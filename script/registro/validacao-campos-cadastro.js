@@ -34,7 +34,7 @@ function closeModal(event) {
 }
 
 function goToLoginPage() {
-    window.location.href = "login.php";
+    window.location.href = "../server-side/registration/validation.php";
 }
 
 // Funções de erro
@@ -212,9 +212,9 @@ function bairroValidate() {
 
 function loginValidate() {
 
-    // Impede qualquer caractere não alfabético.
+    // Impede qualquer caractere não alfabético (sem espaços).
     document.getElementById("login").addEventListener("input", function () {
-        this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, ""); 
+        this.value = this.value.replace(/[^A-Za-zÀ-ÿ]/g, ""); 
     });
 
     campos[13].value.length < 6 ? setError(12) : removeError(12);
@@ -222,9 +222,9 @@ function loginValidate() {
 
 function senhaValidate() {
 
-    // Impede qualquer caractere não alfabético.
+    // Impede qualquer caractere não alfabético (sem espaços).
     campos[14].addEventListener("input", function () {
-        this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, ""); 
+        this.value = this.value.replace(/[^A-Za-zÀ-ÿ]/g, ""); 
     });
 
     campos[14].value.length < 8 ? setError(13) : removeError(13);
@@ -232,9 +232,9 @@ function senhaValidate() {
 
 function confirmarSenhaValidate() {
 
-    // Impede qualquer caractere não alfabético.
+    // Impede qualquer caractere não alfabético (sem espaços).
     campos[15].addEventListener("input", function () {
-        this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, ""); 
+        this.value = this.value.replace(/[^A-Za-zÀ-ÿ]/g, ""); 
     });
 
     campos[15].value !== campos[14].value ? setError(14) : removeError(14);
@@ -342,15 +342,4 @@ btnRegister.addEventListener('click', (event) => {
 
     // Salva o novo usuário como usuarioN
     localStorage.setItem(`usuario${contador}`, JSON.stringify(novoUsuario));
-});
-
-// Impede a reinicilização da página após o envio do formulário
-document.addEventListener('DOMContentLoaded', function() {
-    form.addEventListener('submit', function(event) {
-        // Impede o comportamento padrão de recarregar a página
-        event.preventDefault();
-
-        // Exibe o modal
-        modal[0].style.display = 'flex';
-    });
 });
