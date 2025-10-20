@@ -1,3 +1,22 @@
+<?php
+// Display a succesfull registration modal
+session_start();
+if ($_SESSION['showModal']) {
+    echo '<div class="modal" onclick="closeModal(event)">' ;
+    echo    '<div class="modal-box">';
+    echo        '<span class="modal-title">';
+    echo            'Registrado com sucesso!';
+    echo        '</span>';
+    echo        '<button class="modal-button" onclick="goToLoginPage()">';
+    echo            'Fazer login';
+    echo        '</button>';
+    echo    '</div>';
+    echo '</div>';
+    
+    // Stop the modal session
+    unset($_SESSION['showModal']);
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,35 +31,25 @@
 </head>
 <body>
     <div class="container">
-        <div class="modal" onclick="closeModal(event)">
-            <div class="modal-box">
-                <span class="modal-title">
-                    Registrado com sucesso!
-                </span>
-                <button class="modal-button" onclick="goToLoginPage()">
-                    Fazer login
-                </button>
-            </div>
-        </div>
         <div class="container-esquerdo">
             <img src="../imagens/imagem-cadastro.jpg" class="imagem">
         </div>
         <div class="container-direito" id="container-direito">
             <img src="../imagens/logomarca.png" class="logomarca" id="logomarca">
             <img src="../imagens/logomarca-dark-mode.png" class="logomarca-dark-mode" id="logomarca-dark-mode">
-            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" id="form">
+            <form action="../server/registration/validation.php" method="post" id="form" enctype="multipart/form-data">
                 <h1>Informações Pessoais</h1>
                 <div class="coluna1">
                     <div class="campo">
-                        <input type="text" class="nome required" placeholder="Nome Completo" id="nome" oninput="nameValidate()">
+                        <input type="text" class="nome required" placeholder="Nome Completo" id="nome" name="nome" oninput="nameValidate()">
                         <span class="span-required">Nome deve ter no mínimo 8 caracteres alfabéticos e no máximo 60.</span>
                     </div>
                     <div class="campo">
-                        <input type="email" class="email required" placeholder="E-mail" name="e-mail" maxlength="30" id="email" oninput="emailValidate()">
+                        <input type="email" class="email required" placeholder="E-mail" name="email" maxlength="30" id="email" oninput="emailValidate()">
                         <span class="span-required">Digite um e-mail válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="date" class="data-de-nascimento required" name="data-de-nascimento" id="data-de-nascimento" value="2024-01-01" oninput="dateValidate(2)">
+                        <input type="date" class="data-de-nascimento required" name="dataDeNascimento" id="data-de-nascimento" value="2024-01-01" oninput="dateValidate(2)">
                         <span class="span-required">Você precisa ter mais de 18 anos.</span>
                     </div>
                     <div class="campo">
@@ -52,56 +61,56 @@
                         <span class="span-required">Selecione um sexo.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="cpf required" placeholder="CPF" maxlength="14" id="cpf" oninput="cpfValidate(4)">
+                        <input type="text" class="cpf required" placeholder="CPF" name="cpf" maxlength="14" id="cpf" oninput="cpfValidate(4)">
                         <span class="span-required">Digite um CPF válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="tel" class="celular required" placeholder="Número do Celular" maxlength="19" id="celular" oninput="celValidate()">
+                        <input type="tel" class="celular required" placeholder="Número do Celular" name="numeroCelular" maxlength="19" id="celular" oninput="celValidate()">
                         <span class="span-required">Digite um número de celular que siga o padrão: (+55)XX-XXXXXXXXX.</span>
                     </div>
                 </div>
                 <h1>Localização</h1>
                 <div class="coluna2">
                     <div class="campo">
-                        <input type="text" class="cep required" placeholder="CEP" maxlength="9" id="cep" onblur="buscaCep(this.value)" oninput="cepValidate()">
+                        <input type="text" class="cep required" placeholder="CEP" name="cep" maxlength="9" id="cep" onblur="buscaCep(this.value)" oninput="cepValidate()">
                         <span class="span-required">Digite um CEP válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="rua required" placeholder="Rua" maxlength="20" id="rua" oninput="ruaValidate()">
+                        <input type="text" class="rua required" placeholder="Rua" name="rua" maxlength="20" id="rua" oninput="ruaValidate()">
                         <span class="span-required">Digite uma rua.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="estado required" placeholder="Estado" maxlength="30" id="estado" oninput="estadoValidate()">
+                        <input type="text" class="estado required" placeholder="Estado" name="estado" maxlength="30" id="estado" oninput="estadoValidate()">
                         <span class="span-required">Digite um estado.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="cidade required" placeholder="Cidade" maxlength="30" id="cidade" oninput="cidadeValidate()">
+                        <input type="text" class="cidade required" placeholder="Cidade" name="cidade" maxlength="30" id="cidade" oninput="cidadeValidate()">
                         <span class="span-required">Digite uma cidade.</span>
                     </div>
                     <div class="campo">
-                        <input type="number" class="numero required" placeholder="Número da Casa" id="numero" oninput="numeroValidate()">
+                        <input type="number" class="numero required" placeholder="Número da Casa" name="numeroCasa" id="numero" oninput="numeroValidate()">
                         <span class="span-required">Digite um número válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="bairro required" placeholder="Bairro" maxlength="30" id="bairro" oninput="bairroValidate()">
+                        <input type="text" class="bairro required" placeholder="Bairro" name="bairro" maxlength="30" id="bairro" oninput="bairroValidate()">
                         <span class="span-required">Digite um bairro.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="ponto-de-referencia required" placeholder="Ponto de Referência" maxlength="30" id="ponto-de-referencia">
+                        <input type="text" class="ponto-de-referencia required" placeholder="Ponto de Referência" name="pontoReferencia" maxlength="30" id="ponto-de-referencia">
                     </div>
                 </div>
                 <h1>Informações da Conta</h1>
                 <div class="coluna3">
                     <div class="campo">
-                        <input type="text" class="login required" placeholder="Login" maxlength="6" id="login" oninput="loginValidate()">
+                        <input type="text" class="login required" placeholder="Login" name="login" maxlength="6" id="login" oninput="loginValidate()">
                         <span class="span-required">Login deve ter exatamente 6 caracteres alfabéticos.</span>
                     </div>
                     <div class="campo">
-                        <input type="password" class="senha required" placeholder="Senha" maxlength="8" id="senha" oninput="senhaValidate(this.value)">
+                        <input type="password" class="senha required" placeholder="Senha" name="senha" maxlength="8" id="senha" oninput="senhaValidate(this.value)">
                         <span class="span-required">Senha deve ter exatamente 8 caracteres alfabéticos.</span>
                     </div>
                     <div class="campo">
-                        <input type="password" class="confirmar-senha required" placeholder="Confirmar Senha" maxlength="8" id="confirmar-senha" oninput="confirmarSenhaValidate()">
+                        <input type="password" class="confirmar-senha required" placeholder="Confirmar Senha" name="confirmacaoSenha" maxlength="8" id="confirmar-senha" oninput="confirmarSenhaValidate()">
                         <span class="span-required">As senhas precisam ser iguais.</span>
                     </div>
                 </div>
@@ -109,13 +118,13 @@
                 <div class="coluna4">
                     <div>
                         <div class="contratante">
-                            <input type="radio" name="tipo-usuario" id="contratante" class="required" onclick="userRoleValidate()">
+                            <input type="radio" name="contratante" id="contratante" class="required" onclick="userRoleValidate()">
                             <label for="contratante" class="sou-contratante">
                                 Sou contratante e viso contratar serviços dentro da plataforma.
                             </label>
                         </div>
                         <div class="prestador">
-                            <input type="radio" name="tipo-usuario" id="prestador" class="required" onclick="userRoleValidate()">
+                            <input type="radio" name="prestador" id="prestador" class="required" onclick="userRoleValidate()">
                             <label for="prestador" class="sou-prestador">
                                 Sou prestador e viso oferecer serviços dentro da plataforma.
                             </label>
