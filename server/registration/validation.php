@@ -1,6 +1,7 @@
 <?php
 
-require __DIR__ . '/../lista-servicos.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../lista-servicos.php';
 
 // Se o envio do formulário for pelo método "POST", começa a validação dos dados
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
