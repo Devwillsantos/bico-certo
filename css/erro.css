@@ -1,0 +1,62 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background-color: #1e4fa3;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Container central */
+.container {
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Ícone central (imagem png) */
+.icone {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 25px;
+}
+
+/* Título */
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+/* Texto */
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+/* Botão */
+.botao {
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: #0a3a87;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.botao:hover {
+    background-color: #092f6c;
+    transform: scale(1.05);
+}
