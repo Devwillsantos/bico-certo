@@ -1,3 +1,12 @@
+<?php
+// Conecta ao banco de dados
+require_once "../server/perfil/contado.php";
+
+// Busca o último resumo salvo
+$stmt = $pdo->query("SELECT * FROM resumo_atividades ORDER BY id DESC LIMIT 1");
+$resumo = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,7 +21,7 @@
   <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="../css/perfil contratante.css">
+  <link rel="stylesheet" href="../css/perfilcontratante.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -188,6 +197,5 @@
   <script src="../script/perfil/ultima visista.js"></script>
   <script src="../script/perfil/perfil.js"></script>
   <script src="../script/perfil/contado.js"></script>
-
 </body>
 </html>
