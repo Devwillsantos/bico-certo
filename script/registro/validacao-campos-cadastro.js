@@ -300,46 +300,4 @@ btnRegister.addEventListener('click', (event) => {
         event.preventDefault();
         return;
     }
-
-    // Criptografa a senha
-    let senhaCriptografada = btoa(campos[14].value);
-
-    // Determina o papel do usuário
-    if (campos[16].checked) {
-        tipoUsuario = 'Contratante';
-    } else {
-        tipoUsuario = 'Prestador';
-        tipoPrestador = campos[18].value;
-    }
-
-    // Coleta os dados do formulário
-    const novoUsuario = {
-        nome: campos[0].value,
-        email: campos[1].value,
-        dataNascimento: campos[2].value,
-        sexo: campos[3].value,
-        cpf: campos[4].value,
-        celular: campos[5].value,
-        cep: campos[6].value,
-        rua: campos[7].value,
-        estado: campos[8].value,
-        cidade: campos[9].value,
-        numero: campos[10].value,
-        bairro: campos[11].value,
-        pontoDeReferencia: campos[12].value,
-        login: campos[13].value,
-        senha: senhaCriptografada,
-        tipoUsuario: tipoUsuario,
-        tipoPrestador: tipoPrestador,
-        online: false
-    };
-
-    // Verifica quantos usuários já existem no localStorage
-    let contador = 1;
-    while (localStorage.getItem(`usuario${contador}`) !== null) {
-        contador++;
-    }
-
-    // Salva o novo usuário como usuarioN
-    localStorage.setItem(`usuario${contador}`, JSON.stringify(novoUsuario));
 });
