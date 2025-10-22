@@ -34,7 +34,7 @@ function closeModal(event) {
 }
 
 function goToLoginPage() {
-    window.location.href = "../server-side/registration/validation.php";
+    window.location.href = "../paginas/login.php";
 }
 
 // Funções de erro
