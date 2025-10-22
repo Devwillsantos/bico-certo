@@ -1,10 +1,10 @@
 <?php
 
-$db_host = 'localhost';
-$db_name = 'bico_certo_db';
+$host = 'localhost';
+$db   = 'bico_certo_db';
 $db_user = 'root';
-$db_pass = '';
-$dsn = "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4";
+$db_pass = ''; // Padrão XAMPP
+$dsn  = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // exceções em erros

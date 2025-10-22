@@ -7,31 +7,31 @@ require_once __DIR__ . '/../lista-servicos.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Dados Pessoais
-    $nome             = $_POST['nome'];
-    $email            = $_POST['email'];
-    $dataNascimento   = $_POST['dataDeNascimento'];
-    $sexo             = $_POST['sexo'];
-    $cpf              = $_POST['cpf'];
-    $numeroCelular    = $_POST['numeroCelular'];
+    $nome             = $_POST['nome'] ?? null;
+    $email            = $_POST['email'] ?? null;
+    $dataNascimento   = $_POST['dataDeNascimento'] ?? null;
+    $sexo             = $_POST['sexo'] ?? null;
+    $cpf              = $_POST['cpf'] ?? null;
+    $numeroCelular    = $_POST['numeroCelular'] ?? null;
 
     // Dados De Localização
-    $cep               = $_POST['cep'];
-    $rua               = $_POST['rua'];
-    $estado            = $_POST['estado'];
-    $cidade            = $_POST['cidade'];
-    $numeroCasa        = $_POST['numeroCasa'];
-    $bairro            = $_POST['bairro'];
-    $referenciaCasa    = $_POST['pontoReferencia'];
+    $cep               = $_POST['cep'] ?? null;
+    $rua               = $_POST['rua'] ?? null;
+    $estado            = $_POST['estado'] ?? null;
+    $cidade            = $_POST['cidade'] ?? null;
+    $numeroCasa        = $_POST['numeroCasa'] === '' ? '0' : $_POST['numeroCasa'];
+    $bairro            = $_POST['bairro'] ?? null;
+    $referenciaCasa    = $_POST['pontoReferencia'] ?? null;
 
     // Dados Da Conta
-    $fotoPerfil         = $_FILES['profile-photo'];
-    $login              = $_POST['login'];
-    $senha              = $_POST['senha'];
-    $confirmacaoSenha   = $_POST['confirmacaoSenha'];
+    $fotoPerfil         = $_FILES['profile-photo'] ?? null;
+    $login              = $_POST['login'] ?? null;
+    $senha              = $_POST['senha'] ?? null;
+    $confirmacaoSenha   = $_POST['confirmacaoSenha'] ?? null;
 
     // Tipo de Usuário e Serviço
     $tipoUsuario = '';
-    $servico     = $_POST['prestador-opcoes'];
+    $servico     = $_POST['prestador-opcoes'] ?? null;
 
     // Verificação do Tipo do Usuário
     if ($_POST['contratante'] === 'on') {
@@ -162,19 +162,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Calcula o primeiro dígito verificador
         $soma1 = 0;
         for ($i = 0, $peso = 10; $i < 9; $i++, $peso--) {
-            $soma1 += $cpf_array[$i] * $peso;
+            $soma1 += $cpfArray[$i] * $peso;
         }
         $d1 = ($soma1 % 11 < 2) ? 0 : 11 - ($soma1 % 11);
 
         // Calcula o segundo dígito verificador
         $soma2 = 0;
         for ($i = 0, $peso = 11; $i < 10; $i++, $peso--) {
-            $soma2 += $cpf_array[$i] * $peso;
+            $soma2 += $cpfArray[$i] * $peso;
         }
         $d2 = ($soma2 % 11 < 2) ? 0 : 11 - ($soma2 % 11);
 
         // Verifica se os dígitos não conferem
-        if ($d1 != $cpf_array[9] or $d2 != $cpf_array[10]) {
+        if ($d1 != $cpfArray[9] or $d2 != $cpfArray[10]) {
             $qtdErrosFuncao += 1;
         }
 
@@ -260,14 +260,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Validação do Número da Casa
-            // Verifica se há apenas números e se o campo não está vazio
-            if (!preg_match('/^[0-9]+$/', $numeroCasa) && $numeroCasa != '') {
+            if ($numeroCasa !== '' && !preg_match('/^[0-9]+$/', $numeroCasa)) {
                 $qtdErrosFuncao += 1;
             }
 
             // Validação do Ponto de Referência
-            // Verifica se não há caracteres especiais, mas aceita o campo vazio
-            if (preg_match('/^[\p{L}0-9 ]+$/u', $referenciaCasa) || $referenciaCasa != '') {
+            if ($referenciaCasa !== '' && !preg_match('/^[\p{L}0-9 ]+$/u', $referenciaCasa)) {
                 $qtdErrosFuncao += 1;
             }
         }
@@ -391,8 +389,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verifica se há algum erro
     if ($qtdErros != 0) {
-        // Redireciona para a página de cadastro
-        header('Location: ../../paginas/cadastro.php');
+        // Redireciona para a página de erro
+        header('Location: ../../paginas/erro.php');
         exit;
     } else {
         // Sanitização dos dados pessoais
@@ -421,6 +419,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Criptografia da senha
         $senhaEncriptada = password_hash($senha, PASSWORD_DEFAULT);
         
+        // Inserção de dados
+        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, tipoUsuario, servico)
+            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :tipoUsuario, :servico)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':nome'           => $nome,
+            ':email'          => $email,
+            ':dataNascimento' => $dataNascimento,
+            ':sexo'           => $sexo,
+            ':cpf'            => $cpf,
+            ':numeroCelular'  => $numeroCelular,
+            ':cep'            => $cep,
+            ':estado'         => $estado,
+            ':cidade'         => $cidade,
+            ':bairro'         => $bairro,
+            ':rua'            => $rua,
+            ':numeroCasa'     => $numeroCasa,
+            ':referenciaCasa' => $referenciaCasa,
+            ':login'          => $login,
+            ':senha'          => $senhaEncriptada,
+            ':tipoUsuario'    => $tipoUsuario,
+            ':servico'        => $servico,
+        ]);
+
+        $id = (int)$pdo->lastInsertId();
+
         // Redireciona para a página de registro e exibe o modal de cadastrado com sucesso
         session_start();
         $_SESSION['showModal'] = true;
