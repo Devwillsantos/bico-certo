@@ -452,7 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 } else {
-    // Se o envio do formulário for por um método diferente do "POST", envia o usuário de volta à página de cadastro
-    header('Location: ../../paginas/cadastro.php');
+    // Se o envio do formulário for por um método diferente do "POST", envia o usuário para a página de erro
+    header('Location: ../../paginas/erro.php');
     exit;
 }
