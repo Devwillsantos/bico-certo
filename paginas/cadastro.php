@@ -65,7 +65,7 @@ if ($_SESSION['showModal']) {
                         <span class="span-required">Digite um CPF válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="tel" class="celular required" placeholder="Número do Celular" name="numeroCelular" maxlength="19" id="celular" oninput="celValidate()">
+                        <input type="tel" class="celular required" placeholder="Número do Celular" name="numeroCelular" maxlength="17" id="celular" oninput="celValidate()">
                         <span class="span-required">Digite um número de celular que siga o padrão: (+55)XX-XXXXXXXXX.</span>
                     </div>
                 </div>
