@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Validação do Número da Casa
-            if ($numeroCasa !== '' && !preg_match('/^[0-9]+$/', $numeroCasa)) {
+            if ($numeroCasa === '' || !preg_match('/^[0-9]+$/', $numeroCasa) || strlen($numeroCasa) > 5) {
                 $qtdErrosFuncao += 1;
             }
 

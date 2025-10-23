@@ -203,7 +203,26 @@ function cidadeValidate() {
 }
 
 function numeroValidate() {
-    campos[10].value < 0 ? setError(10) : removeError(10);
+  let campo = campos[10];
+  let valor = campo.value;
+
+  // Remove caracteres não numéricos
+  valor = valor.replace(/\D/g, '');
+
+  // Limita a 5 dígitos
+  if (valor.length > 5) {
+    valor = valor.substring(0, 5);
+  }
+
+  // Atualiza o valor do input
+  campo.value = valor;
+
+  // Validação: campo vazio, negativo ou inválido
+  if (valor === '' || Number(valor) < 0) {
+    setError(10);
+  } else {
+    removeError(10);
+  }
 }
 
 function bairroValidate() {
