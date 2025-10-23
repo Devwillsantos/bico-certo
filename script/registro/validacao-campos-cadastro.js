@@ -235,7 +235,16 @@ function numeroValidate() {
 }
 
 function bairroValidate() {
-    campos[11].value.length < 3 ? setError(11) : removeError(11);
+    const valor = campos[11].value.trim();
+
+    // Regex explicada abaixo
+    const regex = /^(?=.*[A-Za-zÀ-ÿ])(?=.*\S).+$/;
+
+    if (!regex.test(valor)) {
+        setError(11);
+    } else {
+        removeError(11);
+    }
 }
 
 function loginValidate() {
