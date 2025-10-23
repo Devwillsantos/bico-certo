@@ -80,7 +80,7 @@ if ($_SESSION['showModal']) {
                         <span class="span-required">Digite uma rua.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="estado required" placeholder="Estado" name="estado" maxlength="30" id="estado" oninput="estadoValidate()">
+                        <input type="text" class="estado required" placeholder="Estado" name="estado" maxlength="19" id="estado" oninput="estadoValidate()">
                         <span class="span-required">Digite um estado.</span>
                     </div>
                     <div class="campo">
