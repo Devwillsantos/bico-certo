@@ -199,30 +199,39 @@ function estadoValidate() {
 }
 
 function cidadeValidate() {
-    campos[9].value.length < 3 ? setError(9) : removeError(9);
+  const valor = campos[9].value.trim();
+  
+  // Expressão regular: apenas letras (maiúsculas e minúsculas) e espaços
+  const apenasLetras = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+
+    if (valor.length < 1 || !apenasLetras.test(valor)) {
+    setError(9);
+    } else {
+    removeError(9);
+    }
 }
 
 function numeroValidate() {
-  let campo = campos[10];
-  let valor = campo.value;
+    let campo = campos[10];
+    let valor = campo.value;
 
-  // Remove caracteres não numéricos
-  valor = valor.replace(/\D/g, '');
+    // Remove caracteres não numéricos
+    valor = valor.replace(/\D/g, '');
 
-  // Limita a 5 dígitos
-  if (valor.length > 5) {
+    // Limita a 5 dígitos
+    if (valor.length > 5) {
     valor = valor.substring(0, 5);
-  }
+    }
 
-  // Atualiza o valor do input
-  campo.value = valor;
+    // Atualiza o valor do input
+    campo.value = valor;
 
-  // Validação: campo vazio, negativo ou inválido
-  if (valor === '' || Number(valor) < 0) {
+    // Validação: campo vazio, negativo ou inválido
+    if (valor === '' || Number(valor) < 0) {
     setError(10);
-  } else {
+    } else {
     removeError(10);
-  }
+    }
 }
 
 function bairroValidate() {
