@@ -76,7 +76,7 @@ if ($_SESSION['showModal']) {
                         <span class="span-required">Digite um CEP válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="rua required" placeholder="Rua" name="rua" maxlength="20" id="rua" oninput="ruaValidate()">
+                        <input type="text" class="rua required" placeholder="Rua" name="rua" maxlength="30" id="rua" oninput="ruaValidate()">
                         <span class="span-required">Digite uma rua.</span>
                     </div>
                     <div class="campo">
