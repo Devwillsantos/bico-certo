@@ -191,8 +191,17 @@ function cepValidate() {
 }
 
 function ruaValidate() {
-    campos[7].value.length < 3 ? setError(7) : removeError(7);
+    const valor = campos[7].value.trim();
+    const temLetra = /[a-zA-Z]/.test(valor);
+    const minimoCaracteres = valor.length >= 1;
+
+    if (minimoCaracteres && temLetra) {
+        removeError(7);
+    } else {
+        setError(7);
+    }
 }
+
 
 function estadoValidate() {
     estadosBrasil.includes(campos[8].value.trim()) ? removeError(8) : setError(8);
