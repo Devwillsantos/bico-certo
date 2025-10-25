@@ -29,23 +29,23 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
     <!-- Top Bar -->
     <header class="top-bar">
       <div class="icone">
-        <a href="./homepage.html">
+        <a href="./homepage.php">
           <img src="../imagens/logomarca.png" class="logomarca" alt="Logomarca">
         </a>
       </div>
       <div class="menu">
         <div class="logo">
-          <a href="./servicos.html">
+          <a href="./servicos.php">
             <img src="../imagens/perfil/servicos.svg" alt="Serviços">
           </a>
         </div>
         <div class="logo">
-          <a href="./mensagem.html">
+          <a href="./mensagem.php">
             <img src="../imagens/perfil/envelope.svg" alt="Mensagens">
           </a>
         </div>
         <div class="logo">
-          <a href="./notifications.html">
+          <a href="./notifications.php">
             <img src="../imagens/perfil/notificação.svg" alt="Notificações">
           </a>
         </div>
@@ -60,8 +60,8 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="profile-menu" id="profileMenu">
       <ul>
         <li><a href="../paginas/perfil contratante.php">Meu Perfil</a></li>
-        <li><a href="../paginas/profile-edit.html">Editar Perfil</a></li>
-        <li><a href="../paginas/login.html">Sair</a></li>
+        <li><a href="../paginas/profile-edit.php">Editar Perfil</a></li>
+        <li><a href="../paginas/login.php">Sair</a></li>
       </ul>
     </div>
 
@@ -186,10 +186,10 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
             <div class="vertical-row"></div>
             <div class="footer-list">
                 <ul>
-                <li class="footer-list-option"><a href="./contato.html" target="_blank">Contato</a></li>
-                <li class="footer-list-option"><a href="./sobrenos.html" target="_blank">Sobre</a></li>
-                <li class="footer-list-option"><a href="./cadastro.html" target="_blank">Cadastro</a></li>
-                <li class="footer-list-option"><a href="./login.html" target="_blank">Login</a></li>
+                <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
+                <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
+                <li class="footer-list-option"><a href="./cadastro.php" target="_blank">Cadastro</a></li>
+                <li class="footer-list-option"><a href="./login.php" target="_blank">Login</a></li>
                 </ul>
             </div>
         </footer>

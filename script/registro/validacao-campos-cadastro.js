@@ -34,7 +34,7 @@ function closeModal(event) {
 }
 
 function goToLoginPage() {
-    window.location.href = "../server-side/registration/validation.php";
+    window.location.href = "../paginas/login.php";
 }
 
 // Funções de erro
@@ -191,23 +191,69 @@ function cepValidate() {
 }
 
 function ruaValidate() {
-    campos[7].value.length < 3 ? setError(7) : removeError(7);
+    const valor = campos[7].value.trim();
+    const temLetra = /[a-zA-Z]/.test(valor);
+    const minimoCaracteres = valor.length >= 1;
+
+    if (minimoCaracteres && temLetra) {
+        removeError(7);
+    } else {
+        setError(7);
+    }
 }
+
 
 function estadoValidate() {
     estadosBrasil.includes(campos[8].value.trim()) ? removeError(8) : setError(8);
 }
 
 function cidadeValidate() {
-    campos[9].value.length < 3 ? setError(9) : removeError(9);
+  const valor = campos[9].value.trim();
+  
+  // Expressão regular: apenas letras (maiúsculas e minúsculas) e espaços
+  const apenasLetras = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+
+    if (valor.length < 1 || !apenasLetras.test(valor)) {
+    setError(9);
+    } else {
+    removeError(9);
+    }
 }
 
 function numeroValidate() {
-    campos[10].value < 0 ? setError(10) : removeError(10);
+    let campo = campos[10];
+    let valor = campo.value;
+
+    // Remove caracteres não numéricos
+    valor = valor.replace(/\D/g, '');
+
+    // Limita a 5 dígitos
+    if (valor.length > 5) {
+    valor = valor.substring(0, 5);
+    }
+
+    // Atualiza o valor do input
+    campo.value = valor;
+
+    // Validação: campo vazio, negativo ou inválido
+    if (valor === '' || Number(valor) < 0) {
+    setError(10);
+    } else {
+    removeError(10);
+    }
 }
 
 function bairroValidate() {
-    campos[11].value.length < 3 ? setError(11) : removeError(11);
+    const valor = campos[11].value.trim();
+
+    // Regex explicada abaixo
+    const regex = /^(?=.*[A-Za-zÀ-ÿ])(?=.*\S).+$/;
+
+    if (!regex.test(valor)) {
+        setError(11);
+    } else {
+        removeError(11);
+    }
 }
 
 function loginValidate() {
@@ -300,46 +346,4 @@ btnRegister.addEventListener('click', (event) => {
         event.preventDefault();
         return;
     }
-
-    // Criptografa a senha
-    let senhaCriptografada = btoa(campos[14].value);
-
-    // Determina o papel do usuário
-    if (campos[16].checked) {
-        tipoUsuario = 'Contratante';
-    } else {
-        tipoUsuario = 'Prestador';
-        tipoPrestador = campos[18].value;
-    }
-
-    // Coleta os dados do formulário
-    const novoUsuario = {
-        nome: campos[0].value,
-        email: campos[1].value,
-        dataNascimento: campos[2].value,
-        sexo: campos[3].value,
-        cpf: campos[4].value,
-        celular: campos[5].value,
-        cep: campos[6].value,
-        rua: campos[7].value,
-        estado: campos[8].value,
-        cidade: campos[9].value,
-        numero: campos[10].value,
-        bairro: campos[11].value,
-        pontoDeReferencia: campos[12].value,
-        login: campos[13].value,
-        senha: senhaCriptografada,
-        tipoUsuario: tipoUsuario,
-        tipoPrestador: tipoPrestador,
-        online: false
-    };
-
-    // Verifica quantos usuários já existem no localStorage
-    let contador = 1;
-    while (localStorage.getItem(`usuario${contador}`) !== null) {
-        contador++;
-    }
-
-    // Salva o novo usuário como usuarioN
-    localStorage.setItem(`usuario${contador}`, JSON.stringify(novoUsuario));
 });

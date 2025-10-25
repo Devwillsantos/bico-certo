@@ -23,7 +23,7 @@
                 <span class="span-required">Digite um e-mail válido.</span>
                 <span class="span-required">Digite um e-mail.</span>
                 <button type="submit" class="botao-enviar-link">Enviar link de Redefinição</button>
-                <a href="../paginas/login.html" class="lembrou-sua-senha">Lembrou sua senha? Clique aqui!</a>
+                <a href="../paginas/login.php" class="lembrou-sua-senha">Lembrou sua senha? Clique aqui!</a>
             </form>
         </div>
         <div class="acessibility-buttons">

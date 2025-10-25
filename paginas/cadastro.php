@@ -1,5 +1,5 @@
 <?php
-// Display a succesfull registration modal
+// Exibição do modal de cadastrado com sucesso
 session_start();
 if ($_SESSION['showModal']) {
     echo '<div class="modal" onclick="closeModal(event)">' ;
@@ -13,7 +13,7 @@ if ($_SESSION['showModal']) {
     echo    '</div>';
     echo '</div>';
     
-    // Stop the modal session
+    // Para a sessão de exibição do modal
     unset($_SESSION['showModal']);
 }
 ?>
@@ -65,7 +65,7 @@ if ($_SESSION['showModal']) {
                         <span class="span-required">Digite um CPF válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="tel" class="celular required" placeholder="Número do Celular" name="numeroCelular" maxlength="19" id="celular" oninput="celValidate()">
+                        <input type="tel" class="celular required" placeholder="Número do Celular" name="numeroCelular" maxlength="17" id="celular" oninput="celValidate()">
                         <span class="span-required">Digite um número de celular que siga o padrão: (+55)XX-XXXXXXXXX.</span>
                     </div>
                 </div>
@@ -76,11 +76,11 @@ if ($_SESSION['showModal']) {
                         <span class="span-required">Digite um CEP válido.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="rua required" placeholder="Rua" name="rua" maxlength="20" id="rua" oninput="ruaValidate()">
+                        <input type="text" class="rua required" placeholder="Rua" name="rua" maxlength="30" id="rua" oninput="ruaValidate()">
                         <span class="span-required">Digite uma rua.</span>
                     </div>
                     <div class="campo">
-                        <input type="text" class="estado required" placeholder="Estado" name="estado" maxlength="30" id="estado" oninput="estadoValidate()">
+                        <input type="text" class="estado required" placeholder="Estado" name="estado" maxlength="19" id="estado" oninput="estadoValidate()">
                         <span class="span-required">Digite um estado.</span>
                     </div>
                     <div class="campo">

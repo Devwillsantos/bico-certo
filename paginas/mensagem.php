@@ -15,21 +15,21 @@
         <!-- Top Bar -->
         <header class="top-bar">
             <div class="icone">
-                <a href="./homepage.html">
+                <a href="./homepage.php">
                     <img src="../imagens/logomarca.png" class="logomarca">
                 </a>
             </div>
             <div class="menu">
                 <div class="logo">
-                    <span><a href="./servicos.html">
+                    <span><a href="./servicos.php">
                     <img src="../imagens/perfil/servicos.svg"></a></span>
                 </div>
                 <div class="logo">
-                    <span><a href="./mensagem.html">
+                    <span><a href="./mensagem.php">
                     <img src="../imagens/perfil/envelope.svg"></a></span>
                 </div>
                 <div class="logo">
-                    <span><a href="./notifications.html">
+                    <span><a href="./notifications.php">
                     <img src="../imagens/perfil/notificação.svg"></a></span>
                 </div>
                 <div class="user-name logo">
@@ -43,9 +43,9 @@
         </header>
         <div class="profile-menu" id="profileMenu">
             <ul>
-                <li><a href="./perfil.html">Meu Perfil</a></li>
-                <li><a href="./profile-edit.html">Editar Perfil</a></li>
-                <li><a href="./login.html" id="logout">Sair</a></li>
+                <li><a href="./perfil.php">Meu Perfil</a></li>
+                <li><a href="./profile-edit.php">Editar Perfil</a></li>
+                <li><a href="./login.php" id="logout">Sair</a></li>
             </ul>
         </div>
         <div class="chat-container">

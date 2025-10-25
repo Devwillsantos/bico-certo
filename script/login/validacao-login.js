@@ -3,6 +3,22 @@ const campos = document.querySelectorAll('.required');
 const spans = document.querySelectorAll('.span-required');
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// MODAL
+const form = document.getElementById('form');
+const modal = document.getElementsByClassName('modal');
+const modalButton = document.getElementsByClassName('modal-button');
+
+function closeModal(event) {
+    // Verifica se o clique foi fora da .modal-box
+    if (event.target === event.currentTarget) {
+        document.querySelector('.modal').style.display = 'none'; // Fecha o modal
+    }
+}
+
+function refresh() {
+    window.location.href = "login.php";
+}
+
 function setError(index) {
     spans[index].style.display = 'block';
     spans[index].style.color = 'rgb(171, 67, 67)';
@@ -32,50 +48,6 @@ function senhaValidate() {
         setError(2);
     } else {
         removeError(2);
-    }
-}
-
-// Validação do Login do Usuário
-function userLoginValidate() {
-    const inputEmail = campos[0].value;
-    const inputSenha = campos[1].value;
-
-    let usuarioEncontrado = false;
-
-    // Primeiro: deslogar todos os usuários (setar online = false)
-    for (let i = 0; i < localStorage.length; i++) {
-        const chave = localStorage.key(i);
-
-        if (chave.startsWith('usuario')) {
-            const usuario = JSON.parse(localStorage.getItem(chave));
-            usuario.online = false;
-            localStorage.setItem(chave, JSON.stringify(usuario));
-        }
-    }
-
-    // Segundo: tentar logar com o usuário informado
-    for (let i = 0; i < localStorage.length; i++) {
-        const chave = localStorage.key(i);
-
-        if (chave.startsWith('usuario')) {
-            const usuario = JSON.parse(localStorage.getItem(chave));
-            const senhaDescriptografada = atob(usuario.senha);
-
-            if (usuario.email === inputEmail && senhaDescriptografada === inputSenha) {
-                usuario.online = true;
-                localStorage.setItem(chave, JSON.stringify(usuario));
-                usuarioEncontrado = true;
-
-                window.location.href = "../../paginas/homepage.html";
-                break;
-            }
-        }
-    }
-
-    if (!usuarioEncontrado) {
-        setError(3);
-    } else {
-        removeError(3);
     }
 }
 
