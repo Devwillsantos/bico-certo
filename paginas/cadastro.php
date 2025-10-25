@@ -1,5 +1,5 @@
 <?php
-// Display a succesfull registration modal
+// Exibição do modal de cadastrado com sucesso
 session_start();
 if ($_SESSION['showModal']) {
     echo '<div class="modal" onclick="closeModal(event)">' ;
@@ -13,7 +13,7 @@ if ($_SESSION['showModal']) {
     echo    '</div>';
     echo '</div>';
     
-    // Stop the modal session
+    // Para a sessão de exibição do modal
     unset($_SESSION['showModal']);
 }
 ?>

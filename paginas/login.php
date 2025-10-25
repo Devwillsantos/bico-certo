@@ -1,3 +1,36 @@
+<?php
+// Exibição do modal de senha incorreta e e-mail não encontrado
+session_start();
+if ($_SESSION['showModal'] === 'senha-errada') { // Exibe o modal de senha errada
+    echo '<div class="modal" onclick="closeModal(event)">' ;
+    echo    '<div class="modal-box">';
+    echo        '<span class="modal-title">';
+    echo            'Senha incorreta!';
+    echo        '</span>';
+    echo        '<button class="modal-button" onclick="refresh()">';
+    echo            'Tentar novamente';
+    echo        '</button>';
+    echo    '</div>';
+    echo '</div>';
+    
+    // Para a sessão de exibição do modal
+    unset($_SESSION['showModal']);
+} else if ($_SESSION['showModal'] === 'e-mail-nao-encontrado') { // Exibe o modal de e-mail não encontrado
+    echo '<div class="modal" onclick="closeModal(event)">' ;
+    echo    '<div class="modal-box">';
+    echo        '<span class="modal-title">';
+    echo            'E-mail não encontrado!';
+    echo        '</span>';
+    echo        '<button class="modal-button" onclick="refresh()">';
+    echo            'Tentar novamente';
+    echo        '</button>';
+    echo    '</div>';
+    echo '</div>';
+
+    // Para a sessão de exibição do modal
+    unset($_SESSION['showModal']);
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -18,14 +51,14 @@
         <div class="container-direito" id="container-direito">
             <img src="../imagens/logomarca.png" class="logomarca" id="logomarca">
             <img src="../imagens/logomarca-dark-mode.png" class="logomarca-dark-mode" id="logomarca-dark-mode">
-            <form action="../server-side/login/login-validation.php" method="post" id="form">
+            <form action="../server/login/validation.php" method="post" id="form">
                 <div class="campo">
-                    <input id="email" type="email" class="email required" placeholder="E-mail" oninput="emailValidate()">
+                    <input id="email" type="email" class="email required" placeholder="E-mail" oninput="emailValidate()" name="email">
                     <span class="span-required">Digite um e-mail válido.</span>
                     <span class="span-required">Digite um e-mail.</span>
                 </div>
                 <div class="campo">
-                    <input id="password" type="password" class="senha required" placeholder="Senha" oninput="senhaValidate()">
+                    <input id="password" type="password" class="senha required" placeholder="Senha" oninput="senhaValidate()" name="senha">
                     <span class="span-required">Digite uma senha válida.</span>
                     <span class="span-required">E-mail ou senha estão incorretos.</span>
                 </div>
@@ -34,12 +67,12 @@
                         <input type="checkbox" id="lembrar-de-mim">
                         <label for="lembrar-de-mim">Lembrar de mim</label>
                     </div>
-                    <div class="esqueci">
-                        <a class="esqueci-minha-senha" href="./esqueci-minha-senha.html">Esqueci minha senha</a>
+                    <div class="link-cadastro">
+                        <a class="cadastro" href="./cadastro.php">Me cadastrar</a>
                     </div>
                 </div>
                 <div class="botoes">
-                    <button class="botao-de-entrar">
+                    <button type="submit" class="botao-de-entrar">
                         Entrar
                     </button>
                     <button type="reset" class="botao-de-limpar-campos">Limpar Campos</button>

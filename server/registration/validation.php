@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login              = $_POST['login'] ?? null;
     $senha              = $_POST['senha'] ?? null;
     $confirmacaoSenha   = $_POST['confirmacaoSenha'] ?? null;
+    $whatsAppLink    = '';
 
     // Tipo de Usuário e Serviço
     $tipoUsuario = '';
@@ -320,6 +321,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    // Criação do link para contato via WhatsApp
+    function criarWhatsAppLink($numeroCelular) {
+        // Remove tudo que não for número
+        $somenteNumeros = preg_replace('/\D/', '', $numeroCelular);
+        
+        // Retorna o link formatado
+        return "https://wa.me/" . $somenteNumeros;
+    }
+
     // Validação do Tipo de Usuário
     function validarTipoUsuario($tipoUsuario) {
 
@@ -416,12 +426,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tipoUsuario = htmlspecialchars($tipoUsuario);
         $servico     = $nomeServico;
         
+        // Link do WhatsApp para contato
+        $whatsAppLink = criarWhatsAppLink($numeroCelular);
+
         // Criptografia da senha
         $senhaEncriptada = password_hash($senha, PASSWORD_DEFAULT);
         
         // Inserção de dados
-        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, tipoUsuario, servico)
-            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :tipoUsuario, :servico)";
+        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico)
+            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nome'           => $nome,
@@ -439,6 +452,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':referenciaCasa' => $referenciaCasa,
             ':login'          => $login,
             ':senha'          => $senhaEncriptada,
+            ':whatsAppLink'   => $whatsAppLink,
             ':tipoUsuario'    => $tipoUsuario,
             ':servico'        => $servico,
         ]);

@@ -3,6 +3,22 @@ const campos = document.querySelectorAll('.required');
 const spans = document.querySelectorAll('.span-required');
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// MODAL
+const form = document.getElementById('form');
+const modal = document.getElementsByClassName('modal');
+const modalButton = document.getElementsByClassName('modal-button');
+
+function closeModal(event) {
+    // Verifica se o clique foi fora da .modal-box
+    if (event.target === event.currentTarget) {
+        document.querySelector('.modal').style.display = 'none'; // Fecha o modal
+    }
+}
+
+function refresh() {
+    window.location.href = "login.php";
+}
+
 function setError(index) {
     spans[index].style.display = 'block';
     spans[index].style.color = 'rgb(171, 67, 67)';

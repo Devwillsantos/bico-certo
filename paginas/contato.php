@@ -40,7 +40,7 @@
                     </a>
                 </div>
                 <input type="hidden" name="access_key" value="950898ff-e46e-4efa-ba77-aab1a3835e0f">
-                <input type="hidden" name="redirect" value="http://127.0.0.1:5500/paginas/obrigado.html?">
+                <input type="hidden" name="redirect" value="http://localhost/bico-certo/paginas/obrigado.php?">
             </form>
         </div>
         <div class="acessibility-buttons">

@@ -11,7 +11,7 @@ $options = [
 ];
 
 try {
-    // Conecta ao MySQL sem selecionar um banco
+    // Estabele conexão com o MySQL
     $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $db_user, $db_pass, $options);
 
     // Cria o banco de dados se não existir
@@ -39,6 +39,7 @@ try {
             `referenciaCasa` VARCHAR(30) DEFAULT NULL,
             `login` CHAR(6) NOT NULL,
             `senha` VARCHAR(255) NOT NULL,
+            `whatsAppLink` VARCHAR(27) NOT NULL,
             `tipoUsuario` VARCHAR(11) NOT NULL,
             `servico` VARCHAR(30) NOT NULL,
             `fotoPerfil` LONGBLOB DEFAULT NULL

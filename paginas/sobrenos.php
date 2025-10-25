@@ -16,8 +16,10 @@
             <img src="../imagens/imagem-sobre-nos.jpg" class="imagem">
         </div>
         <div class="container-direito" id="container-direito">
-            <img src="../imagens/logomarca.png" class="logomarca" id="logomarca">
-            <img src="../imagens/logomarca-dark-mode.png" class="logomarca-dark-mode" id="logomarca-dark-mode">
+            <div>
+                <img src="../imagens/logomarca.png" class="logomarca" id="logomarca">
+                <img src="../imagens/logomarca-dark-mode.png" class="logomarca-dark-mode" id="logomarca-dark-mode">
+            </div>
             <article>
                 <h1>
                     Sobre Nós

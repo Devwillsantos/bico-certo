@@ -14,21 +14,21 @@
     <!-- Top Bar -->
     <header class="top-bar">
         <div class="icone">
-            <a href="./homepage.html">
+            <a href="./homepage.php">
                 <img src="../imagens/logomarca.png" class="logomarca">
             </a>
         </div>
         <div class="menu">
             <div class="logo">
-                <span><a href="./servicos.html">
+                <span><a href="./servicos.php">
                 <img src="../imagens/perfil/servicos.svg"></a></span>
             </div>
             <div class="logo">
-                <span><a href="./mensagem.html">
+                <span><a href="./mensagem.php">
                 <img src="../imagens/perfil/envelope.svg"></a></span>
             </div>
             <div class="logo">
-                <span><a href="./notifications.html">
+                <span><a href="./notifications.php">
                 <img src="../imagens/perfil/notificação.svg"></a></span>
             </div>
             <div class="user-name logo">
@@ -43,9 +43,9 @@
     <!-- Profile Menu -->
     <div class="profile-menu" id="profileMenu">
         <ul>
-            <li><a href="./perfil.html">Meu Perfil</a></li>
-            <li><a href="./profile-edit.html">Editar Perfil</a></li>
-            <li><a href="./login.html" id="logout">Sair</a></li>
+            <li><a href="./perfil.php">Meu Perfil</a></li>
+            <li><a href="./profile-edit.php">Editar Perfil</a></li>
+            <li><a href="./login.php" id="logout">Sair</a></li>
         </ul>
     </div>
     <!-- Main Content -->
@@ -152,10 +152,10 @@
         <div class="vertical-row"></div>
         <div class="footer-list">
             <ul>
-                <li class="footer-list-option"><a href="./contato.html" target="_blank">Contato</a></li>
-                <li class="footer-list-option"><a href="./sobrenos.html" target="_blank">Sobre</a></li>
-                <li class="footer-list-option"><a href="./cadastro.html" target="_blank">Cadastro</a></li>
-                <li class="footer-list-option"><a href="./login.html" target="_blank">Login</a></li>
+                <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
+                <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
+                <li class="footer-list-option"><a href="./cadastro.php" target="_blank">Cadastro</a></li>
+                <li class="footer-list-option"><a href="./login.php" target="_blank">Login</a></li>
             </ul>
         </div>
     </footer>
