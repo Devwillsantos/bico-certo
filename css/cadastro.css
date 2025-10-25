@@ -485,8 +485,8 @@ optgroup > option {
     align-items: center;
 }
 
-.btn-profile-photo {
-    width: 87px;
+.profile-photo-input {
+    display: none;
 }
 
 .profile-photo-preview {
@@ -507,7 +507,8 @@ optgroup > option {
 }
 
 
-/* Botões de Cadastro e Voltar à Página Inicial*/
+/* Botões de Cadastro, Limpar Formulário, Voltar à Página Inicial e de Adicionar Foto de Perfil */
+.botao-de-adicionar-foto-de-perfil,
 .botao-de-cadastrar-usuario,
 .botao-de-limpar-formulario,
 .botao-de-voltar-a-pagina-inicial {
@@ -530,6 +531,17 @@ optgroup > option {
     vertical-align: middle;
 }
 
+.botao-de-adicionar-foto-de-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../imagens/icone-botoes/add-profile-photo.svg);
+    background-size: 23px;
+    border-bottom: 1px solid;
+    width: 43px;
+    border-radius: 20%;
+}
+
 .botao-de-voltar-a-pagina-inicial {
     text-decoration: none;
     background-image: url(../imagens/icone-botoes/backward-solid.svg);
@@ -540,12 +552,14 @@ optgroup > option {
     background-image: url(../imagens/icone-botoes/broom-icon.svg);
 }
 
+.botao-de-adicionar-foto-de-perfil:hover,
 .botao-de-cadastrar-usuario:hover,
 .botao-de-limpar-formulario:hover,
 .botao-de-voltar-a-pagina-inicial:hover {
     opacity: 0.8;
 }
 
+.botao-de-adicionar-foto-de-perfil:active,
 .botao-de-cadastrar-usuario:active,
 .botao-de-limpar-formulario:active,
 .botao-de-voltar-a-pagina-inicial:active {

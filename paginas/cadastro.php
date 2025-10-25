@@ -226,7 +226,12 @@ if ($_SESSION['showModal']) {
                 </div>
                 <h1>Foto de Perfil</h1>
                 <div class="coluna6">
-                    <input type="file" name="profile-photo" id="profilePhotoInput" class="btn-profile-photo" accept="image/*">
+                    <div>
+                        <input type="file" name="profile-photo" id="profilePhotoInput" accept="image/*" class="profile-photo-input">
+                        <label for="profilePhotoInput" class="botao-de-adicionar-foto-de-perfil">
+                            <span id="texto-arquivo"></span>
+                        </label>
+                    </div>
                     <img src="" alt="" id="profilePhotoPreview" class="profile-photo-preview">
                     <span class="span-required">Selecione uma foto de perfil.</span>
                 </div>
