@@ -41,7 +41,7 @@ try {
             `senha` VARCHAR(255) NOT NULL,
             `whatsAppLink` VARCHAR(27) NOT NULL,
             `tipoUsuario` VARCHAR(11) NOT NULL,
-            `servico` VARCHAR(30) NOT NULL,
+            `servico` VARCHAR(255) NOT NULL,
             `fotoPerfil` varchar(255) DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
