@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $referenciaCasa    = $_POST['pontoReferencia'] ?? null;
 
     // Dados Da Conta
-    $fotoPerfil         = $_FILES['profile-photo'] ?? null;
     $login              = $_POST['login'] ?? null;
     $senha              = $_POST['senha'] ?? null;
     $confirmacaoSenha   = $_POST['confirmacaoSenha'] ?? null;
+    $fotoPerfil         = $_FILES['profile-photo'] ?? null;
     $whatsAppLink    = '';
 
     // Tipo de Usuário e Serviço
@@ -403,6 +403,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ../../paginas/erro.php');
         exit;
     } else {
+
+        // --- INÍCIO DO CÓDIGO PARA UPLOAD DE FOTO --- //
+
+        $caminhoFotoBD = null;
+
+        // 1. Verifica se o arquivo foi enviado corretamente
+        if (isset($fotoPerfil) && $fotoPerfil['error'] === UPLOAD_ERR_OK) {
+
+            // 1.1. DEFINE O CAMINHO ABSOLUTO NO SERVIDOR SEM USAR realpath AINDA
+            // Caminho que aponta para: .../server/profile-photos/
+            $diretorioBase = __DIR__ . '/../profile-photos'; 
+
+            // 1.2. GARANTE QUE O DIRETÓRIO EXISTA
+            if (!is_dir($diretorioBase)) {
+                // Tenta criar o diretório com permissões 0777 (leitura, escrita e execução para todos)
+                $criado = @mkdir($diretorioBase, 0777, true); 
+                
+                if (!$criado) {
+                    // Se falhar a criação (muitas vezes por permissão), registra o erro
+                    error_log("ERRO CRÍTICO: Não foi possível criar o diretório de upload: " . $diretorioBase);
+                    // Aborta o processo de upload
+                    header('Location: ../../paginas/erro.php');
+                    exit;
+                }
+            }
+            
+            // 1.3. AGORA, USA realpath() PARA TER O CAMINHO ABSOLUTO LIMPO (sem o '../')
+            // Se a pasta existe, realpath() funcionará
+            $diretorioDestino = realpath($diretorioBase) . DIRECTORY_SEPARATOR;
+
+            // ----------------------------------------------------------------------
+            // SE O var_dump ABAIXO ESTIVER CORRETO, O RESTANTE VAI FUNCIONAR:
+            // var_dump($diretorioDestino); // Deve retornar o caminho completo e limpo
+            // ----------------------------------------------------------------------
+            
+            // Gera um nome único para o arquivo
+            $extensao = pathinfo($fotoPerfil['name'], PATHINFO_EXTENSION);
+            $novoNomeArquivo = time() . '_' . uniqid() . '.' . $extensao;
+
+            // Caminho completo ABSOLUTO para onde o arquivo será movido no servidor
+            $caminhoCompletoDestino = $diretorioDestino . $novoNomeArquivo;
+
+            // var_dump($caminhoCompletoDestino); // Este var_dump deve estar correto agora
+            // exit; 
+            
+            // Tenta mover o arquivo
+            if (move_uploaded_file($fotoPerfil['tmp_name'], $caminhoCompletoDestino)) {
+                
+                // 2. Caminho RELATIVO para exibição no navegador/Banco de Dados
+                $caminhoRelativoWeb = '/server/profile-photos/' . $novoNomeArquivo;
+                $caminhoFotoBD = $caminhoRelativoWeb;
+
+            } else {
+                header('Location: ../../paginas/erro.php');
+                exit;
+            }
+        }
+        
+        // Se a foto não foi enviada ou houve erro (é obrigatória)
+        if (is_null($caminhoFotoBD)) {
+            header('Location: ../../paginas/erro.php');
+            exit;
+        }
+
+        $fotoPerfil = $caminhoFotoBD;
+        
+        // --- FIM DO CÓDIGO PARA UPLOAD DE FOTO --- //
+
         // Sanitização dos dados pessoais
         $nome           = htmlspecialchars($nome);
         $email          = htmlspecialchars($email);
@@ -431,10 +499,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Criptografia da senha
         $senhaEncriptada = password_hash($senha, PASSWORD_DEFAULT);
-        
+
         // Inserção de dados
-        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico)
-            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico)";
+        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico, fotoPerfil)
+            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico, :fotoPerfil)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nome'           => $nome,
@@ -455,6 +523,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':whatsAppLink'   => $whatsAppLink,
             ':tipoUsuario'    => $tipoUsuario,
             ':servico'        => $servico,
+            ':fotoPerfil'     => $fotoPerfil
         ]);
 
         $id = (int)$pdo->lastInsertId();

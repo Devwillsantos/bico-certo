@@ -25,6 +25,7 @@ function DarkMode() {
     const contratante = document.querySelectorAll('.sou-contratante');
     const prestador = document.querySelectorAll('.sou-prestador');
     const prestadorOpcoes = document.getElementById('prestador-opcoes');
+    const botaoAdicionarFotoPerfil = document.querySelectorAll('.botao-de-adicionar-foto-de-perfil');
     const botaoCadastrarUsuario = document.querySelectorAll('.botao-de-cadastrar-usuario');
     const botaoLimparFormulario = document.querySelectorAll('.botao-de-limpar-formulario');
     const botaoVoltarPaginaInicial = document.querySelectorAll('.botao-de-voltar-a-pagina-inicial');
@@ -104,6 +105,7 @@ function DarkMode() {
     contratante[0].style.color = 'white';
     prestador[0].style.color = 'white';
     prestadorOpcoes.style.color = 'white';
+    botaoAdicionarFotoPerfil[0].style.backgroundImage = 'url(../imagens/icone-botoes/add-profile-photo-dm.svg)';
     botaoCadastrarUsuario[0].style.backgroundImage = 'url(../imagens/icone-botoes/user-plus-solid-dm.svg)';
     botaoLimparFormulario[0].style.backgroundImage = 'url(../imagens/icone-botoes/broom-icon-dm.svg)';
     botaoVoltarPaginaInicial[0].style.backgroundImage = 'url(../imagens/icone-botoes/backward-solid-dm.svg)';
@@ -149,6 +151,7 @@ function LightMode() {
     const contratante = document.querySelectorAll('.sou-contratante');
     const prestador = document.querySelectorAll('.sou-prestador');
     const prestadorOpcoes = document.getElementById('prestador-opcoes');
+    const botaoAdicionarFotoPerfil = document.querySelectorAll('.botao-de-adicionar-foto-de-perfil');
     const botaoCadastrarUsuario = document.querySelectorAll('.botao-de-cadastrar-usuario');
     const botaoLimparFormulario = document.querySelectorAll('.botao-de-limpar-formulario');
     const botaoVoltarPaginaInicial = document.querySelectorAll('.botao-de-voltar-a-pagina-inicial');
@@ -228,6 +231,7 @@ function LightMode() {
     contratante[0].style.color = 'black';
     prestador[0].style.color = 'black';
     prestadorOpcoes.style.color = 'black';
+    botaoAdicionarFotoPerfil[0].style.backgroundImage = 'url(../imagens/icone-botoes/add-profile-photo.svg)';
     botaoCadastrarUsuario[0].style.backgroundImage = 'url(../imagens/icone-botoes/user-plus-solid.svg)';
     botaoLimparFormulario[0].style.backgroundImage = 'url(../imagens/icone-botoes/broom-icon.svg)';
     botaoVoltarPaginaInicial[0].style.backgroundImage = 'url(../imagens/icone-botoes/backward-solid.svg)';
