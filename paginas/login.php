@@ -1,7 +1,9 @@
 <?php
 // Exibição do modal de senha incorreta e e-mail não encontrado
 session_start();
-if ($_SESSION['showModal'] === 'senha-errada') { // Exibe o modal de senha errada
+if (!isset($_SESSION['showModal'])) {
+    $_SESSION['showModal'] = null;
+} else if ($_SESSION['showModal'] === 'senha-errada') { // Exibe o modal de senha errada
     echo '<div class="modal" onclick="closeModal(event)">' ;
     echo    '<div class="modal-box">';
     echo        '<span class="modal-title">';

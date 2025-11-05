@@ -1,7 +1,9 @@
 <?php
 // Exibição do modal de cadastrado com sucesso
 session_start();
-if ($_SESSION['showModal']) {
+if (!isset($_SESSION['showModal'])) {
+    $_SESSION['showModal'] = null;
+} else if ($_SESSION['showModal']) {
     echo '<div class="modal" onclick="closeModal(event)">' ;
     echo    '<div class="modal-box">';
     echo        '<span class="modal-title">';
