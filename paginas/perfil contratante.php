@@ -1,12 +1,3 @@
-<?php
-// Conecta ao banco de dados
-require_once "../server/perfil/contado.php";
-
-// Busca o último resumo salvo
-$stmt = $pdo->query("SELECT * FROM resumo_atividades ORDER BY id DESC LIMIT 1");
-$resumo = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -81,6 +72,9 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
           <p><strong>Registro em</strong>: Abril 20, 2024</p>
           <p><strong>Última visita</strong>: <span id="ultima-visita"></span></p>
         </div>
+
+        <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
+
       </div>
     </div>
 
@@ -95,7 +89,6 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
 
         <h4>Resumo De Contratações</h4>
         <p><strong>Contratos Concluídos:</strong> <span id="contratosConcluidos">0</span></p>
-        <p><strong>Contratos em Andamento:</strong> <span id="contratosAndamento">0</span></p>
         <p><strong>Última Contratação:</strong> <span id="ultimaContratacao">Nenhuma ainda</span></p>
 
 
@@ -193,9 +186,31 @@ $resumo = $stmt->fetch(PDO::FETCH_ASSOC);
                 </ul>
             </div>
         </footer>
+
+        <div id="modalAvaliacao" class="modal">
+          <div class="modal-content">
+            <span id="fecharModal" class="fechar">&times;</span>
+            <h2>Avaliar Hudson Alves</h2>
+
+            <form action="avaliar.php" method="POST">
+              <div class="estrelas"> 
+                <input type="hidden" name="nota" id="nota"> 
+                <i class="estrela" data-valor="1">★</i>
+                <i class="estrela" data-valor="2">★</i>
+                <i class="estrela" data-valor="3">★</i>
+                <i class="estrela" data-valor="4">★</i>
+                <i class="estrela" data-valor="5">★</i>
+              </div>
+              <textarea name="comentario" placeholder="Escreva sua avaliação..."  required></textarea>
+              <input type="hidden" name="id_avaliado" value="<php echo $id_usuario; ?>">
+              <button type="submit" class="btn-enviar">Enviar Avaliação</button> 
+            </form>
+          </div>
+        </div>
    <!-- Scripts -->
   <script src="../script/perfil/ultima visista.js"></script>
   <script src="../script/perfil/perfil.js"></script>
   <script src="../script/perfil/contado.js"></script>
+  <script src="../script/perfil/avaliacao.js"></script>
 </body>
 </html>
