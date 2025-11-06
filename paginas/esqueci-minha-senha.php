@@ -1,3 +1,35 @@
+<?php
+// Exibição do modal de cadastrado com sucesso e de erro
+session_start();
+if (!isset($_SESSION['showModal'])) {
+    $_SESSION['showModal'] = null;
+} else if ($_SESSION['showModal'] === 'senha-atualizada') {
+    echo '<div class="modal" onclick="closeModal(event)">' ;
+    echo    '<div class="modal-box">';
+    echo        '<span class="modal-title">';
+    echo            'Senha atualizada com sucesso!';
+    echo        '</span>';
+    echo        '<button class="modal-button" onclick="goToLoginPage()">';
+    echo            'Fazer login';
+    echo        '</button>';
+    echo    '</div>';
+    echo '</div>';
+    
+    // Para a sessão de exibição do modal
+    unset($_SESSION['showModal']);
+} else if ($_SESSION['showModal'] === 'erro') {
+    echo '<div class="modal" onclick="closeModal(event)">' ;
+    echo    '<div class="modal-box">';
+    echo        '<span class="modal-title">';
+    echo            'Desculpe, não conseguimos realizar o reset da senha.';
+    echo        '</span>';
+    echo    '</div>';
+    echo '</div>';
+    
+    // Para a sessão de exibição do modal
+    unset($_SESSION['showModal']);
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -18,12 +50,35 @@
         <div class="container-direito" id="container-direito">
             <img src="../imagens/logomarca.png" class="logomarca" id="logomarca">
             <img src="../imagens/logomarca-dark-mode.png" class="logomarca-dark-mode" id="logomarca-dark-mode">
-            <form method="post" id="form" action="#">
-                <input id="email" type="email" name="email" placeholder="E-mail" class="email required" oninput="emailValidate()">
-                <span class="span-required">Digite um e-mail válido.</span>
-                <span class="span-required">Digite um e-mail.</span>
-                <button type="submit" class="botao-enviar-link">Enviar link de Redefinição</button>
-                <a href="../paginas/login.php" class="lembrou-sua-senha">Lembrou sua senha? Clique aqui!</a>
+            <form method="post" id="form" action="../server/forgotten-password/validation.php">
+                <div class="form-container">
+                    <div class="email-container">
+                        <input id="email" type="email" name="email" placeholder="E-mail" class="campo email required" oninput="emailValidate()">
+                        <span class="span-required">
+                            Digite um e-mail válido.
+                        </span>
+                    </div>
+                    <div class="cpf-container">
+                        <input id="cpf" type="text" name="cpf" placeholder="CPF" class="campo cpf required" maxlength="14" oninput="cpfValidate()">
+                        <span class="span-required">
+                            Digite um CPF válido.
+                        </span>
+                    </div>
+                    <div class="senha-nova-container">
+                        <input id="senhaNova" type="password" name="senhaNova" placeholder="Senha nova" class="campo senha-nova required" maxlength="8" oninput="senhaNovaValidate()">
+                        <span class="span-required">
+                            Digite uma senha válida (8 caracteres alfabéticos).
+                        </span>
+                    </div>
+                    <div class="buttons-container">
+                        <button type="submit" class="botao-resetar-senha">
+                            Resetar senha
+                        </button>
+                        <a href="../paginas/login.php" class="lembrou-sua-senha">
+                            Lembrou sua senha? Clique aqui!
+                        </a>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="acessibility-buttons">
@@ -40,5 +95,6 @@
     <script src="../script/esqueci-minha-senha/validacao-campos-esqueci-minha-senha.js"></script>
     <script src="../script/esqueci-minha-senha/acessibilidade.js"></script>
     <script src="../script/esqueci-minha-senha/light-and-dark-mode.js"></script>
+    <script src="../script/registro/formatacao-cpf.js"></script>
 </body>
 </html>

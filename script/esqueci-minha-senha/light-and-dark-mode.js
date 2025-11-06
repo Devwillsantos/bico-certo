@@ -7,7 +7,9 @@ function DarkMode() {
     const botoesAumentarZoom = document.querySelectorAll('.acessibilidade-mais');
     const botoesAbaixarZoom = document.querySelectorAll('.acessibilidade-menos');
     const email = document.getElementById('email');
-    const botaoEnviarLink = document.querySelectorAll('.botao-enviar-link');
+    const cpf = document.getElementById('cpf');
+    const senhaNova = document.getElementById('senhaNova');
+    const botaoResetarSenha = document.querySelectorAll('.botao-resetar-senha');
     const acessibilityPanel = document.querySelector('.acessibility-panel');
 
     edit.classList.toggle('dark-mode');
@@ -21,7 +23,15 @@ function DarkMode() {
     email.style.background = "url('../imagens/icones-pagina-registro/icone-email-dm.svg') no-repeat left";
     email.style.backgroundPosition = '10px';
     email.style.backgroundSize = '14px';
-    botaoEnviarLink[0].style.backgroundImage = 'url(../imagens/icone-botoes/paper-plane-solid-dm.svg)';
+    cpf.style.color = 'white';
+    cpf.style.background = "url('../imagens/icones-pagina-registro/icone-cpf-dm.svg') no-repeat left";
+    cpf.style.backgroundPosition = '10px';
+    cpf.style.backgroundSize = '14px';
+    senhaNova.style.color = 'white';
+    senhaNova.style.background = "url('../imagens/icones-pagina-registro/icone-senha-dm.svg') no-repeat left";
+    senhaNova.style.backgroundPosition = '10px';
+    senhaNova.style.backgroundSize = '14px';
+    botaoResetarSenha[0].style.backgroundImage = 'url(../imagens/icone-botoes/unlock-keyhole-solid-full-dm.svg)';
     
 
     const botaoAumentarZoom = botoesAumentarZoom[0];
@@ -47,7 +57,9 @@ function LightMode() {
     const botoesAumentarZoom = document.querySelectorAll('.acessibilidade-mais');
     const botoesAbaixarZoom = document.querySelectorAll('.acessibilidade-menos');
     const email = document.getElementById('email');
-    const botaoEnviarLink = document.querySelectorAll('.botao-enviar-link');
+    const cpf = document.getElementById('cpf');
+    const senhaNova = document.getElementById('senhaNova');
+    const botaoResetarSenha = document.querySelectorAll('.botao-resetar-senha');
     const acessibilityPanel = document.querySelector('.acessibility-panel');
 
     edit.classList.toggle('dark-mode');
@@ -61,7 +73,15 @@ function LightMode() {
     email.style.background = "url('../imagens/icones-pagina-registro/icone-email.svg') no-repeat left";
     email.style.backgroundPosition = '10px';
     email.style.backgroundSize = '14px';
-    botaoEnviarLink[0].style.backgroundImage = 'url(../imagens/icone-botoes/paper-plane-solid.svg)';
+    cpf.style.color = 'black';
+    cpf.style.background = "url('../imagens/icones-pagina-registro/icone-cpf.svg') no-repeat left";
+    cpf.style.backgroundPosition = '10px';
+    cpf.style.backgroundSize = '14px';
+    senhaNova.style.color = 'black';
+    senhaNova.style.background = "url('../imagens/icones-pagina-registro/icone-senha.svg') no-repeat left";
+    senhaNova.style.backgroundPosition = '10px';
+    senhaNova.style.backgroundSize = '14px';
+    botaoResetarSenha[0].style.backgroundImage = 'url(../imagens/icone-botoes/unlock-keyhole-solid-full.svg)';
     
 
     const botaoAumentarZoom = botoesAumentarZoom[0];

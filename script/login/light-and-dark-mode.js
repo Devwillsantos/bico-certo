@@ -11,6 +11,7 @@ function DarkMode() {
     const botaoEntrar = document.querySelectorAll('.botao-de-entrar');
     const botaoLimparCampos = document.querySelectorAll('.botao-de-limpar-campos');
     const botaoVoltarPaginaInicial = document.querySelectorAll('.homepage');
+    const botaoCadastro = document.querySelectorAll('.botao-de-me-cadastrar');
     const acessibilityPanel = document.querySelector('.acessibility-panel');
 
     body.classList.toggle('dark-mode');
@@ -31,6 +32,7 @@ function DarkMode() {
     botaoEntrar[0].style.backgroundImage = 'url(../imagens/icone-botoes/right-to-bracket-solid-dm.svg)';
     botaoLimparCampos[0].style.backgroundImage = 'url(../imagens/icone-botoes/broom-icon-dm.svg)';
     botaoVoltarPaginaInicial[0].style.backgroundImage = 'url(../imagens/icone-botoes/backward-solid-dm.svg)';
+    botaoCadastro[0].style.backgroundImage = 'url(../imagens/icone-botoes/user-plus-solid-dm.svg)';
 
     const botaoAumentarZoom = botoesAumentarZoom[0];
     const botaoAbaixarZoom = botoesAbaixarZoom[0];
@@ -60,6 +62,7 @@ function LightMode() {
     const botaoEntrar = document.querySelectorAll('.botao-de-entrar');
     const botaoLimparCampos = document.querySelectorAll('.botao-de-limpar-campos');
     const botaoVoltarPaginaInicial = document.querySelectorAll('.homepage');
+    const botaoCadastro = document.querySelectorAll('.botao-de-me-cadastrar');
     const acessibilityPanel = document.querySelector('.acessibility-panel');
 
 
@@ -80,7 +83,8 @@ function LightMode() {
     password.style.backgroundSize = '14px';
     botaoEntrar[0].style.backgroundImage = 'url(../imagens/icone-botoes/right-to-bracket-solid.svg)';
     botaoLimparCampos[0].style.backgroundImage = 'url(../imagens/icone-botoes/broom-icon.svg)';
-    botaoVoltarPaginaInicial[0].style.backgroundImage = 'url(../imagens/icone-botoes/backward-solid.svg)';  
+    botaoVoltarPaginaInicial[0].style.backgroundImage = 'url(../imagens/icone-botoes/backward-solid.svg)';
+    botaoCadastro[0].style.backgroundImage = 'url(../imagens/icone-botoes/user-plus-solid.svg)';  
 
     const botaoAumentarZoom = botoesAumentarZoom[0];
     const botaoAbaixarZoom = botoesAbaixarZoom[0];
