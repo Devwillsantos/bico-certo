@@ -85,7 +85,7 @@ if (!isset($_SESSION['showModal'])) {
                             Me Cadastrar
                         </span>
                     </a>
-                    <a href="../index.html" class="homepage">
+                    <a href="../index.php" class="homepage">
                         <span>
                             Voltar à Página Inicial
                         </span>

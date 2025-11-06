@@ -240,7 +240,7 @@ if (!isset($_SESSION['showModal'])) {
                 <div class="buttons-container">
                     <button type="submit" class="botao-de-cadastrar-usuario">Cadastrar Usuário</button>
                     <button type="reset" class="botao-de-limpar-formulario">Limpar Formulário</button>
-                    <a href="../index.html" class="botao-de-voltar-a-pagina-inicial">
+                    <a href="../index.php" class="botao-de-voltar-a-pagina-inicial">
                         <span>Voltar à Página Inicial</span>
                     </a>
                 </div>

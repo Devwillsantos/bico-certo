@@ -95,7 +95,7 @@
                     Obrigado por escolher o Bico Certo. Estamos empolgados para fazer parte da sua jornada e ajudar você a alcançar seus objetivos profissionais. Vamos juntos transformar o futuro do trabalho informal!
                 </p>
             </article>
-            <a href="../index.html" class="botao-de-voltar-a-pagina-inicial">
+            <a href="../index.php" class="botao-de-voltar-a-pagina-inicial">
                 <span>Voltar à Página Inicial</span>
             </a>
         </div>

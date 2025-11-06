@@ -1,4 +1,5 @@
 <?php
+require_once '../server/logged-in-user.php';
 require_once '../server/config.php';
 ?>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@ require_once '../server/config.php';
         <ul>
             <li><a href="./perfil.php">Meu Perfil</a></li>
             <li><a href="./profile-edit.php">Editar Perfil</a></li>
-            <li><a href="./login.php" id="logout">Sair</a></li>
+            <li><a href="../index.php" id="logout">Sair</a></li>
         </ul>
     </div>
     <!-- Main Content -->

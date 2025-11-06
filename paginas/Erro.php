@@ -16,7 +16,7 @@ http_response_code(404);
         <h1>Ops! Página Não Encontrada</h1>
         <p>A página que você está tentando acessar não está disponível no momento.<br>
         Clique abaixo para voltar à página inicial.</p>
-        <a href="../paginas/homepage.php" class="botao">Voltar para a Home</a>
+        <a href="../index.php" class="botao">Voltar para a página inicial</a>
     </div>
 </body>
 </html>

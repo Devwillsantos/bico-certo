@@ -1,3 +1,6 @@
+<?php
+require_once '../server/logged-in-user.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -52,7 +55,7 @@
       <ul>
         <li><a href="../paginas/perfil contratante.php">Meu Perfil</a></li>
         <li><a href="../paginas/profile-edit.php">Editar Perfil</a></li>
-        <li><a href="../paginas/login.php">Sair</a></li>
+        <li><a href="../index.php" id="logout">Sair</a></li>
       </ul>
     </div>
 

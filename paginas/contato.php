@@ -35,7 +35,7 @@
                     <button type="submit" class="botao-de-enviar">
                         Enviar
                     </button>
-                    <a href="../index.html" class="botao-de-voltar-a-pagina-inicial">
+                    <a href="../index.php" class="botao-de-voltar-a-pagina-inicial">
                         <span>Voltar à Página Inicial</span>
                     </a>
                 </div>
