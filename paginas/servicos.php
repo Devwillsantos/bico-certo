@@ -1,3 +1,6 @@
+<?php
+require_once '../server/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,292 +55,99 @@
     <main>
         <div class="main-container">
             <div class="container1">
-                <select name="state-filter" id="state-filter">
-                    <option value="" disabled selected>Filtre por estado</option>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapá</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceará</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="ES">Espírito Santo</option>
-                    <option value="GO">Goiás</option>
-                    <option value="MA">Maranhão</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Pará</option>
-                    <option value="PB">Paraíba</option>
-                    <option value="PR">Paraná</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piauí</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondônia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option value="SP">São Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>
-                </select>
-                
-                <input type="text" class="search-bar" placeholder="Pesquise um serviço ou usuário">
-
-                <select name="star-filter" id="star-filter">
-                    <option value="" disabled selected>Filtre por estrelas</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="1">⭐</option>
-                </select>
-
-                
+                <form method="GET" action="" class="search-container">
+                    <input type="text" name="busca" class="search-bar" 
+                           placeholder="Pesquise um serviço..." 
+                           value="<?php echo htmlspecialchars($_GET['busca'] ?? ''); ?>"> 
+                    <button type="submit" class="search-button">Buscar</button>
+                </form>
             </div>
+            
             <div class="container2">
-            <div class="card">
-                <img src="../imagens/servicos/perfil_1.jpeg" class="services-photo">
-                <p class="service-title">Professora de Inglês</p>
-                <p>⭐⭐⭐⭐⭐</p>
-                <p class="name">Ângela Ferreira</p>
-                <p class="estado">Rio de Janeiro</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
+                <?php
+                    // 2. CAPTURA O TERMO DE BUSCA
+                    $termo_busca = $_GET['busca'] ?? ''; // Pega o valor do input 'busca' ou uma string vazia
+                    
+                    try {
+                        // 3. CONSTRÓI A CONSULTA SQL DINAMICAMENTE
+                        $sql = "SELECT id, nome, estado, servico, fotoPerfil, whatsAppLink 
+                                FROM usuarios ";
+                        
+                        $parametros = []; // Array para armazenar os parâmetros de segurança do PDO
+
+                        // Adiciona a cláusula WHERE se houver um termo de busca
+                        if (!empty($termo_busca)) {
+                            // Pesquisa pelo termo no campo 'servico' usando LIKE para correspondência parcial
+                            // O **CONCAT('%', :busca, '%')** é a forma segura de usar LIKE com PDO
+                            $sql .= "WHERE servico LIKE :busca ";
+                            
+                            // Adiciona o parâmetro. Usamos '%' no valor (não no SQL) para usar a busca por LIKE
+                            $parametros[':busca'] = '%' . $termo_busca . '%';
+                        }
+
+                        $sql .= "ORDER BY nome ASC";
+                        
+                        $stmt = $pdo->prepare($sql);
+                        
+                        // Executa a consulta, passando os parâmetros
+                        $stmt->execute($parametros);
+
+                        // 4. Recupera todos os usuários
+                        $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        // 5. Verifica se há usuários para exibir
+                        if ($usuarios) {
+                            $cards_exibidos = 0; // Contador para saber se algum card foi exibido
+                            
+                            // Itera sobre cada usuário e gera o HTML do card
+                            foreach ($usuarios as $usuario) {
+                                // Limpa e valida os dados antes de inseri-los no HTML (Segurança!)
+                                $id = htmlspecialchars($usuario['id'] ?? '');
+                                $nome = htmlspecialchars($usuario['nome'] ?? 'Nome Desconhecido');
+                                $estado = htmlspecialchars($usuario['estado'] ?? 'Estado Não Informado');
+                                $servico = htmlspecialchars($usuario['servico'] ?? ''); // Pega o serviço
+                                $foto_perfil = $usuario['fotoPerfil'];
+                                $whatsapp_link = htmlspecialchars($usuario['whatsAppLink'] ?? 'https://wa.me/');
+
+                                // Converte o caminho da imagem de perfil:
+                                $caminho_img = $foto_perfil;
+
+                                // VERIFICAÇÃO PRINCIPAL: SÓ EXIBE O CARD SE O SERVIÇO TIVER VALOR
+                                if (!empty($servico)) {
+                                    $cards_exibidos++;
+                ?>
+                <div class="card">
+                    <img src="<?php echo '../' . $caminho_img; ?>" class="services-photo" alt="Foto de perfil de <?php echo $nome; ?>">
+                    <p class="service-title"><?php echo $servico; ?></p>
+                    <p class="name"><?php echo $nome; ?></p>
+                    <p class="estado"><?php echo $estado; ?></p>
+                    <a href="<?php echo $whatsapp_link; ?>" target="_blank" class="contact-button">Visualizar perfil</a>
+                    <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
+                    <a href="<?php echo $whatsapp_link; ?>" target="_blank">
+                        <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white" alt="Entrar em contato via WhatsApp">
+                    </a>
+                </div>
+                <?php
+                                }
+                            } // Fim do foreach
+                            
+                            // 6. Mensagem caso não haja serviços válidos
+                            if ($cards_exibidos === 0) {
+                                $mensagem = !empty($termo_busca) ? "Nenhum serviço encontrado para a busca \"{$termo_busca}\"." : "Nenhum serviço disponível para exibição.";
+                                echo "<p>{$mensagem}</p>";
+                            }
+
+                        } else {
+                            // Se a consulta não retornar resultados (o que inclui zero resultados da busca)
+                            $mensagem = !empty($termo_busca) ? "Nenhum resultado encontrado para a busca \"{$termo_busca}\"." : "Nenhum usuário encontrado na base de dados.";
+                            echo "<p>{$mensagem}</p>";
+                        }
+                    } catch (PDOException $e) {
+                        // Em caso de erro na consulta
+                        die('Erro ao carregar os serviços: ' . $e->getMessage());
+                    }
+                ?>
             </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_2.jpeg" class="services-photo">
-                <p class="service-title">Eletricista</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Eduardo Henrique</p>
-                <p class="estado">São Paulo</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_3.jpeg" class="services-photo">
-                <p class="service-title">Fotógrafo</p>
-                <p>⭐⭐</p>
-                <p class="name">Matheus Vasconcelos</p>
-                <p class="estado">Minas Gerais</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_4.jpeg" class="services-photo">
-                <p class="service-title">Professora de Música</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Sulamita Santos</p>
-                <p class="estado">Goiás</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_5.jpeg" class="services-photo">
-                <p class="service-title">Programador Front-End</p>
-                <p>⭐⭐⭐</p>
-                <p class="name">William Almeida</p>
-                <p class="estado">Pernambuco</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_6.jpg" class="services-photo">
-                <p class="service-title">Professor de Inglês</p>
-                <p>⭐⭐⭐⭐⭐</p>
-                <p class="name">Lucas Henrique da Silva Almeida</p>
-                <p class="estado">Rio de Janeiro</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_7.jpg" class="services-photo">
-                <p class="service-title">Eletricista</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Ana Luiza Carvalho Menezes</p>
-                <p class="estado">São Paulo</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_8.jpg" class="services-photo">
-                <p class="service-title">Fotógrafa</p>
-                <p>⭐⭐</p>
-                <p class="name">Maria Clara Rodrigues Souza</p>
-                <p class="estado">Minas Gerais</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_9.jpg" class="services-photo">
-                <p class="service-title">Professor de Dança</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Rafael Augusto Oliveira Pereira</p>
-                <p class="estado">Goiás</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_10.jpg" class="services-photo">
-                <p class="service-title">Programadora Back-End</p>
-                <p>⭐⭐⭐</p>
-                <p class="name">Gabriela Costa dos Santos</p>
-                <p class="estado">Pernambuco</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_11.jpg" class="services-photo">
-                <p class="service-title">Pintora</p>
-                <p>⭐⭐⭐⭐⭐</p>
-                <p class="name">Lara Beatriz Fonseca Duarte</p>
-                <p class="estado">Rio de Janeiro</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_12.jpg" class="services-photo">
-                <p class="service-title">Mecânica</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Aura Moreira Fernandes</p>
-                <p class="estado">São Paulo</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_13.jpg" class="services-photo">
-                <p class="service-title">Professora de Espanhol</p>
-                <p>⭐⭐</p>
-                <p class="name">Sofia de Moura Pinto</p>
-                <p class="estado">Minas Gerais</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_14.jpg" class="services-photo">
-                <p class="service-title">Coach</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Gustavo Henrique Almeida Farias</p>
-                <p class="estado">Goiás</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_15.jpg" class="services-photo">
-                <p class="service-title">Babá</p>
-                <p>⭐⭐⭐</p>
-                <p class="name">Beatriz dos Anjos Martins</p>
-                <p class="estado">Pernambuco</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_16.jpg" class="services-photo">
-                <p class="service-title">Professora de Investimentos</p>
-                <p>⭐⭐⭐⭐⭐</p>
-                <p class="name">Luana Ribeiro Fernandes</p>
-                <p class="estado">Rio de Janeiro</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_17.jpg" class="services-photo">
-                <p class="service-title">Eletricista</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Thiago Cardoso dos Anjos</p>
-                <p class="estado">São Paulo</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_18.jpg" class="services-photo">
-                <p class="service-title">Personal Trainer</p>
-                <p>⭐⭐</p>
-                <p class="name">Bianca Ramos da Conceição</p>
-                <p class="estado">Minas Gerais</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_19.jpg" class="services-photo">
-                <p class="service-title">Professora de Artes Cênicas</p>
-                <p>⭐⭐⭐⭐</p>
-                <p class="name">Laura Mendes Guimarães</p>
-                <p class="estado">Goiás</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-            <div class="card">
-                <img src="../imagens/servicos/perfil_20.jpg" class="services-photo">
-                <p class="service-title">Programador Full-Stack</p>
-                <p>⭐⭐⭐</p>
-                <p class="name">André Luiz Freitas Gomes</p>
-                <p class="estado">Pernambuco</p>
-                <a href="./mensagem.html" class="contact-button">Entrar em contato</a>
-                <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
-                <a href="https://chat.whatsapp.com/DSv8j4QpaI9CuZtDlzOEOZ" target="_blank">
-                    <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white">
-                </a>
-            </div>
-        </div>
         </div>
     </main>
     <!-- Footer-->
