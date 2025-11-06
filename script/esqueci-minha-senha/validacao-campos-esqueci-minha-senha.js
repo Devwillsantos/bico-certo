@@ -3,38 +3,153 @@ const campos = document.querySelectorAll('.required');
 const spans = document.querySelectorAll('.span-required');
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    form.addEventListener('submit', (event) => {
-        emailValidate();
+function setError(index){
+    spans[index].style.display = 'block';
+    spans[index].style.color = 'rgb(171, 67, 67)';
+}
 
-        const temErro = Array.from(spans).some(span => span.style.display === 'block');
+function removeError(index){
+    spans[index].style.display = 'none';
+}
 
-        if (temErro) {
-            event.preventDefault();
+// MODAL
+const modal = document.getElementsByClassName('modal');
+const modalButton = document.getElementsByClassName('modal-button');
+
+function closeModal(event) {
+    // Verifica se o clique foi fora da .modal-box
+    if (event.target === event.currentTarget) {
+        document.querySelector('.modal').style.display = 'none'; // Fecha o modal
+    }
+}
+
+function goToLoginPage() {
+    window.location.href = "../paginas/login.php";
+}
+
+// Validação de Email
+function emailValidate() {
+    if (campos[0].value.length === 0) {
+        // Exibe o erro para campo vazio
+        setError(0);
+    } else if (!emailRegex.test(campos[0].value)) {
+        // Exibe o erro para formato inválido de email
+        setError(0);
+    } else {
+        // Remove todos os erros se o email for válido
+        removeError(0);
+    }
+}
+
+// VALIDAÇÃO DO CPF
+function cpfValidate() {
+    let cpf            = campos[1].value.replace(/\D/g, ''); // REMOVE CARACTERES NÃO-NÚMERICOS
+
+    let dv1            = Number(cpf[9]); // PRIMEIRO DIGITO VERIFICADOR DIGITADO NO FORMULÁRIO
+    let d_vef1         = 0;              // PRIMEIRO DÍGITO VERIFICADOR CALCULADO USANDO A LÓGICA
+    let lista_dv1      = [];             // LISTA COM OS 9 PRIMEIROS DÍGITOS MULTIPLICADOS POR SEUS PESOS
+    let soma_lista_dv1 = 0;              // SOMA DA MULTIPLICAÇÃO DOS 9 PRIMEIROS DÍGITOS
+    let calculo_dv1    = 0;              // REALIZA A MULTIPLICAÇÃO DO DÍGITO COM O SEU PESO
+    let incremento_dv1 = 10;             // SIMPLES INCREMENTO PARA REALIZAR A MULTIPLICAÇÃO DECRESCENTE DOS DÍGITOS
+    
+    let dv2            = Number(cpf[10]); // SEGUNDO DIGITO VERIFICADOR DIGITADO NO FORMULÁRIO
+    let d_vef2         = 0;               // SEGUNDO DÍGITO VERIFICADOR CALCULADO USANDO A LÓGICA
+    let lista_dv2      = [];              // LISTA COM OS 10 PRIMEIROS DÍGITOS MULTIPLICADOS POR SEUS PESOS
+    let soma_lista_dv2 = 0;               // SOMA DA MULTIPLICAÇÃO DOS 10 PRIMEIROS DÍGITOS
+    let calculo_dv2    = 0;               // REALIZA A MULTIPLICAÇÃO DO DÍGITOCOM O SEU PESO
+    let incremento_dv2 = 11;              // SIMPLES INCREMENTO PARA REALIZAR A MULTIPLICAÇÃO DECRESCENTE DOS DÍGITOS
+
+    // LISTA CONTENDO CPFs REPETIDOS
+    let lista_cpfs_repetidos = ['00000000000', '11111111111', '22222222222','33333333333', '44444444444',
+                                '55555555555', '66666666666', '77777777777', '88888888888', '99999999999'];
+
+    // VERIFICA SE O CPF DIGITADO SÃO APENAS NÚMEROS REPETIDOS
+    function verificar_numeros_repetidos(cpf) {
+        let cpf_repetido = lista_cpfs_repetidos.indexOf(cpf) != -1;
+        return cpf_repetido;
+    }
+
+    // TRANSFORMA O CPF EM UMA LISTA
+    cpf = cpf.split('');
+
+    // CÁLCULOS PARA O PRIMEIRO DÍGITO VERIFICADOR
+    // ITERA SOBRE OS 9 PRIMEIROS DíGITOS E RETORNA COM UMA LISTA COM CADA DÍGITO MULTIPLICADO
+    for (let i = 0; i < 9; i++) {
+        calculo_dv1 = cpf[i] * incremento_dv1;
+        incremento_dv1 -= 1;
+        lista_dv1.push(calculo_dv1);
+    }
+
+    // VERIFICA SE O NONO DÍGITO É DIFERENTE DE "NaN"
+    if (!isNaN(lista_dv1.at(-1))) {
+        for (let i = 0; i < lista_dv1.length; i++) {
+            soma_lista_dv1 += lista_dv1[i];
         }
+    }
+
+    // CALCULA O PRIMEIRO DÍGITO VERIFICADOR
+    if (soma_lista_dv1 % 11 <= 1) {
+        d_vef1 = 0;
+    } else {
+        d_vef1 = 11 - (soma_lista_dv1 % 11);
+    }
+
+    // CÁLCULOS PARA O SEGUNDO DÍGITO VERIFICADOR
+    // ITERA SOBRE OS 10 PRIMEIROS DÍGITOS E RETORNA COM UMA LISTA COM CADA DÍGITO MULTIPLICADO
+    for (let i = 0; i < 10; i++) {
+        calculo_dv2 = cpf[i] * incremento_dv2;
+        incremento_dv2 -= 1;
+        lista_dv2.push(calculo_dv2);
+    }
+
+    // VERIFICA SE O DÉCIMO DÍGITO É DIFERENTE DE "NaN"
+    if (!isNaN(lista_dv2.at(-1))) {
+        for (let i = 0; i < lista_dv2.length; i++) {
+            soma_lista_dv2 += lista_dv2[i];
+        }
+    }
+
+    // CALCULA O SEGUNDO DÍGITO VERIFICADOR
+    if (soma_lista_dv2 % 11 <= 1) {
+        d_vef2 = 0;
+    } else {
+        d_vef2 = 11 - (soma_lista_dv2 % 11);
+    }
+
+    // JUNTA TODOS OS DÍGITOS DO CPF EM UMA STRING
+    cpf = cpf.join('');
+
+    // VERIFICA SE OS DÍGITOS VERIFICADORES DIGITADOS COINCIDEM COM OS DÍGITOS CALCULADOS E SE O CPF DIGITADO NÃO SÃO APENAS NÚMEROS REPETIDOS
+    if ((dv1 === d_vef1 && dv2 === d_vef2) && !(verificar_numeros_repetidos(cpf))) {
+        removeError(1);
+    } else {
+        setError(1);
+    }
+
+}
+
+// VALIDAÇÂO DA SENHA NOVA
+function senhaNovaValidate() {
+
+    // Impede qualquer caractere não alfabético (sem espaços).
+    campos[2].addEventListener("input", function () {
+        this.value = this.value.replace(/[^A-Za-zÀ-ÿ]/g, ""); 
     });
 
-    function setError(index){
-        spans[index].style.display = 'block';
-        spans[index].style.color = 'rgb(171, 67, 67)';
-    }
+    campos[2].value.length < 8 ? setError(2) : removeError(2);
+}
 
-    function removeError(index){
-        spans[index].style.display = 'none';
-    }
+// Evento de submit do formulário
+form.addEventListener('submit', (event) => {
+    // Execução de validações
+    emailValidate();
+    cpfValidate();
+    senhaNovaValidate();
 
-    // Validação de Email e campo vazio
-    function emailValidate() {
-        if (campos[0].value.length === 0) {
-            // Exibe o erro para campo vazio
-            setError(1);
-            removeError(0); // Esconde o erro de formato enquanto o campo está vazio
-        } else if (!emailRegex.test(campos[0].value)) {
-            // Exibe o erro para formato inválido de email
-            setError(0);
-            removeError(1); // Esconde o erro de campo vazio
-        } else {
-            // Remove todos os erros se o email for válido
-            removeError(0);
-            removeError(1);
-        }
+    const temErro = Array.from(spans).some(span => span.style.display === 'block');
+
+    if (temErro) {
+        event.preventDefault();
+        return;
     }
+});
