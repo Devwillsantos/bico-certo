@@ -1,19 +1,62 @@
 <?php
-require_once "contado.php"; // conexão com o banco
+// ✅ Caminho seguro para o config.php
+require_once __DIR__ . "/../config.php";
 
-$data = json_decode(file_get_contents("php://input"), true);
+if (!isset($pdo)) {
+  die("Erro: conexão com o banco não estabelecida.");
+}
 
-if ($data) {
-    $stmt = $pdo->prepare("INSERT INTO resumo_atividades (contratos_concluidos, contratos_andamento, ultima_contratacao)
-                           VALUES (:cc, :ca, :uc)");
-    $stmt->execute([
-        ':cc' => $data['contratosConcluidos'],
-        ':ca' => $data['contratosAndamento'],
-        ':uc' => $data['ultimaContratacao']
-    ]);
+// 🔍 Buscar informações de um usuário
+function buscarUsuario($id) {
+  global $pdo;
+  $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+  $stmt->execute([$id]);
+  return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
-    echo "Resumo salvo com sucesso!";
-} else {
-    echo "Nenhum dado recebido.";
+// 💬 Salvar comentário (via POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $id_usuario = $_POST['id_usuario'] ?? null;
+  $comentario = trim($_POST['comentario'] ?? '');
+  $avaliacao  = $_POST['avaliacao'] ?? null;
+
+  if ($id_usuario && $comentario !== '') {
+    try {
+      $stmt = $pdo->prepare("
+        INSERT INTO comentarios (id_usuario, comentario, avaliacao, data_envio)
+        VALUES (?, ?, ?, NOW())
+      ");
+      $stmt->execute([$id_usuario, $comentario, $avaliacao]);
+
+      echo json_encode(["status" => "success", "mensagem" => "Comentário enviado com sucesso!"]);
+    } catch (PDOException $e) {
+      echo json_encode(["status" => "error", "mensagem" => "Erro ao enviar comentário: " . $e->getMessage()]);
+    }
+  } else {
+    echo json_encode(["status" => "error", "mensagem" => "Campos obrigatórios não preenchidos."]);
+  }
+  exit;
+}
+
+// 📦 Buscar comentários de um usuário (via GET)
+if (isset($_GET['id'])) {
+  $id_usuario = $_GET['id'];
+  try {
+    $stmt = $pdo->prepare("
+      SELECT c.*, u.nome AS nome_autor
+      FROM comentarios c
+      LEFT JOIN usuarios u ON c.id_usuario = u.id
+      WHERE c.id_usuario = ?
+      ORDER BY c.data_envio DESC
+    ");
+    $stmt->execute([$id_usuario]);
+    $comentarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode(["status" => "success", "comentarios" => $comentarios]);
+  } catch (PDOException $e) {
+    echo json_encode(["status" => "error", "mensagem" => "Erro ao buscar comentários: " . $e->getMessage()]);
+  }
+  exit;
 }
 ?>
+

@@ -1,207 +1,209 @@
-<!DOCTYPE html> 
+<?php
+require_once __DIR__ . "/../server/config.php"; // Conexão com o banco
+
+$id_usuario = $_GET['id'] ?? null;
+
+// Perfil padrão (caso id inválido)
+$usuario = [
+  'nome' => 'Usuário',
+  'foto' => '../imagens/servicos/perfil_6.jpg',
+  'status' => 'Disponível',
+  'data_registro' => date('Y-m-d'),
+  'ultima_contratacao' => null,
+  'contratos_concluidos' => 0,
+  'telefone' => 'Não informado',
+  'genero' => 'Não informado',
+  'data_nascimento' => 'Não informada',
+  'profissao' => 'Não informada',
+  'cidade' => 'Não informada',
+  'descricao' => 'Sem descrição disponível.'
+];
+
+$avaliacoes = [];
+
+// Se recebeu id, busca dados reais
+if ($id_usuario) {
+  $sql = "SELECT id, nome, numeroCelular AS telefone, sexo AS genero, dataNascimento AS data_nascimento,
+                 servico AS profissao, cidade, fotoPerfil AS foto, descricao, data_registro, ultima_visita
+          FROM usuarios WHERE id = ?";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute([$id_usuario]);
+  $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if ($dados) {
+    foreach ($dados as $campo => $valor) {
+      if (!empty($valor)) $usuario[$campo] = $valor;
+    }
+  }
+
+  // Atualiza última visita
+  $pdo->prepare("UPDATE usuarios SET ultima_visita = NOW() WHERE id = ?")->execute([$id_usuario]);
+
+  // Busca avaliações (se houver)
+  $sqlAval = "
+    SELECT a.*, u.nome AS nome_avaliador, u.fotoPerfil AS foto_avaliador
+    FROM avaliacoes a
+    LEFT JOIN usuarios u ON a.id_avaliador = u.id
+    WHERE a.id_avaliado = ?
+    ORDER BY a.data DESC";
+  $stmt = $pdo->prepare($sqlAval);
+  $stmt->execute([$id_usuario]);
+  $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+ob_clean();
+?>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-    <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
-    <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
-    <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
-    <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
-    <link rel="stylesheet" href="../css/perfil.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Perfil - <?= htmlspecialchars($usuario['nome']) ?></title>
+  
+  <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
+  <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
+  <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
+  <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/perfil.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="top-bar">
-            <div class="icone">
-                <a href="./homepage.php">
-                    <img src="../imagens/logomarca.png" class="logomarca">
-                </a>
-            </div>
-            <div class="menu">
-                <div class="logo">
-                    <span><a href="./servicos.php">
-                    <img src="../imagens/perfil/servicos.svg"></a></span>
-                </div>
-                <div class="logo">
-                    <span><a href="./mensagem.php">
-                    <img src="../imagens/perfil/envelope.svg"></a></span>
-                </div>
-                <div class="logo">
-                    <span><a href="./notifications.php">
-                    <img src="../imagens/perfil/notificação.svg"></a></span>
-                </div>
-                <div class="user-name logo">
-                    <p id="username"></p>
-                </div>
-                <!-- Ícone de perfil com menu de opções -->
-                <div class="logo" onclick="toggleProfileMenu()">
-                    <img src="../imagens/servicos/perfil_6.jpg">
-                </div>
-            </div>
-        </header>
-        <div class="profile-menu" id="profileMenu">
-            <ul>
-                <li><a href="./perfil.php">Meu Perfil</a></li>
-                <li><a href="./profile-edit.php">Editar Perfil</a></li>
-                <li><a href="./login.php" id="logout">Sair</a></li>
-            </ul>
+  <div class="container">
+    <!-- TOPO -->
+    <header class="top-bar">
+      <div class="icone">
+        <a href="./homepage.php"><img src="../imagens/logomarca.png" class="logomarca" alt="Bico Certo"></a>
+      </div>
+
+      <div class="menu">
+        <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg" alt="Serviços"></a></div>
+        <div class="logo"><a href="./mensagem.php"><img src="../imagens/perfil/envelope.svg" alt="Mensagens"></a></div>
+        <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
+
+        <div class="user-display">
+          <span><?= htmlspecialchars($usuario['nome']) ?></span>
+          <div class="logo" onclick="toggleProfileMenu()">
+            <img src="<?= htmlspecialchars($usuario['foto']) ?>" alt="Perfil">
+          </div>
         </div>
+      </div>
+    </header>
 
-        <!-- Profile Section -->
-        <div class="profile"> <!-- Seção que contém as informações do perfil do usuário -->
-            <!-- Banner Section -->
-            <div class="banner"> <!-- Seção do banner de perfil -->
-                <img src="../imagens/perfil/fundo.jpg"> <!-- Imagem do banner, representando o perfil -->
-            </div>
-        
-            <!-- Profile Info Section -->
-            <div class="profile-info-container"> <!-- Contêiner para as informações do perfil -->
-                <div class="profile-pic"> <!-- Seção para a foto de perfil do usuário -->
-                    <img src="../imagens/servicos/perfil_6.jpg"> <!-- Imagem da foto de perfil -->
-                </div>
-                <div class="user-info"> <!-- Seção que contém as informações do usuário -->
-                    <h2>Hudson Alves</h2> <!-- Nome do usuário -->
-                   
-                    <select id="status" name="status" onchange="updateStatusColor()"> <!-- Dropdown para selecionar o status do usuário -->
-                        <option value="Disponível">Disponível</option> <!-- Opção para status disponível -->
-                        <option value="Trabalhando">Trabalhando</option> <!-- Opção para status de trabalho -->
-                        <option value="Descansando">Descansando</option> <!-- Opção para status de descanso -->
-                        <option value="Férias">Férias</option> <!-- Opção para status de férias -->''
-                    </select>
-                    <span id="status-indicator" class="status-indicator"></span> <!-- Indicador visual do status selecionado -->
-                    <p>⭐⭐⭐⭐⭐</p>
-                    <p><strong>Registro em</strong>: Janeiro 24, 2024</p> <!-- Data em que o usuário se registrou -->
-                    <p><strong>Última visita</strong>: <span id="ultima-visita"></span></p> <!-- Última visita do usuário (preenchido dinamicamente) -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content"> <!-- Seção principal do conteúdo, onde as informações detalhadas do usuário são exibidas -->
-            <!-- Left Column - User Info -->
-            <div class="user-details"> <!-- Coluna esquerda contendo informações do usuário -->
-                <h3>Informações</h3> <!-- Título para a seção de informações -->
-                <p><strong>Nome</strong>: Hudson Alves Souza Ribanreli</p> <!-- Nome completo do usuário -->
-                
-                <p><strong>N.º do Celular</strong>: +55 (21) 91234-5678</p> <!-- Nome completo do usuário -->
-
-                <p><strong>Gênero</strong>: Masculino</p> <!-- Gênero do usuário -->
-                
-                <p><strong>Data de nascimento</strong>: 11/09/1970</p> <!-- Data de nascimento do usuário -->
-                
-                <p><strong>Profissão</strong>: Montador de Imóveis</p> <!-- Profissão do usuário -->
-                
-                <p><strong>Localidade</strong>: Rio De Janeiro</p> <!-- Localização do usuário -->
-
-                <h4>Resumo De Contratações</h4>
-                <p><strong>Contratos Concluídos:</strong> <span id="contratosConcluidos">0</span></p>
-                <p><strong>Contratos em Andamento:</strong> <span id="contratosAndamento">0</span></p>
-                <p><strong>Última Contratação:</strong> <span id="ultimaContratacao">Nenhuma ainda</span></p>
-                
-                <p><strong>Descrição</strong>:</p> <!-- Título para a seção de descrição do usuário -->
-                <div class="descricao-box"> <!-- Caixa que contém a descrição do usuário -->
-                    <p>Olá, muito prazer! Meu nome é Hudson Alves Souza Ribanreli, tenho 54 anos e sou montador de móveis, com mais de três décadas de experiência dedicada a essa arte. Nascido e criado na vibrante cidade do Rio de Janeiro, cresci rodeado pela energia criativa que me inspirou desde cedo. Sempre tive uma verdadeira paixão por transformar peças soltas em algo que não apenas seja funcional, mas que também carregue beleza e personalidade. Ao longo dos anos, aperfeiçoei minhas habilidades, buscando entregar sempre o melhor em cada projeto que realizo, com atenção aos detalhes e compromisso com a satisfação dos meus clientes.</p> <!-- Descrição pessoal do usuário -->
-                </div>
-            </div>
-
-            <!-- Right Column - Activities -->
-            <div class="activities"> <!-- Coluna direita que lista as atividades relacionadas ao usuário -->
-                <h3>Reclamações ou Opiniões</h3> <!-- Título para a seção de atividades -->
-
-                <!-- Activity 1 -->
-                <div class="activity"> <!-- Seção para a primeira atividade -->
-                    <img src="../imagens/servicos/perfil_5.jpeg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Ricardo Alves curtiu seu Perfil.</strong></p> <!-- Mensagem indicando que o usuário "Gordinho_com_fome" curtiu o perfil -->
-                        <div class="activity-interactions"> <!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 29, 2024</span> <!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-                    
-                <!-- Activity 2 -->
-                <div class="activity"> <!-- Seção para a segunda atividade -->
-                    <img src="../imagens/servicos/perfil_14.jpg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Roberto da Silva curtiu seu Perfil.</strong></p> <!-- Mensagem indicando que o "Canal do Ronaldinho" curtiu o perfil -->
-                        <div class="activity-interactions"><!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 26, 2024</span><!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity 3 - Comentário -->
-                <div class="activity"> <!-- Seção para a terceira atividade -->
-                    <img src="../imagens/servicos/perfil_8.jpg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Roberta Amarantos comentou no seu Perfil.</strong></p> <!-- Mensagem indicando que o "Canal do Ronaldinho" comentou no perfil -->
-                        <p><i>Cara, você manda muito bem! O jeito que você deixa tudo no capricho é de tirar o chapéu. Trabalho incrível!</i></p> <!-- Comentário feito pelo "Canal do Ronaldinho" -->
-                        <div class="activity-interactions"> <!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 26, 2024</span> <!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity 4 -->
-                <div class="activity"> <!-- Seção para a quarta atividade -->
-                    <img src="../imagens/servicos/perfil_9.jpg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Élio Alves comentou no seu Perfil.</strong></p> <!-- Mensagem indicando que o "Pastor" comentou no perfil -->
-                        <p><i>Parabéns, viu? Dá pra ver que você entende do que faz! Cada detalhe ficou show de bola.</i></p> <!-- Comentário feito pelo "Pastor" -->
-                        <div class="activity-interactions"> <!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 25, 2024</span> <!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity 5 -->
-                <div class="activity"> <!-- Seção para a quinta atividade -->
-                    <img src="../imagens/servicos/perfil_20.jpg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Rodrigo Almeida comentou no seu Perfil.</strong></p> <!-- Mensagem indicando que o usuário "bora_bil" comentou no perfil -->
-                        <p><i>Você é fera demais! Não é qualquer um que consegue deixar tudo tão bem feito e ainda com esse acabamento top.</i></p> <!-- Comentário feito pelo "bora_bil" -->
-                        <div class="activity-interactions"> <!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 15, 2024</span> <!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity 6 -->
-                <div class="activity"> <!-- Seção para a sexta atividade -->
-                    <img src="../imagens/servicos/perfil_1.jpeg" class="perfil"> <!-- Imagem do usuário que interagiu -->
-                    <div class="activity-content"> <!-- Contêiner para o conteúdo da atividade -->
-                        <p><strong>Rafaela Andrade comentou no seu Perfil</strong></p> <!-- Mensagem indicando que "Julio Santos" comentou no perfil -->
-                        <p><i>Seu trabalho é sensacional! Dá pra ver que você coloca coração e muito esforço no que faz. Ficou perfeito!</i></p> <!-- Comentário feito por "Julio Santos" -->
-                        <div class="activity-interactions"> <!-- Seção para interações da atividade -->
-                            <span><img src="../imagens/perfil/clock-blue.svg">Setembro 10, 2024</span> <!-- Data da interação -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- MENU PERFIL -->
+    <div class="profile-menu" id="profileMenu">
+      <ul>
+        <li><a href="./perfil.php?id=<?= $id_usuario ?>">Meu Perfil</a></li>
+        <li><a href="./profile-edit.php?id=<?= $id_usuario ?>">Editar Perfil</a></li>
+        <li><a href="./login.php" id="logout">Sair</a></li>
+      </ul>
     </div>
-        <!-- Footer-->
-        <footer>
-            <div class="footer-image">
-                <img src="../imagens/logomarca-dark-mode.png">
-            </div>
-            <div class="vertical-row"></div>
-            <div class="footer-list">
-                <ul>
-                    <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
-                    <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
-                    <li class="footer-list-option"><a href="./cadastro.php" target="_blank">Cadastro</a></li>
-                    <li class="footer-list-option"><a href="./login.php" target="_blank">Login</a></li>
-                </ul>
-            </div>
-        </footer>
-    <script src="../script/perfil/status do perfil.js"></script> <!-- Link para o script que gerencia o status do perfil -->
-    <script src="../script/perfil/ultima visista.js"></script><!-- Link para o script que atualiza a última visita -->
-    <script src="../script/perfil/perfil.js"></script>
-    <script src="../script/perfil/contado.js"></script>
-    <script src="../script/user-login.js"></script>
-    <script src="../script/user-logout.js"></script>
+
+    <!-- PERFIL -->
+    <div class="profile">
+      <div class="banner">
+        <img src="../imagens/perfil/fundo.jpg" alt="Capa do perfil">
+      </div>
+
+      <div class="profile-info-container">
+        <div class="profile-pic">
+          <img src="<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto de perfil">
+        </div>
+
+        <div class="user-info">
+          <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
+          <p><strong>Registro em:</strong> <?= date('d/m/Y', strtotime($usuario['data_registro'])) ?></p>
+          <p><strong>Última visita:</strong> <?= !empty($usuario['ultima_visita']) ? date('d/m/Y H:i', strtotime($usuario['ultima_visita'])) : 'Primeiro acesso' ?></p>
+        </div>
+
+        <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
+      </div>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="main-content">
+      <div class="user-details">
+        <h3>Informações</h3>
+        <p><strong>Nome:</strong> <?= htmlspecialchars($usuario['nome']) ?></p>
+        <p><strong>N.º do Celular:</strong> <?= htmlspecialchars($usuario['telefone']) ?></p>
+        <p><strong>Gênero:</strong> <?= htmlspecialchars($usuario['genero']) ?></p>
+        <p><strong>Data de nascimento:</strong> <?= htmlspecialchars($usuario['data_nascimento']) ?></p>
+        <p><strong>Profissão:</strong> <?= htmlspecialchars($usuario['profissao']) ?></p>
+        <p><strong>Localidade:</strong> <?= htmlspecialchars($usuario['cidade']) ?></p>
+
+        <h4>Resumo de Contratações</h4>
+        <p><strong>Contratos Concluídos:</strong> <span><?= htmlspecialchars($usuario['contratos_concluidos']) ?></span></p>
+        <p><strong>Última Contratação:</strong>
+          <?= $usuario['ultima_contratacao'] ? date('d/m/Y', strtotime($usuario['ultima_contratacao'])) : 'Nenhuma ainda' ?></p>
+
+        <p><strong>Descrição:</strong></p>
+        <div class="descricao-box"><p><?= htmlspecialchars($usuario['descricao']) ?></p></div>
+      </div>
+
+      <div class="activities" id="atividades">
+        <h3>Reclamações ou Opiniões</h3>
+
+        <!-- Container de avaliações: data-avatar com foto do perfil para uso no JS -->
+        <div id="reclamacoesContainer" class="activity-list" data-avatar="<?= htmlspecialchars($usuario['foto']) ?>">
+          <?php if (empty($avaliacoes)): ?>
+            <p id="semAvaliacoes">Sem avaliações ainda.</p>
+          <?php else: ?>
+            <?php foreach ($avaliacoes as $a):
+              $avatar = !empty($a['foto_avaliador']) ? $a['foto_avaliador'] : '../imagens/servicos/perfil_6.jpg';
+              $nomeAval = !empty($a['nome_avaliador']) ? $a['nome_avaliador'] : 'Usuário';
+              $texto = htmlspecialchars($a['comentario']);
+              $dataFmt = !empty($a['data']) ? date('d/m/Y H:i', strtotime($a['data'])) : '';
+            ?>
+              <div class="activity">
+                <img class="perfil" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar" onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
+                <div class="activity-content">
+                  <p><strong><?= htmlspecialchars($nomeAval) ?></strong> comentou no seu Perfil.</p>
+                  <p><?= $texto ?></p>
+                  <div class="activity-interactions">
+                    <img src="../imagens/icones/relogio.png" alt="Hora">
+                    <span><?= $dataFmt ?></span>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-image"><img src="../imagens/logomarca-dark-mode.png" alt="Bico Certo"></div>
+    <div class="vertical-row"></div>
+    <div class="footer-list">
+      <ul>
+        <li class="footer-list-option"><a href="./contato.php">Contato</a></li>
+        <li class="footer-list-option"><a href="./sobrenos.php">Sobre</a></li>
+        <li class="footer-list-option"><a href="./cadastro.php">Cadastro</a></li>
+        <li class="footer-list-option"><a href="./login.php">Login</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div id="modalAvaliacao" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-labelledby="tituloModal">
+      <span id="fecharModal" class="fechar" aria-label="Fechar">&times;</span>
+      <h2 id="tituloModal">Avaliar <?= htmlspecialchars($usuario['nome']) ?></h2>
+
+      <form id="formAvaliacao">
+        <textarea name="comentario" placeholder="Escreva sua avaliação..." required></textarea>
+        <input type="hidden" name="id_avaliado" value="<?= htmlspecialchars($id_usuario) ?>">
+        <button type="submit" class="btn-enviar">Enviar Avaliação</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../script/perfil/avaliacao.js"></script>
+  <script src="../script/perfil/ultima visista.js"></script>
+  <script src="../script/perfil/perfil.js"></script>
 </body>
 </html>
