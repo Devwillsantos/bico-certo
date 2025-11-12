@@ -22,12 +22,7 @@
         order: 0;
     }
 
-    select {
-        order: 1;
-    }
-
-    .search-bar,
-    select {
+    .search-bar {
         width: 90% !important;
         box-sizing: border-box;
         align-self: center;
@@ -217,14 +212,20 @@ body::-webkit-scrollbar-thumb {
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.288);
     padding-bottom: 20px;
+    height: 100vh;
     
 }
 /* Containers Principais*/
-.container1,
+.container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .container2 {
     display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
 }
 
@@ -232,37 +233,50 @@ body::-webkit-scrollbar-thumb {
     padding: 10px 22px 0px 22px;
 }
 
-
-.container1 {
-    justify-content: space-between;
-    flex-wrap: nowrap;
+/* Barra de Pesquisa */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
 }
 
-/* Barra de Pesquisa */
 input.search-bar {
     background: url(../imagens/magnifying-glass-solid.svg) no-repeat left;
     background-position: 10px;
     background-size: 18px;
     padding-left: 35px;
+    width: 300px;
+    height: 40px;
     
 }
 
-select {
-    background: url(../imagens/star-solid.svg) no-repeat left;
-    background-position: 10px;
-    background-size: 20px;
+.search-button {
+    cursor: pointer;
+    font-size: 13.333px;
+    display: inline-block;
+    background-color: rgb(23,50,118);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.15s;
+    box-sizing: border-box;
+    width: 100px;
+    height: 40px;
+    vertical-align: middle;
 }
 
-#state-filter {
-    background: url(../imagens/icones-pagina-registro/icone-estado.svg) no-repeat left;
-    background-position: 10px;
-    background-size: 20px;
+.search-button:hover {
+    opacity: 0.8;
 }
 
-.search-bar,
-select {
+.search-button:active {
+    opacity: 0.6;
+}
+
+.search-bar {
     width: 30%;
-    margin: 20px;
     padding: 10px;
     text-align: center;
     outline: none;
@@ -270,10 +284,6 @@ select {
     border-radius: 5px;
     border: none;
     border-bottom: 2px solid #173276;
-}
-
-select {
-    cursor: pointer;
 }
 
 /* Estilos do Componente "Card" */

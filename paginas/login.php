@@ -69,17 +69,26 @@ if (!isset($_SESSION['showModal'])) {
                         <input type="checkbox" id="lembrar-de-mim">
                         <label for="lembrar-de-mim">Lembrar de mim</label>
                     </div>
-                    <div class="link-cadastro">
-                        <a class="cadastro" href="./cadastro.php">Me cadastrar</a>
+                    <div class="link-esqueci-senha">
+                        <a class="esqueci-senha" href="./esqueci-minha-senha.php">Esqueci minha senha</a>
                     </div>
                 </div>
                 <div class="botoes">
                     <button type="submit" class="botao-de-entrar">
                         Entrar
                     </button>
-                    <button type="reset" class="botao-de-limpar-campos">Limpar Campos</button>
-                    <a href="../index.html" class="homepage">
-                        <span>Voltar à Página Inicial</span>
+                    <button type="reset" class="botao-de-limpar-campos">
+                        Limpar Campos
+                    </button>
+                    <a href="./cadastro.php" class="botao-de-me-cadastrar">
+                        <span>
+                            Me Cadastrar
+                        </span>
+                    </a>
+                    <a href="../index.php" class="homepage">
+                        <span>
+                            Voltar à Página Inicial
+                        </span>
                     </a>
                 </div>
             </form>

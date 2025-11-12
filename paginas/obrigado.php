@@ -25,7 +25,7 @@
                 Gostariamos de agradecer pelo seu tempo e dizer que acabamos de receber sua mensagem! Em breve retornaremos com uma resposta no E-Mail que você forneceu. 😊
             </p>
             <form>
-                <button formaction="../index.html" class="botao-de-voltar-a-pagina-inicial">
+                <button formaction="../index.php" class="botao-de-voltar-a-pagina-inicial">
                     Voltar à Página Inicial
                 </button>
             </form>

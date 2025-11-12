@@ -50,6 +50,7 @@ if ($id_usuario) {
   $stmt->execute([$id_usuario]);
   $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 ob_clean();
 ?>
 <!DOCTYPE html>
@@ -203,7 +204,7 @@ ob_clean();
   </div>
 
   <script src="../script/perfil/avaliacao.js"></script>
-  <script src="../script/perfil/ultima visista.js"></script>
+  <script src="../script/perfil/ultima_visita.js"></script>
   <script src="../script/perfil/perfil.js"></script>
 </body>
 </html>

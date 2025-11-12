@@ -252,6 +252,22 @@ button:active {
     color: var(--primary-color)
 }
 
+.link-esqueci-senha {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.esqueci-senha {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.esqueci-senha:hover {
+    text-decoration: underline;
+}
+
 /* Lembrar de mim */
 .checkbox {
     flex: 1;
@@ -270,23 +286,6 @@ button:active {
     vertical-align: middle;
 }
 
-/* Me cadastrar */
-.link-cadastro {
-    flex: 1;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-
-.cadastro {
-    text-decoration: none;
-    color: var(--primary-color);
-}
-
-.cadastro:hover {
-    text-decoration: underline;
-}
-
 /* Botões */
 .botao-de-entrar {
     background-image: url(../imagens/icone-botoes/right-to-bracket-solid.svg);
@@ -295,6 +294,26 @@ button:active {
 .botao-de-limpar-campos {
     background-size: 24px;
     background-image: url(../imagens/icone-botoes/broom-icon.svg);
+}
+
+.botao-de-me-cadastrar {
+    display: block;
+    width: 100%;
+    background-image: url(../imagens/icone-botoes/user-plus-solid.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 11px;
+    margin-top: 5px;
+    font-size: 13.333px;
+    cursor: pointer;
+    border: none;
+    box-sizing: border-box;
+    transition: all 0.15s;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 5px;
+    text-decoration: none;
+    height: 40px;
 }
 
 .homepage {
@@ -322,11 +341,13 @@ a > span {
     top: 12px;
 }
 
-.homepage:hover {
+.homepage:hover,
+.botao-de-me-cadastrar:hover {
     opacity: 0.8;
 }
 
-.homepage:active {
+.homepage:active,
+.botao-de-me-cadastrar:active {
     opacity: 0.6;
 }
 

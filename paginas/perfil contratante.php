@@ -150,7 +150,6 @@ ob_clean();
             <p id="semAvaliacoes">Sem avaliações ainda.</p>
           <?php else: ?>
             <?php foreach ($avaliacoes as $a): 
-              // dados do avaliador (fallback para padrão)
               $avatar = !empty($a['foto_avaliador']) ? $a['foto_avaliador'] : '../imagens/servicos/perfil_6.jpg';
               $nomeAval = !empty($a['nome_avaliador']) ? $a['nome_avaliador'] : 'Usuário';
               $texto = htmlspecialchars($a['comentario']);
@@ -176,7 +175,7 @@ ob_clean();
 
   <footer>
     <div class="footer-image">
-      <img src="../imagens/logomarca-dark-mode.png">
+      <img src="../imagens/logomarca-dark-mode.png" alt="Bico Certo">
     </div>
     <div class="vertical-row"></div>
     <div class="footer-list">
@@ -202,10 +201,10 @@ ob_clean();
       </form>
     </div>
   </div>
-  <!-- arquivos JS do projeto (se tiverem) -->
+
+  <!-- JS -->
   <script src="../script/perfil/avaliacao.js"></script>
   <script src="../script/perfil/ultima visista.js"></script>
   <script src="../script/perfil/perfil.js"></script>
-  <!-- NOTA: avaliacao.js não é necessário — comportamento de teste está embutido acima -->
 </body>
 </html>
