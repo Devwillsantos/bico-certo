@@ -36,7 +36,16 @@ require_once __DIR__ . "/../server/config.php";
                 <img src="../imagens/perfil/notificação.svg"></a></span>
             </div>
             <div class="user-name logo">
-                <p id="username"></p>
+                <?php
+                    $sql = "SELECT login FROM usuarios WHERE id = :id";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['id' => $_SESSION['usuario_id']]);
+                    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $login = $usuario['login'];
+                ?>
+                <p id="username">
+                    <?php echo $login; ?>
+                </p>
             </div>
             <!-- Ícone de perfil com menu de opções -->
             <div class="logo" onclick="toggleProfileMenu()">
