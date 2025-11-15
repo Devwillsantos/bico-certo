@@ -174,8 +174,6 @@ require_once __DIR__ . "/../server/config.php";
             <ul>
                 <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
                 <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
-                <li class="footer-list-option"><a href="./cadastro.php" target="_blank">Cadastro</a></li>
-                <li class="footer-list-option"><a href="./login.php" target="_blank">Login</a></li>
             </ul>
         </div>
     </footer>
