@@ -1,5 +1,6 @@
 <?php
-require_once '../server/logged-in-user.php';
+require_once __DIR__ . "/../server/logged-in-user.php";
+require_once __DIR__ . "/../server/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -36,11 +37,27 @@ require_once '../server/logged-in-user.php';
                     <img src="../imagens/perfil/notificação.svg"></a></span>
                 </div>
                 <div class="user-name logo">
-                    <p id="username"></p>
+                    <?php
+                        $sql = "SELECT login FROM usuarios WHERE id = :id";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute(['id' => $_SESSION['usuario_id']]);
+                        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $login = $usuario['login'];
+                    ?>
+                    <p id="username">
+                        <?php echo $login; ?>
+                    </p>
                 </div>
                 <!-- Ícone de perfil com menu de opções -->
                 <div class="logo" onclick="toggleProfileMenu()">
-                    <img src="../imagens/servicos/perfil_6.jpg">
+                    <?php
+                        $sql = "SELECT fotoPerfil FROM usuarios WHERE id = :id";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute(['id' => $_SESSION['usuario_id']]);
+                        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $foto_perfil = $usuario['fotoPerfil'];
+                    ?>
+                    <img src="<?php echo '../' . $foto_perfil; ?>">
                 </div>
             </div>
         </header>
