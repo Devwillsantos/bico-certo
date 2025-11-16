@@ -36,7 +36,18 @@ require_once "../server/perfil/informaçoes.php";
       <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
 
       <div class="user-display">
-        <span><?= htmlspecialchars($usuario['nome']) ?></span>
+        <span>
+          <?php
+            $sql = "SELECT login FROM usuarios WHERE id = :id";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['id' => $_SESSION['usuario_id']]);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            $login = $usuario['login'];
+          ?>
+          <p id="username">
+            <?php echo $login; ?>
+          </p>
+        </span>
         <div class="logo" onclick="toggleProfileMenu()">
           <?php
             $sql = "SELECT fotoPerfil FROM usuarios WHERE id = :id";
