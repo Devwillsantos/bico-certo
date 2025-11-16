@@ -42,7 +42,13 @@ try {
             `whatsAppLink` VARCHAR(27) NOT NULL,
             `tipoUsuario` VARCHAR(11) NOT NULL,
             `servico` VARCHAR(255) NOT NULL,
-            `fotoPerfil` varchar(255) DEFAULT NULL
+            `fotoPerfil` varchar(255) DEFAULT NULL,
+            `data_registro` datetime DEFAULT CURRENT_TIMESTAMP,
+            `ultima_visita` datetime DEFAULT NULL,
+            `contratos_concluidos` int(11) DEFAULT 0,
+            `ultima_contratacao` datetime DEFAULT NULL,
+            `descricao` text DEFAULT NULL,
+            `profissao` varchar(255) DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 

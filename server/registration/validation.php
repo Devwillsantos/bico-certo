@@ -501,29 +501,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $senhaEncriptada = password_hash($senha, PASSWORD_DEFAULT);
 
         // Inserção de dados
-        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico, fotoPerfil)
-            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico, :fotoPerfil)";
+        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico, fotoPerfil, ultima_visita, ultima_contratacao, descricao, profissao)
+            VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico, :fotoPerfil, :ultima_visita, :ultima_contratacao, :descricao, :profissao)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
-            ':nome'           => $nome,
-            ':email'          => $email,
-            ':dataNascimento' => $dataNascimento,
-            ':sexo'           => $sexo,
-            ':cpf'            => $cpf,
-            ':numeroCelular'  => $numeroCelular,
-            ':cep'            => $cep,
-            ':estado'         => $estado,
-            ':cidade'         => $cidade,
-            ':bairro'         => $bairro,
-            ':rua'            => $rua,
-            ':numeroCasa'     => $numeroCasa,
-            ':referenciaCasa' => $referenciaCasa,
-            ':login'          => $login,
-            ':senha'          => $senhaEncriptada,
-            ':whatsAppLink'   => $whatsAppLink,
-            ':tipoUsuario'    => $tipoUsuario,
-            ':servico'        => $servico,
-            ':fotoPerfil'     => $fotoPerfil
+            ':nome'               => $nome,
+            ':email'              => $email,
+            ':dataNascimento'     => $dataNascimento,
+            ':sexo'               => $sexo,
+            ':cpf'                => $cpf,
+            ':numeroCelular'      => $numeroCelular,
+            ':cep'                => $cep,
+            ':estado'             => $estado,
+            ':cidade'             => $cidade,
+            ':bairro'             => $bairro,
+            ':rua'                => $rua,
+            ':numeroCasa'         => $numeroCasa,
+            ':referenciaCasa'     => $referenciaCasa,
+            ':login'              => $login,
+            ':senha'              => $senhaEncriptada,
+            ':whatsAppLink'       => $whatsAppLink,
+            ':tipoUsuario'        => $tipoUsuario,
+            ':servico'            => $servico,
+            ':fotoPerfil'         => $fotoPerfil,
+            ':ultima_visita'      => null,
+            ':ultima_contratacao' => null,
+            ':descricao'          => null,
+            ':profissao'          => null,
         ]);
 
         $id = (int)$pdo->lastInsertId();
