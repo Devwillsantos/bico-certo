@@ -36,28 +36,12 @@ require_once "../server/perfil/informaçoes.php";
         <div class="logo"><a href="./mensagem.php"><img src="../imagens/perfil/envelope.svg" alt="Mensagens"></a></div>
         <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
 
+        <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">
-          <span>
-            <?php
-              $sql = "SELECT login FROM usuarios WHERE id = :id";
-              $stmt = $pdo->prepare($sql);
-              $stmt->execute(['id' => $_SESSION['usuario_id']]);
-              $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-              $login = $usuario['login'];
-            ?>
-            <p id="username">
-              <?php echo $login; ?>
-            </p>
-          </span>
+          <span><p id="username"><?= $login_usuario ?></p></span>
+
           <div class="logo" onclick="toggleProfileMenu()">
-            <?php
-                $sql = "SELECT fotoPerfil FROM usuarios WHERE id = :id";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute(['id' => $_SESSION['usuario_id']]);
-                $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-                $foto_perfil = $usuario['fotoPerfil'];
-            ?>
-            <img src="<?php echo '../' . $foto_perfil; ?>">
+            <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado">
           </div>
         </div>
       </div>
@@ -79,8 +63,11 @@ require_once "../server/perfil/informaçoes.php";
       </div>
 
       <div class="profile-info-container">
+        
+        <!-- FOTO DO DONO DO PERFIL -->
         <div class="profile-pic">
-          <img src="<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto de perfil">
+          <img src="../<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto do perfil"
+            onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
         </div>
 
         <div class="user-info">
@@ -125,13 +112,16 @@ require_once "../server/perfil/informaçoes.php";
       <div class="activities" id="atividades">
         <h3>Reclamações ou Opiniões</h3>
 
-        <div id="reclamacoesContainer" class="activity-list" data-avatar="<?= htmlspecialchars($usuario['foto']) ?>">
+        <div id="reclamacoesContainer" class="activity-list">
+
           <?php if (empty($avaliacoes)): ?>
             <p id="semAvaliacoes">Sem avaliações ainda.</p>
 
           <?php else: ?>
             <?php foreach ($avaliacoes as $a):
-              $avatar = !empty($a['foto_avaliador']) ? $a['foto_avaliador'] : '../imagens/servicos/perfil_6.jpg';
+              // Foto do avaliador
+              $avatar = !empty($a['foto_usuario']) ? "../" . $a['foto_usuario'] : '../imagens/servicos/perfil_6.jpg';
+
               $nomeAval = !empty($a['nome_avaliador']) ? $a['nome_avaliador'] : 'Usuário';
               $texto = htmlspecialchars($a['comentario']);
               $dataFmt = !empty($a['data']) ? date('d/m/Y H:i', strtotime($a['data'])) : '';
@@ -153,6 +143,7 @@ require_once "../server/perfil/informaçoes.php";
               <hr>
             <?php endforeach; ?>
           <?php endif; ?>
+
         </div>
 
       </div>
