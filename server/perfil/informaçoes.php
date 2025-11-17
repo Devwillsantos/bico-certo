@@ -1,32 +1,39 @@
 <?php
 session_start();
-
 require_once __DIR__ . "/../config.php";
 
 $id_usuario = $_SESSION['usuario_id'] ?? null;
 
+// Valores padrão
 $usuario = [
-  'data_registro' => null,
-  'ultima_visita' => null,
-  'contratos_concluidos' => 0,
-  'ultima_contratacao' => null,
-  'profissao' => 'Não Informada',
-  'descricao' => 'Nenhuma descrição disponível.',
-  'foto' => 'imagens/padrao.jpg'
+    'nome' => 'Usuário',
+    'telefone' => 'Não informado',
+    'genero' => 'Não informado',
+    'data_nascimento' => 'Não informado',
+    'servico' => 'Não Informado', // ← AGORA CORRETO
+    'cidade' => 'Não informado',
+    'data_registro' => null,
+    'ultima_visita' => null,
+    'contratos_concluidos' => 0,
+    'ultima_contratacao' => null,
+    'descricao' => 'Nenhuma descrição disponível.',
+    'foto' => 'imagens/padrao.jpg'
 ];
 
 $avaliacoes = [];
+$login_usuario = "Usuário";
+$foto_usuario = "imagens/padrao.jpg";
 
 if ($id_usuario) {
 
-    // 1. Buscar dados do usuário
+    // 🔍 1. Buscar dados do usuário logado
     $sql = "SELECT 
-                id, nome,
+                id,
+                nome,
                 numeroCelular AS telefone,
                 sexo AS genero,
                 dataNascimento AS data_nascimento,
-                profissao,
-                servico,
+                servico,                         -- CORRIGIDO
                 cidade,
                 fotoPerfil AS foto,
                 data_registro,
@@ -47,29 +54,27 @@ if ($id_usuario) {
         }
     }
 
-    // 2. Buscar login
+    // 🔍 2. Buscar login do usuário
     $sql = "SELECT login FROM usuarios WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['id' => $id_usuario]);
     $login_usuario = $stmt->fetchColumn() ?: 'Usuário';
 
-
-    // 3. Buscar foto do usuário
+    // 🔍 3. Buscar foto do usuário logado
     $sql = "SELECT fotoPerfil FROM usuarios WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['id' => $id_usuario]);
     $foto_usuario = $stmt->fetchColumn() ?: 'imagens/padrao.jpg';
 
-    // 4. Buscar comentários do perfil
+    // 🔍 4. Buscar comentários recebidos neste perfil
     $sql = "SELECT 
                 c.id,
                 c.id_usuario,
-                c.nome,
+                c.nome AS nome_avaliador,
                 c.comentario,
                 c.nota,
-                c.data_comentario,
-                u.fotoPerfil AS foto_usuario,
-                u.profissao
+                c.data_comentario AS data,
+                u.fotoPerfil AS foto_usuario
             FROM comentarios c
             JOIN usuarios u ON u.id = c.id_usuario
             WHERE c.perfil_id = ?
@@ -80,5 +85,6 @@ if ($id_usuario) {
     $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// limpar buffer
 ob_clean();
 ?>

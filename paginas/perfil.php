@@ -20,7 +20,7 @@ require_once "../server/perfil/informaçoes.php";
 
 <body>
 
-  <!-- 🔥 ESSENCIAL PARA O JS FUNCIONAR -->
+  <!-- ID DO USUÁRIO PARA O JS -->
   <input type="hidden" id="id_usuario" value="<?= htmlspecialchars($id_usuario) ?>">
 
   <div class="container">
@@ -36,7 +36,7 @@ require_once "../server/perfil/informaçoes.php";
         <div class="logo"><a href="./mensagem.php"><img src="../imagens/perfil/envelope.svg" alt="Mensagens"></a></div>
         <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
 
-        <!-- FOTO DO USUÁRIO LOGADO -->
+        <!-- Usuário logado -->
         <div class="user-display">
           <span><p id="username"><?= $login_usuario ?></p></span>
 
@@ -47,7 +47,7 @@ require_once "../server/perfil/informaçoes.php";
       </div>
     </header>
 
-    <!-- MENU PERFIL -->
+    <!-- MENU DROPDOWN -->
     <div class="profile-menu" id="profileMenu">
       <ul>
         <li><a href="./perfil.php?id=<?= $id_usuario ?>">Meu Perfil</a></li>
@@ -63,8 +63,7 @@ require_once "../server/perfil/informaçoes.php";
       </div>
 
       <div class="profile-info-container">
-        
-        <!-- FOTO DO DONO DO PERFIL -->
+
         <div class="profile-pic">
           <img src="../<?= htmlspecialchars($usuario['foto']) ?>" alt="Foto do perfil"
             onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
@@ -78,7 +77,7 @@ require_once "../server/perfil/informaçoes.php";
           </p>
         </div>
 
-        <!-- ⭐ MOSTRAR APENAS SE FOR OUTRO PERFIL -->
+        <!-- Botão de avaliar apenas se for outro perfil -->
         <?php if ($id_usuario != $usuario['id']): ?>
           <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
         <?php endif; ?>
@@ -86,7 +85,7 @@ require_once "../server/perfil/informaçoes.php";
       </div>
     </div>
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
 
       <div class="user-details">
@@ -96,11 +95,14 @@ require_once "../server/perfil/informaçoes.php";
         <p><strong>N.º do Celular:</strong> <?= htmlspecialchars($usuario['telefone']) ?></p>
         <p><strong>Gênero:</strong> <?= htmlspecialchars($usuario['genero']) ?></p>
         <p><strong>Data de nascimento:</strong> <?= htmlspecialchars($usuario['data_nascimento']) ?></p>
-        <p><strong>Profissão:</strong> <?= htmlspecialchars($usuario['profissao']) ?></p>
+
+        <!-- AGORA AQUI MOSTRA SERVIÇO, NÃO PROFISSÃO -->
+        <p><strong>Serviço:</strong> <?= htmlspecialchars($usuario['servico']) ?></p>
+
         <p><strong>Localidade:</strong> <?= htmlspecialchars($usuario['cidade']) ?></p>
 
         <h4>Resumo de Contratações</h4>
-        <p><strong>Contratos Concluídos:</strong> <span><?= htmlspecialchars($usuario['contratos_concluidos']) ?></span></p>
+        <p><strong>Contratos Concluídos:</strong> <?= htmlspecialchars($usuario['contratos_concluidos']) ?></p>
 
         <p><strong>Última Contratação:</strong>
           <?= $usuario['ultima_contratacao'] ? date('d/m/Y', strtotime($usuario['ultima_contratacao'])) : 'Nenhuma ainda' ?>
@@ -124,7 +126,6 @@ require_once "../server/perfil/informaçoes.php";
           <?php else: ?>
             <?php foreach ($avaliacoes as $a):
               $avatar = !empty($a['foto_usuario']) ? "../" . $a['foto_usuario'] : '../imagens/servicos/perfil_6.jpg';
-
               $nomeAval = !empty($a['nome_avaliador']) ? $a['nome_avaliador'] : 'Usuário';
               $texto = htmlspecialchars($a['comentario']);
               $dataFmt = !empty($a['data']) ? date('d/m/Y H:i', strtotime($a['data'])) : '';
@@ -154,7 +155,7 @@ require_once "../server/perfil/informaçoes.php";
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- RODAPÉ -->
   <footer>
     <div class="footer-image"><img src="../imagens/logomarca-dark-mode.png" alt="Bico Certo"></div>
     <div class="vertical-row"></div>
@@ -181,7 +182,6 @@ require_once "../server/perfil/informaçoes.php";
         <input type="hidden" name="id_usuario" value="<?= htmlspecialchars($id_usuario) ?>">
         <input type="hidden" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>">
         <input type="hidden" name="nota" value="5">
-
         <button type="submit" class="btn-enviar">Enviar Avaliação</button>
       </form>
     </div>
