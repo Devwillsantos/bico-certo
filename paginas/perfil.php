@@ -78,7 +78,11 @@ require_once "../server/perfil/informaçoes.php";
           </p>
         </div>
 
-        <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
+        <!-- ⭐ MOSTRAR APENAS SE FOR OUTRO PERFIL -->
+        <?php if ($id_usuario != $usuario['id']): ?>
+          <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
+        <?php endif; ?>
+
       </div>
     </div>
 
@@ -119,7 +123,6 @@ require_once "../server/perfil/informaçoes.php";
 
           <?php else: ?>
             <?php foreach ($avaliacoes as $a):
-              // Foto do avaliador
               $avatar = !empty($a['foto_usuario']) ? "../" . $a['foto_usuario'] : '../imagens/servicos/perfil_6.jpg';
 
               $nomeAval = !empty($a['nome_avaliador']) ? $a['nome_avaliador'] : 'Usuário';
