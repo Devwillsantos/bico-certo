@@ -188,7 +188,6 @@ require_once "../server/perfil/informaçoes.php";
   </div>
 
   <script src="../script/perfil/avaliacao.js"></script>
-  <script src="../script/perfil/ultima_visita.js"></script>
   <script src="../script/perfil/perfil.js"></script>
 </body>
 </html>

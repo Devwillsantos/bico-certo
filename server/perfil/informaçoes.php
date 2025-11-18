@@ -10,7 +10,7 @@ $usuario = [
     'telefone' => 'Não informado',
     'genero' => 'Não informado',
     'data_nascimento' => 'Não informado',
-    'servico' => 'Não Informado', // ← AGORA CORRETO
+    'servico' => 'Não Informado',
     'cidade' => 'Não informado',
     'data_registro' => null,
     'ultima_visita' => null,
@@ -26,6 +26,11 @@ $foto_usuario = "imagens/padrao.jpg";
 
 if ($id_usuario) {
 
+    // 🔥 ATUALIZAR ULTIMA VISITA
+    $sql = "UPDATE usuarios SET ultima_visita = NOW() WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_usuario]);
+
     // 🔍 1. Buscar dados do usuário logado
     $sql = "SELECT 
                 id,
@@ -33,7 +38,7 @@ if ($id_usuario) {
                 numeroCelular AS telefone,
                 sexo AS genero,
                 dataNascimento AS data_nascimento,
-                servico,                         -- CORRIGIDO
+                servico,
                 cidade,
                 fotoPerfil AS foto,
                 data_registro,
@@ -85,6 +90,5 @@ if ($id_usuario) {
     $avaliacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-// limpar buffer
 ob_clean();
 ?>

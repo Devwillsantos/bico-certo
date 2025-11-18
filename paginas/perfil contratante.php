@@ -100,7 +100,6 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
         <p><strong>Gênero:</strong> <?= htmlspecialchars($usuario['genero'] ?? '-') ?></p>
         <p><strong>Data de nascimento:</strong> <?= htmlspecialchars($usuario['data_nascimento'] ?? '-') ?></p>
         <p><strong>Localidade:</strong> <?= htmlspecialchars($usuario['cidade'] ?? '-') ?></p>
-        <p><strong>Profissão:</strong> <?= htmlspecialchars($usuario['profissao'] ?? 'Não Informada') ?></p>
 
         <h4>Resumo de Contratações</h4>
         <p><strong>Contratos Concluídos:</strong> <span><?= htmlspecialchars($usuario['contratos_concluidos'] ?? 0) ?></span></p>
@@ -194,8 +193,6 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
   </footer>
 
   <script src="../script/perfil/avaliacao.js"></script>
-  <script src="../script/perfil/ultima_visita.js"></script>
   <script src="../script/perfil/perfil.js"></script>
-
 </body>
 </html>
