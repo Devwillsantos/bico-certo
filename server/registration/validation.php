@@ -500,44 +500,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Criptografia da senha
         $senhaEncriptada = password_hash($senha, PASSWORD_DEFAULT);
 
-
-               // Valores padrão para campos obrigatórios no banco
+        // Valores padrão para campos obrigatórios no banco
         $descricaoPadrao = "Nenhuma descrição informada.";
         $profissaoPadrao = "Não Informado";
 
-             // Caso venham vazios ou não existam
+        // Caso venham vazios ou não existam
         $descricao = $_POST['descricao'] ?? $descricaoPadrao;
         $profissao = $_POST['profissao'] ?? $profissaoPadrao;
 
-          // Inserção de dados
-        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico, fotoPerfil, ultima_visita, ultima_contratacao, descricao, profissao)
-         VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico, :fotoPerfil, :ultima_visita, :ultima_contratacao, :descricao, :profissao)";
-         $stmt = $pdo->prepare($sql);
-         $stmt->execute([
-        ':nome'               => $nome,
-        ':email'              => $email,
-        ':dataNascimento'     => $dataNascimento,
-        ':sexo'               => $sexo,
-        ':cpf'                => $cpf,
-        ':numeroCelular'      => $numeroCelular,
-        ':cep'                => $cep,
-        ':estado'             => $estado,
-        ':cidade'             => $cidade,
-        ':bairro'             => $bairro,
-        ':rua'                => $rua,
-        ':numeroCasa'         => $numeroCasa,
-        ':referenciaCasa'     => $referenciaCasa,
-        ':login'              => $login,
-        ':senha'              => $senhaEncriptada,
-        ':whatsAppLink'       => $whatsAppLink,
-        ':tipoUsuario'        => $tipoUsuario,
-        ':servico'            => $servico,
-        ':fotoPerfil'         => $fotoPerfil,
-        ':ultima_visita'      => null,
-        ':ultima_contratacao' => null,
-        ':descricao'          => $descricao,
-        ':profissao'          => $profissao,
-     ]);
+        // Inserção de dados
+        $sql = "INSERT INTO usuarios (nome, email, dataNascimento, sexo, cpf, numeroCelular, cep, estado, cidade, bairro, rua, numeroCasa, referenciaCasa, login, senha, whatsAppLink, tipoUsuario, servico, fotoPerfil, ultima_visita, ultima_contratacao, descricao, profissao, foto_capa)
+                VALUES (:nome, :email, :dataNascimento, :sexo, :cpf, :numeroCelular, :cep, :estado, :cidade, :bairro, :rua, :numeroCasa, :referenciaCasa, :login, :senha, :whatsAppLink, :tipoUsuario, :servico, :fotoPerfil, :ultima_visita, :ultima_contratacao, :descricao, :profissao, :foto_capa)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':nome'               => $nome,
+            ':email'              => $email,
+            ':dataNascimento'     => $dataNascimento,
+            ':sexo'               => $sexo,
+            ':cpf'                => $cpf,
+            ':numeroCelular'      => $numeroCelular,
+            ':cep'                => $cep,
+            ':estado'             => $estado,
+            ':cidade'             => $cidade,
+            ':bairro'             => $bairro,
+            ':rua'                => $rua,
+            ':numeroCasa'         => $numeroCasa,
+            ':referenciaCasa'     => $referenciaCasa,
+            ':login'              => $login,
+            ':senha'              => $senhaEncriptada,
+            ':whatsAppLink'       => $whatsAppLink,
+            ':tipoUsuario'        => $tipoUsuario,
+            ':servico'            => $servico,
+            ':fotoPerfil'         => $fotoPerfil,
+            ':ultima_visita'      => null,
+            ':ultima_contratacao' => null,
+            ':descricao'          => $descricao,
+            ':profissao'          => $profissao,
+            ':foto_capa'          => null
+        ]);
 
         $id = (int)$pdo->lastInsertId();
 
