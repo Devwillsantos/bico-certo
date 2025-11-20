@@ -52,7 +52,11 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
     <!-- MENU PERFIL -->
     <div class="profile-menu" id="profileMenu">
       <ul>
-        <li><a href="./perfil.php?id=<?= htmlspecialchars($id_usuario_logado) ?>">Meu Perfil</a></li>
+        <li>
+          <a href="./perfil.php<?php echo '?id=' . $_SESSION['usuario_id'] ?>">
+            Meu Perfil
+          </a>
+        </li>
         <li><a href="./profile-edit.php?id=<?= htmlspecialchars($id_usuario_logado) ?>">Editar Perfil</a></li>
         <li><a href="./login.php" id="logout">Sair</a></li>
       </ul>

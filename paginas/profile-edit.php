@@ -40,7 +40,11 @@ require_once __DIR__ . "/../server/config.php";
     </header>
     <div class="profile-menu" id="profileMenu">
         <ul>
-            <li><a href="./perfil.php">Meu Perfil</a></li>
+            <li>
+                <a href="./perfil.php<?php echo '?id=' . $_SESSION['usuario_id'] ?>">
+                    Meu Perfil
+                </a>
+            </li>
             <li><a href="./profile-edit.php">Editar Perfil</a></li>
             <li><a href="../index.php" id="logout">Sair</a></li>
         </ul>
