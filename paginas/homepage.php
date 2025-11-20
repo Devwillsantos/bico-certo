@@ -28,34 +28,32 @@ require_once __DIR__ . "/../server/config.php";
                 <img src="../imagens/perfil/servicos.svg"></a></span>
             </div>
             <div class="user-name logo">
-                <?php
-                    $sql = "SELECT login FROM usuarios WHERE id = :id";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute(['id' => $_SESSION['usuario_id']]);
-                    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $login = $usuario['login'];
-                ?>
                 <p id="username">
-                    <?php echo $login; ?>
+                    <?php echo $_SESSION['usuario_login']; ?>
                 </p>
             </div>
             <!-- Ícone de perfil com menu de opções -->
             <div class="logo" onclick="toggleProfileMenu()">
-                <?php
-                    $sql = "SELECT fotoPerfil FROM usuarios WHERE id = :id";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute(['id' => $_SESSION['usuario_id']]);
-                    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $foto_perfil = $usuario['fotoPerfil'];
-                ?>
-                <img src="<?php echo '../' . $foto_perfil; ?>">
+                <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
             </div>
         </div>
     </header>
     <!-- Profile Menu -->
     <div class="profile-menu" id="profileMenu">
         <ul>
-            <li><a href="./perfil.php">Meu Perfil</a></li>
+            <li>
+                <a href="
+                    <?php
+                        if ($_SESSION['tipoUsuario'] === 'prestador') {
+                            echo './perfil.php?id=' . $_SESSION['usuario_id'];
+                        } else {
+                            echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+                        }
+                    ?>"
+                >
+                    Meu Perfil
+                </a>
+            </li>
             <li><a href="./profile-edit.php">Editar Perfil</a></li>
             <li><a href="../index.php" id="logout">Sair</a></li>
         </ul>

@@ -41,10 +41,9 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
         
         <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">
-          <span><p id="username"><?= htmlspecialchars($login_usuario) ?></p></span>
+          <span><?php echo $_SESSION['usuario_login']; ?></span>
           <div class="logo" onclick="toggleProfileMenu()">
-            <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado"
-                 onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
+            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
           </div>
         </div>
       </div>
@@ -53,7 +52,19 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
     <!-- MENU PERFIL -->
     <div class="profile-menu" id="profileMenu">
       <ul>
-        <li><a href="./perfil.php?id=<?= htmlspecialchars($id_usuario_logado) ?>">Meu Perfil</a></li>
+        <li>
+          <a href="
+            <?php
+              if ($_SESSION['tipoUsuario'] === 'prestador') {
+                echo './perfil.php?id=' . $_SESSION['usuario_id'];
+              } else {
+                echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+              }
+            ?>"
+          >
+            Meu Perfil
+          </a>
+        </li>
         <li><a href="./profile-edit.php?id=<?= htmlspecialchars($id_usuario_logado) ?>">Editar Perfil</a></li>
         <li><a href="./login.php" id="logout">Sair</a></li>
       </ul>

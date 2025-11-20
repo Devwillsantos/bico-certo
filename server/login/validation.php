@@ -27,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Verifica a senha
         if (password_verify($senha, $usuario['senha'])) {
             // Login bem-sucedido
-            $_SESSION['usuario_id']   = $usuario['id'];
-            $_SESSION['usuario_nome'] = $usuario['nome'];
-            $_SESSION['tipoUsuario']  = $usuario['tipoUsuario'];
+            $_SESSION['usuario_id']    = $usuario['id'];
+            $_SESSION['usuario_login'] = $usuario['login'];
+            $_SESSION['usuario_nome']  = $usuario['nome'];
+            $_SESSION['usuario_foto']  = $usuario['fotoPerfil'];
+            $_SESSION['tipoUsuario']   = $usuario['tipoUsuario'];
 
             // Redireciona para homepage
             header('Location: ../../paginas/homepage.php');

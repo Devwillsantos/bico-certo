@@ -42,10 +42,14 @@ $capa = !empty($usuario['fotoCapa'])
 
         <!-- Usuário logado -->
         <div class="user-display">
-          <span><p id="username"><?= $login_usuario ?></p></span>
+          <span>
+            <p id="username">
+              <?php echo $_SESSION['usuario_login']; ?>
+            </p>
+          </span>
 
           <div class="logo" onclick="toggleProfileMenu()">
-            <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado">
+            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
           </div>
         </div>
       </div>
@@ -54,7 +58,19 @@ $capa = !empty($usuario['fotoCapa'])
     <!-- MENU DROPDOWN -->
     <div class="profile-menu" id="profileMenu">
       <ul>
-        <li><a href="./perfil.php?id=<?= $id_usuario ?>">Meu Perfil</a></li>
+        <li>
+          <a href="
+            <?php
+              if ($_SESSION['tipoUsuario'] === 'prestador') {
+                echo './perfil.php?id=' . $_SESSION['usuario_id'];
+              } else {
+                echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+              }
+            ?>"
+          >
+            Meu Perfil
+          </a>
+        </li>
         <li><a href="./profile-edit.php?id=<?= $id_usuario ?>">Editar Perfil</a></li>
         <li><a href="./login.php" id="logout">Sair</a></li>
       </ul>
