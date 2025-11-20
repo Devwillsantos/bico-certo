@@ -59,7 +59,15 @@ $capa = !empty($usuario['fotoCapa'])
     <div class="profile-menu" id="profileMenu">
       <ul>
         <li>
-          <a href="./perfil.php<?php echo '?id=' . $_SESSION['usuario_id'] ?>">
+          <a href="
+            <?php
+              if ($_SESSION['tipoUsuario'] === 'prestador') {
+                echo './perfil.php?id=' . $_SESSION['usuario_id'];
+              } else {
+                echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+              }
+            ?>"
+          >
             Meu Perfil
           </a>
         </li>
