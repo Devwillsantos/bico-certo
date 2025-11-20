@@ -27,14 +27,6 @@ require_once __DIR__ . "/../server/config.php";
                 <span><a href="./servicos.php">
                 <img src="../imagens/perfil/servicos.svg"></a></span>
             </div>
-            <div class="logo">
-                <span><a href="./mensagem.php">
-                <img src="../imagens/perfil/envelope.svg"></a></span>
-            </div>
-            <div class="logo">
-                <span><a href="./notifications.php">
-                <img src="../imagens/perfil/notificação.svg"></a></span>
-            </div>
             <div class="user-name logo">
                 <?php
                     $sql = "SELECT login FROM usuarios WHERE id = :id";

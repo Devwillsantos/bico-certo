@@ -38,9 +38,7 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
 
       <div class="menu">
         <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg" alt="Serviços"></a></div>
-        <div class="logo"><a href="./mensagem.php"><img src="../imagens/perfil/envelope.svg" alt="Mensagens"></a></div>
-        <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
-
+        
         <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">
           <span><p id="username"><?= htmlspecialchars($login_usuario) ?></p></span>
