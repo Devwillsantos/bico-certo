@@ -36,7 +36,11 @@ require_once "../server/perfil/informaçoes.php";
 
         <!-- Usuário logado -->
         <div class="user-display">
-          <span><p id="username"><?= $login_usuario ?></p></span>
+          <span>
+            <p id="username">
+              <?= $login_usuario ?>
+            </p>
+          </span>
 
           <div class="logo" onclick="toggleProfileMenu()">
             <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado">

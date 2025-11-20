@@ -130,7 +130,11 @@ require_once __DIR__ . "/../server/config.php";
                     <p class="service-title"><?php echo $servico; ?></p>
                     <p class="name"><?php echo $nome; ?></p>
                     <p class="estado"><?php echo $estado; ?></p>
-                    <a href="<?php echo $whatsapp_link; ?>" target="_blank" class="contact-button">Visualizar perfil</a>
+                    <form action="./perfil.php" method="get">
+                        <button class="contact-button" name="id" value="<?php echo $id ?>">
+                            Visualizar perfil
+                        </button>
+                    </form>
                     <img src="../imagens/servicos/whatsapp-blue-icon.svg" class="whatsapp-icon-blue">
                     <a href="<?php echo $whatsapp_link; ?>" target="_blank">
                         <img src="../imagens/servicos/whatsapp-white-icon.svg" class="whatsapp-icon-white" alt="Entrar em contato via WhatsApp">

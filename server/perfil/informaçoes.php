@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . "/../config.php";
 
-$id_usuario = $_SESSION['usuario_id'] ?? null;
+$id_usuario = $_GET['id'];
 
 // Valores padrão
 $usuario = [
