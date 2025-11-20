@@ -48,7 +48,8 @@ try {
             `contratos_concluidos` int(11) DEFAULT 0,
             `ultima_contratacao` datetime DEFAULT NULL,
             `descricao` text DEFAULT NULL,
-            `profissao` varchar(255) DEFAULT NULL
+            `profissao` varchar(255) DEFAULT NULL,
+            `foto_capa` varchar(255) DEFAULT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
