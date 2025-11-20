@@ -41,10 +41,9 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
         
         <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">
-          <span><p id="username"><?= htmlspecialchars($login_usuario) ?></p></span>
+          <span><?php echo $_SESSION['usuario_login']; ?></span>
           <div class="logo" onclick="toggleProfileMenu()">
-            <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado"
-                 onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
+            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
           </div>
         </div>
       </div>

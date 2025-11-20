@@ -38,12 +38,12 @@ require_once "../server/perfil/informaçoes.php";
         <div class="user-display">
           <span>
             <p id="username">
-              <?= $login_usuario ?>
+              <?php echo $_SESSION['usuario_login']; ?>
             </p>
           </span>
 
           <div class="logo" onclick="toggleProfileMenu()">
-            <img src="../<?= htmlspecialchars($foto_usuario) ?>" alt="Foto do usuário logado">
+            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
           </div>
         </div>
       </div>
