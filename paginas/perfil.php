@@ -33,8 +33,6 @@ require_once "../server/perfil/informaçoes.php";
 
       <div class="menu">
         <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg" alt="Serviços"></a></div>
-        <div class="logo"><a href="./mensagem.php"><img src="../imagens/perfil/envelope.svg" alt="Mensagens"></a></div>
-        <div class="logo"><a href="./notifications.php"><img src="../imagens/perfil/notificação.svg" alt="Notificações"></a></div>
 
         <!-- Usuário logado -->
         <div class="user-display">
