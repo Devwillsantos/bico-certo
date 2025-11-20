@@ -20,7 +20,7 @@ try {
     // Seleciona o banco de dados
     $pdo->exec("USE `$db`");
 
-    // Cria a tabela se não existir
+    // Cria a tabela de usuários se não existir
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS `usuarios` (
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -52,6 +52,18 @@ try {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
+    // Cria a tabela de comentários se não existir
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS `comentarios` (
+            `id` int(11) NOT NULL,
+            `id_usuario` int(11) NOT NULL,
+            `nome` varchar(100) NOT NULL,
+            `comentario` text NOT NULL,
+            `nota` int(1) NOT NULL,
+            `data_comentario` timestamp NOT NULL DEFAULT current_timestamp(),
+            `perfil_id` int(11) NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ");
 } catch (PDOException $e) {
     die('Erro ao conectar com o banco: ' . $e->getMessage());
 }
