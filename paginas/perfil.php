@@ -1,6 +1,12 @@
 <?php
 require_once __DIR__ . "/../server/config.php";
 require_once "../server/perfil/informaçoes.php";
+
+// Supondo que você já tem $usuario carregado do banco
+
+$capa = !empty($usuario['fotoCapa']) 
+        ? "../uploads/capas/" . $usuario['fotoCapa'] 
+        : "../imagens/perfil/fundo.jpg"; // CAPA PADRÃO
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -57,7 +63,7 @@ require_once "../server/perfil/informaçoes.php";
     <!-- PERFIL -->
     <div class="profile">
       <div class="banner">
-        <img src="../imagens/perfil/fundo.jpg" alt="Capa do perfil">
+        <img src="<?= $capa ?>" alt="Capa do perfil">
       </div>
 
       <div class="profile-info-container">

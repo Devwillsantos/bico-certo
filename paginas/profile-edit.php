@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../server/logged-in-user.php";
 require_once __DIR__ . "/../server/config.php";
+require_once __DIR__ . "/../server/perfil/editaperfil.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -71,13 +72,18 @@ require_once __DIR__ . "/../server/config.php";
                 <div class="grupo-formulario">
                     <label for="fotoPerfil">Foto de perfil</label>
                     <input type="file" id="fotoPerfil" accept="image/*" onchange="carregarFotoPerfil(event)">
-                    <img id="imagemPerfil" src="#" alt="Imagem de perfil" class="foto-perfil" style="display: none;">
-                </div>
+                     <img id="imagemPerfil"
+                       src="<?= (!empty($usuario['fotoPerfil'])) ? '../' . htmlspecialchars($usuario['fotoPerfil']) : '../imagens/perfil/default.png' ?>"
+                         alt="Imagem de perfil"
+                         class="foto-perfil">
+                        </div>
                 
                 <div class="grupo-formulario">
                     <label for="fotoCapa">Foto de capa</label>
                     <input type="file" id="fotoCapa" accept="image/*" onchange="carregarFotoCapa(event)">
-                    <img id="imagemCapa" src="#" alt="Imagem de capa" class="foto-perfil" style="display: none;">
+                   <img src="<?php echo $capa; ?>" 
+                     alt="Foto de capa"
+                    class="foto-perfil">
                 </div>
                 
                 <div class="grupo-formulario">
