@@ -1,5 +1,5 @@
 <?php
-include('../server/log/conexao.php');
+include('../server/conexao.php');
 
 if (!isset($_GET['id'])) {
     die("ID não informado.");

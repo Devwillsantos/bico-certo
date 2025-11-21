@@ -1,11 +1,18 @@
 <?php
-include('../server/log/conexao.php');
+// Inclui o arquivo de conexão, que garante que o banco e as tabelas existam
+include('../server/config.php');
 
 try {
+    // Prepara a consulta SQL para buscar todos os registros da tabela de logs
+    // ORDER BY idlog DESC → mostra o log mais recente primeiro
     $stmt = $pdo->prepare("SELECT * FROM log ORDER BY idlog DESC");
     $stmt->execute();
+
+    // Armazena todos os resultados retornados pela consulta
     $logs = $stmt->fetchAll();
+
 } catch (PDOException $e) {
+    // Caso ocorra algum erro na consulta, o sistema interrompe e mostra a mensagem
     die("Erro ao carregar logs: " . $e->getMessage());
 }
 ?>
@@ -15,15 +22,19 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Log do Sistema</title>
+
+    <!-- CSS que estiliza a tabela de logs -->
     <link rel="stylesheet" href="../css/log.css">
 </head>
 
 <body>
 <h1>Registros de Log</h1>
 
+<!-- Tabela que exibirá os registros -->
 <table>
     <thead>
         <tr>
+            <!-- Cabeçalho das colunas -->
             <th>ID</th>
             <th>Login</th>
             <th>Nome</th>
@@ -37,6 +48,7 @@ try {
     </thead>
 
     <tbody>
+        <!-- Percorre cada linha retornada do banco e exibe na tabela -->
         <?php foreach ($logs as $row): ?>
             <tr>
                 <td><?= $row['idlog'] ?></td>
@@ -48,6 +60,7 @@ try {
                 <td><?= $row['hora_log'] ?></td>
                 <td><?= $row['status'] ?></td>
 
+                <!-- Ações: editar ou excluir o registro -->
                 <td>
                     <a href="editar.php?id=<?= $row['idlog'] ?>">Editar</a>
                     |
@@ -64,3 +77,4 @@ try {
 
 </body>
 </html>
+
