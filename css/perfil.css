@@ -117,6 +117,18 @@ body {
     overflow: hidden; /* Esconde partes que ultrapassam os limites */
 }
 
+/* Heading que aparece acima da seção de informações do perfil */
+.profile-heading {
+    padding: 14px 30px;
+    background: transparent;
+}
+.profile-heading h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #0b2b4a;
+    font-weight: 700;
+}
+
 .banner > img {
     width: 100%; /* Ocupa toda a largura */
     height: 160px; /* Altura fixa */
@@ -164,6 +176,22 @@ body {
 .user-info h2 {
     font-size: 24px; /* Tamanho da fonte do nome */
     color: black; /* Cor do nome */
+}
+
+/* Coloca o título (nome + botão) na mesma linha do avatar */
+.user-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.user-title h2 {
+    margin: 0;
+    font-size: 22px;
+}
+.user-title .btn-avaliar {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 14px;
 }
 
 .user-info p {
@@ -245,9 +273,20 @@ body {
 }
 
 .activity-interactions img {
-    width: 15px; /* Largura dos ícones */
-    margin-right: 3px; /* Espaçamento entre ícone e texto */
+    width: 15px; /* Largura dos ícones antigos (mantido se usado em outros pontos) */
+    margin-right: 6px; /* Espaçamento entre ícone e texto */
     vertical-align: bottom; /* Alinha à base */
+}
+
+.activity-interactions .icon-relogio {
+    display: inline-block;
+    font-style: normal;
+    font-size: 14px; /* tamanho do ícone font-awesome */
+    color: #757575;
+    margin-right: 6px;
+    width: auto;
+    height: auto;
+    flex: 0 0 auto;
 }
 
 .activity-interactions span {

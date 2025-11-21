@@ -40,9 +40,12 @@ if ($id_usuario) {
                 dataNascimento AS data_nascimento,
                 servico,
                 cidade,
+                estado,
                 fotoPerfil AS foto,
+                foto_capa,
                 data_registro,
                 ultima_visita,
+                tipoUsuario,
                 contratos_concluidos,
                 ultima_contratacao,
                 descricao
@@ -79,7 +82,8 @@ if ($id_usuario) {
                 c.comentario,
                 c.nota,
                 c.data_comentario AS data,
-                u.fotoPerfil AS foto_usuario
+                u.fotoPerfil AS foto_usuario,
+                u.tipoUsuario AS tipo_usuario
             FROM comentarios c
             JOIN usuarios u ON u.id = c.id_usuario
             WHERE c.perfil_id = ?

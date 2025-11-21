@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === modal) modal.style.display = "none";
     });
 
-    // 🚀 **ENVIO DO FORMULÁRIO**
+    //  **ENVIO DO FORMULÁRIO**
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -68,22 +68,31 @@ function addComentarioNaLista(c) {
     div.className = "activity";
 
     div.innerHTML = `
-        <img class="perfil" src="../imagens/servicos/perfil_6.jpg">
-        <div class="activity-content">
-            <p><strong>${escapeHtml(c.nome)}</strong> comentou no seu Perfil.</p>
-            <p>${escapeHtml(c.comentario)}</p>
-            <div class="activity-interactions">
-                <img src="../imagens/icones/relogio.png" alt="Hora">
-                <span>${c.data_comentario}</span>
+            ${/* build profile link depending on tipo_usuario */''}
+            ${(() => {
+                const tipo = c.tipo_usuario || '';
+                const link = tipo === 'prestador' ? `./perfil.php?id=${c.id_usuario}` : `./perfil%20contratante.php?id=${c.id_usuario}`;
+                return `<a href="${link}"><img class="perfil" src="${c.foto_usuario ? '../' + c.foto_usuario : '../imagens/servicos/perfil_6.jpg'}" onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'"></a>`;
+            })()}
+            <div class="activity-content">
+                <p><strong>${(() => {
+                    const tipo = c.tipo_usuario || '';
+                    const link = tipo === 'prestador' ? `./perfil.php?id=${c.id_usuario}` : `./perfil%20contratante.php?id=${c.id_usuario}`;
+                    return `<a href="${link}">${escapeHtml(c.nome)}</a>`;
+                })()}</strong> comentou no seu Perfil.</p>
+                <p>${escapeHtml(c.comentario)}</p>
+                <div class="activity-interactions">
+                    <i class="fas fa-clock icon-relogio" aria-hidden="true"></i>
+                    <span>${c.data_comentario}</span>
+                </div>
             </div>
-        </div>
     `;
 
     container.prepend(div);
 }
 
 
-// 🔧 HTML safe
+//  HTML safe
 function escapeHtml(s) {
     return String(s)
         .replaceAll("&", "&amp;")
@@ -94,7 +103,7 @@ function escapeHtml(s) {
 }
 
 
-// 🚀 **CARREGAR COMENTÁRIOS DO BANCO**
+//  **CARREGAR COMENTÁRIOS DO BANCO**
 function carregarComentarios() {
 
     const id_usuario = document.getElementById("id_usuario").value;

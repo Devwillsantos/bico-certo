@@ -13,15 +13,18 @@ if (!$id_usuario) {
 
 try {
     $sql = "SELECT 
-                id,
-                id_usuario,
-                nome,
-                comentario,
-                nota,
-                DATE_FORMAT(data_comentario, '%d/%m/%Y %H:%i') AS data_comentario
-            FROM comentarios
-            WHERE id_usuario = ?
-            ORDER BY id DESC";
+                c.id,
+                c.id_usuario,
+                c.comentario,
+                c.nota,
+                DATE_FORMAT(c.data_comentario, '%d/%m/%Y %H:%i') AS data_comentario,
+                COALESCE(u.nome, c.nome) AS nome,
+                u.fotoPerfil AS foto_usuario,
+                u.tipoUsuario AS tipo_usuario
+            FROM comentarios c
+            LEFT JOIN usuarios u ON u.id = c.id_usuario
+            WHERE c.perfil_id = ?
+            ORDER BY c.id DESC";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_usuario]);

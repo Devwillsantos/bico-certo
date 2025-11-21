@@ -4,9 +4,9 @@ require_once "../server/perfil/informaçoes.php";
 
 // Supondo que você já tem $usuario carregado do banco
 
-$capa = !empty($usuario['fotoCapa']) 
-        ? "../uploads/capas/" . $usuario['fotoCapa'] 
-        : "../imagens/perfil/fundo.jpg"; // CAPA PADRÃO
+$capa = !empty($usuario['foto_capa'])
+  ? (strpos($usuario['foto_capa'], 'uploads/') === 0 ? "../" . $usuario['foto_capa'] : "../uploads/capas/" . $usuario['foto_capa'])
+  : "../imagens/perfil/fundo.jpg"; // CAPA PADRÃO
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -90,17 +90,19 @@ $capa = !empty($usuario['fotoCapa'])
         </div>
 
         <div class="user-info">
-          <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
+          <div class="user-title">
+            <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
+
+            <?php if (($_SESSION['usuario_id'] ?? null) != ($id_usuario ?? null)): ?>
+              <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
+            <?php endif; ?>
+          </div>
+
           <p><strong>Registro em:</strong> <?= date('d/m/Y', strtotime($usuario['data_registro'])) ?></p>
           <p><strong>Última visita:</strong>
-            <?= !empty($usuario['ultima_visita']) ? date('d/m/Y H:i', strtotime($usuario['ultima_visita'])) : 'Primeiro acesso' ?>
+            <?= !empty($usuario['ultima_visita']) ? date('d/m/Y', strtotime($usuario['ultima_visita'])) : 'Primeiro acesso' ?>
           </p>
         </div>
-
-        <!-- Botão de avaliar apenas se for outro perfil -->
-        <?php if ($id_usuario != $usuario['id']): ?>
-          <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
-        <?php endif; ?>
 
       </div>
     </div>
@@ -114,12 +116,14 @@ $capa = !empty($usuario['fotoCapa'])
         <p><strong>Nome:</strong> <?= htmlspecialchars($usuario['nome']) ?></p>
         <p><strong>N.º do Celular:</strong> <?= htmlspecialchars($usuario['telefone']) ?></p>
         <p><strong>Gênero:</strong> <?= htmlspecialchars($usuario['genero']) ?></p>
-        <p><strong>Data de nascimento:</strong> <?= htmlspecialchars($usuario['data_nascimento']) ?></p>
+        <p><strong>Data de nascimento:</strong> <?= !empty($usuario['data_nascimento']) ? date('d/m/Y', strtotime($usuario['data_nascimento'])) : '---' ?></p>
 
-        <!-- AGORA AQUI MOSTRA SERVIÇO, NÃO PROFISSÃO -->
-        <p><strong>Serviço:</strong> <?= htmlspecialchars($usuario['servico']) ?></p>
+        <!-- Mostrar 'Serviço' apenas se o dono do perfil for prestador e houver serviço definido -->
+        <?php if (!empty($usuario['tipoUsuario']) && $usuario['tipoUsuario'] === 'prestador' && !empty($usuario['servico'])): ?>
+          <p><strong>Serviço:</strong> <?= htmlspecialchars($usuario['servico']) ?></p>
+        <?php endif; ?>
 
-        <p><strong>Localidade:</strong> <?= htmlspecialchars($usuario['cidade']) ?></p>
+        <p><strong>Localidade:</strong> <?= htmlspecialchars($usuario['estado'] ?? '-') ?></p>
 
         <h4>Resumo de Contratações</h4>
         <p><strong>Contratos Concluídos:</strong> <?= htmlspecialchars($usuario['contratos_concluidos']) ?></p>
@@ -151,15 +155,24 @@ $capa = !empty($usuario['fotoCapa'])
               $dataFmt = !empty($a['data']) ? date('d/m/Y H:i', strtotime($a['data'])) : '';
             ?>
               <div class="activity">
-                <img class="perfil" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar"
-                  onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
+                <a href="./perfil.php?id=<?= htmlspecialchars($a['id_usuario']) ?>">
+                  <img class="perfil" src="<?= htmlspecialchars($avatar) ?>" alt="Avatar"
+                    onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
+                </a>
 
                 <div class="activity-content">
-                  <p><strong><?= htmlspecialchars($nomeAval) ?></strong> comentou no seu Perfil.</p>
+                  <p><strong>
+                    <?php
+                      $link = (isset($a['tipo_usuario']) && $a['tipo_usuario'] === 'prestador')
+                        ? './perfil.php?id=' . htmlspecialchars($a['id_usuario'])
+                        : './perfil%20contratante.php?id=' . htmlspecialchars($a['id_usuario']);
+                    ?>
+                    <a href="<?= $link ?>"><?= htmlspecialchars($nomeAval) ?></a>
+                  </strong> comentou no seu Perfil.</p>
                   <p><?= $texto ?></p>
 
                   <div class="activity-interactions">
-                    <img src="../imagens/icones/relogio.png" alt="Hora">
+                    <i class="fas fa-clock icon-relogio" aria-hidden="true"></i>
                     <span><?= $dataFmt ?></span>
                   </div>
                 </div>
