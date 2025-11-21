@@ -32,3 +32,31 @@ th {
 tr:hover {
   background: #eef4ff;
 }
+
+/* BOTÕES DE AÇÃO */
+.action-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s ease;
+}
+
+/* EDITAR */
+.btn-edit {
+  background-color: #28a745;
+}
+
+.btn-edit:hover {
+  background-color: #1e7e34;
+}
+
+/* EXCLUIR */
+.btn-delete {
+  background-color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #b52a36;
+}

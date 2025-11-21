@@ -1,5 +1,5 @@
 <?php
-include('../server/conexao.php');
+include('../conexao.php');
 
 if (!isset($_GET['id'])) {
     die("ID não informado.");
@@ -27,7 +27,7 @@ if (!$log) {
 
 <h1>Editar Log #<?= $log['idlog'] ?></h1>
 
-<form action="update_log.php" method="POST">
+<form action="../../server/log/update_log.php" method="POST">
 
     <input type="hidden" name="idlog" value="<?= $log['idlog'] ?>">
 

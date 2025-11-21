@@ -61,13 +61,21 @@ try {
                 <td><?= $row['status'] ?></td>
 
                 <!-- Ações: editar ou excluir o registro -->
-                <td>
-                    <a href="editar.php?id=<?= $row['idlog'] ?>">Editar</a>
-                    |
-                    <a href="excluir.php?id=<?= $row['idlog'] ?>" 
-                       onclick="return confirm('Tem certeza que deseja excluir este registro?');">
-                       Excluir
-                    </a>
+   <td>
+    <a class="action-btn btn-edit" 
+       href="../server/log/editar.php?id=<?= $row['idlog'] ?>">
+       Editar
+    </a>
+
+    <a class="action-btn btn-delete" 
+       href="excluir.php?id=<?= $row['idlog'] ?>"
+       onclick="return confirm('Tem certeza que deseja excluir este registro?');">
+       Excluir
+    </a>
+</td>
+
+</td>
+
                 </td>
             </tr>
         <?php endforeach; ?>
