@@ -65,6 +65,27 @@ try {
             `perfil_id` int(11) NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     ");
+// Cria a tabela de LOG se não existir
+    $pdo->exec("
+    CREATE TABLE IF NOT EXISTS `log` (
+        `idlog` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `id_usuario` INT(11) DEFAULT NULL,
+        `login` VARCHAR(50) NOT NULL,
+        `nome` VARCHAR(100) NOT NULL,
+        `cpf` CHAR(14) DEFAULT NULL,
+        `acao` VARCHAR(50) NOT NULL,
+        `descricao` TEXT DEFAULT NULL,
+        `data_log` DATE NOT NULL,
+        `hora_log` TIME NOT NULL,
+        `ip` VARCHAR(45) DEFAULT NULL,
+        `status` VARCHAR(20) DEFAULT 'Ativo',
+
+        FOREIGN KEY (`id_usuario`) REFERENCES usuarios(`id`)
+            ON DELETE SET NULL
+            ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+");
+
 } catch (PDOException $e) {
     die('Erro ao conectar com o banco: ' . $e->getMessage());
 }
