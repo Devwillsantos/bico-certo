@@ -122,6 +122,7 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     cursor: pointer;
     color: rgb(23, 50, 118); /* Ajustar cor igual ao código 2 */
+    gap: 10px;
 }
 
 .top-bar .logo img {

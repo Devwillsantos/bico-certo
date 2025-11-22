@@ -26,6 +26,7 @@ body {
   align-items: center; /* Centraliza verticalmente o conteúdo */
   cursor: pointer; /* Mostra cursor de clique */
   color: #000; /* Cor do texto preta */
+  gap: 10px;
 }
 
 .top-bar .logo img {

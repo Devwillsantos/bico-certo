@@ -285,6 +285,7 @@ h1, .grupo-formulario label {
   align-items: center;
   margin-right: 15px;
   color: rgb(23,50,118);
+  gap: 10px;
 }
 
 .top-bar .logo:last-child img {

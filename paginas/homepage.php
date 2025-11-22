@@ -24,8 +24,26 @@ require_once __DIR__ . "/../server/config.php";
         </div>
         <div class="menu">
             <div class="logo">
-                <span><a href="./servicos.php">
-                <img src="../imagens/perfil/servicos.svg"></a></span>
+                <span>
+                    <a href="./consulta.php">
+                        <img src="../imagens/perfil/master-search.svg">
+                    </a>
+                </span>
+                <span>
+                    <a href="./log.php">
+                        <img src="../imagens/perfil/master-log.svg">
+                    </a>
+                </span>
+                <span>
+                    <a href="./db-model.php">
+                        <img src="../imagens/perfil/master-db.svg">
+                    </a>
+                </span>
+                <span>
+                    <a href="./servicos.php">
+                        <img src="../imagens/perfil/servicos.svg">
+                    </a>
+                </span>
             </div>
             <div class="user-name logo">
                 <p id="username">

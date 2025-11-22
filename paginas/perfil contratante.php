@@ -23,7 +23,7 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
   <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
   <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
 
-  <link rel="stylesheet" href="../css/perfil.css">
+  <link rel="stylesheet" href="../css/perfilcontratante.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -37,7 +37,20 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
       </div>
 
       <div class="menu">
-        <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg" alt="Serviços"></a></div>
+        <div class="logo">
+          <a href="./consulta.php">
+              <img src="../imagens/perfil/master-search.svg">
+          </a>
+          <a href="./log.php">
+              <img src="../imagens/perfil/master-log.svg">
+          </a>
+          <a href="./db-model.php">
+              <img src="../imagens/perfil/master-db.svg">
+          </a>
+          <a href="./servicos.php">
+            <img src="../imagens/perfil/servicos.svg" alt="Serviços">
+          </a>
+        </div>
         
         <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">

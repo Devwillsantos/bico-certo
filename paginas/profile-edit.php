@@ -33,7 +33,20 @@ if ($id) {
     <header class="top-bar">
         <div class="icone"><a href="./homepage.php"><img src="../imagens/logomarca.png" class="logomarca"></a></div>
         <div class="menu">
-            <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg"></a></div>
+            <div class="logo">
+                <a href="./consulta.php">
+                    <img src="../imagens/perfil/master-search.svg">
+                </a>
+                <a href="./log.php">
+                    <img src="../imagens/perfil/master-log.svg">
+                </a>
+                <a href="./db-model.php">
+                    <img src="../imagens/perfil/master-db.svg">
+                </a>
+                <a href="./servicos.php">
+                    <img src="../imagens/perfil/servicos.svg">
+                </a>
+            </div>
             <div class="user-name logo"><p id="username"><?php echo $_SESSION['usuario_login']; ?></p></div>
             <div class="logo" onclick="toggleProfileMenu()"><img src="<?php echo '../' . ($_SESSION['usuario_foto'] ?? 'imagens/perfil/default.png'); ?>"></div>
         </div>
