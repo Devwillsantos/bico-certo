@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . "/../server/logged-in-user.php";
 require_once "conexao.php";
 
 // Buscar nome e foto do usuário logado

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . "/../server/logged-in-user.php";
 require_once __DIR__ . "/../server/config.php";
 require_once "../server/perfil/informaçoes.php";
 

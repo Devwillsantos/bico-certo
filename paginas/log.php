@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../server/logged-in-user.php";
 // Inclui o arquivo de conexão, que garante que o banco e as tabelas existam
 include('../server/config.php');
 
