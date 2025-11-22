@@ -11,8 +11,21 @@
 }
 
 body {
-background: #f7f8fa;
-color: #333;
+  background: #f7f8fa;
+  color: #333;
+}
+
+/* Scrollbar Personalizada*/
+body::-webkit-scrollbar {
+  width: 2px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: rgb(160, 160, 160);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(23, 50, 118)
 }
 
 /* Navigation Bar */
