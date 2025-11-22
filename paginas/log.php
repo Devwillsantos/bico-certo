@@ -1,5 +1,14 @@
 <?php
+
+// Apenas usuários registrados podem entrar nesta página
 require_once __DIR__ . "/../server/logged-in-user.php";
+
+// Apenas usuários do tipo "master" podem entrar nesta página
+if ($_SESSION['tipoUsuario'] != 'master') {
+    header('Location: ../paginas/erro.php');
+    exit;
+}
+
 // Inclui o arquivo de conexão, que garante que o banco e as tabelas existam
 include('../server/config.php');
 
