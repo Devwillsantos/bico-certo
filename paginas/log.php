@@ -95,6 +95,17 @@ try {
 
 <!-- Tabela que exibirá os registros -->
 <div class="tabela-container">
+
+<!-- Campo de busca -->
+    <div style="margin-top: 20px; text-align:center;">
+        <input 
+            type="text" 
+            id="searchNome" 
+            placeholder="Buscar por nome..."
+            class="search-bar"
+        >
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -124,6 +135,23 @@ try {
         </tbody>
     </table>
 </div>
+
+<script>
+    document.getElementById("searchNome").addEventListener("keyup", function () {
+        let filtro = this.value.toLowerCase();
+        let linhas = document.querySelectorAll("table tbody tr");
+
+        linhas.forEach(function (linha) {
+            let nome = linha.children[2].textContent.toLowerCase(); // Coluna "Nome"
+
+            if (nome.includes(filtro)) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        });
+    });
+</script>
 
 </body>
 <script src="../script/perfil/perfil.js"></script>
