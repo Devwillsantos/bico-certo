@@ -98,10 +98,9 @@ try {
         }
     }
 
-    // If nome was provided, update session login/name so header reflects changes
-    if (!empty($_POST['nome'])) {
-        $_SESSION['usuario_login'] = trim($_POST['nome']);
-    }
+    // Do NOT override the session login (username) when the user changes their display name.
+    // The stored 'nome' will be returned to the client so profile displays can update,
+    // but we keep the session 'usuario_login' as the account login identifier.
 
     if (!empty($fields)) {
         $sql = 'UPDATE usuarios SET ' . implode(', ', $fields) . ' WHERE id = ?';
@@ -111,7 +110,7 @@ try {
     }
 
     // Buscar os dados atualizados para retornar ao cliente (caminhos das imagens e nome)
-    $stmt2 = $pdo->prepare('SELECT nome, fotoPerfil, foto_capa FROM usuarios WHERE id = ?');
+    $stmt2 = $pdo->prepare('SELECT nome, fotoPerfil, foto_capa, login FROM usuarios WHERE id = ?');
     $stmt2->execute([$userId]);
     $usuarioAtualizado = $stmt2->fetch();
 
@@ -121,6 +120,7 @@ try {
             'nome' => $usuarioAtualizado['nome'] ?? null,
             'fotoPerfil' => $usuarioAtualizado['fotoPerfil'] ?? null,
             'foto_capa' => $usuarioAtualizado['foto_capa'] ?? null,
+            'login' => $usuarioAtualizado['login'] ?? null,
         ];
     }
 

@@ -27,6 +27,10 @@ if ($id) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Editar Perfil</title>
+        <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
+        <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
+        <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
+        <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
         <link rel="stylesheet" href="/bico-certo/css/profile-edit.css">
     </head>
     <body>
@@ -43,7 +47,23 @@ if ($id) {
                     <img src="../imagens/perfil/servicos.svg">
                 </a>
             </div>
-            <div class="user-name logo"><p id="username"><?php echo $_SESSION['usuario_login']; ?></p></div>
+            <div class="user-name logo"><p id="username">
+                <?php
+                    // Mostrar sempre o login (campo 'login' do banco) para evitar que mudanças no 'nome' alterem o cabeçalho.
+                    $loginDisplay = $_SESSION['usuario_login'] ?? '';
+                    if (!empty($_SESSION['usuario_id'])) {
+                        try {
+                            $stmtLogin = $pdo->prepare('SELECT login FROM usuarios WHERE id = ?');
+                            $stmtLogin->execute([$_SESSION['usuario_id']]);
+                            $row = $stmtLogin->fetch();
+                            if ($row && !empty($row['login'])) $loginDisplay = $row['login'];
+                        } catch (Exception $e) {
+                            // ignore and fallback to session value
+                        }
+                    }
+                    echo htmlspecialchars($loginDisplay);
+                ?>
+            </p></div>
             <div class="logo" onclick="toggleProfileMenu()"><img src="<?php echo '../' . ($_SESSION['usuario_foto'] ?? 'imagens/perfil/default.png'); ?>"></div>
         </div>
     </header>

@@ -68,10 +68,16 @@ async function saveInformations() {
                 if (formImg) formImg.src = newPath + '?t=' + Date.now();
             }
 
-            // atualiza nome exibido no topo, se retornado
+            // Atualiza o nome exibido no próprio perfil (se o elemento existir na página)
             if (data.usuario && data.usuario.nome) {
-                const username = document.getElementById('username');
-                if (username) username.textContent = data.usuario.nome;
+                const profileName = document.getElementById('profile-name');
+                if (profileName) profileName.textContent = data.usuario.nome;
+            }
+
+            // Garantir que o cabeçalho mostre o login da conta (não o nome editável)
+            if (data.usuario && data.usuario.login) {
+                const headerLogin = document.getElementById('username');
+                if (headerLogin) headerLogin.textContent = data.usuario.login;
             }
 
             // esconder mensagem depois de 2s
