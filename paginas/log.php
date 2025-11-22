@@ -38,61 +38,96 @@ try {
 </head>
 
 <body>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="icone">
+            <a href="./homepage.php">
+                <img src="../imagens/logomarca.png" class="logomarca">
+            </a>
+        </div>
+        <div class="menu">
+            <div class="logo">
+                <?php
+                    if ($_SESSION['tipoUsuario'] === 'master') {
+                        require_once __DIR__ . "/../server/master-navbar.php";
+                    } 
+                ?>
+                <span>
+                    <a href="./servicos.php">
+                        <img src="../imagens/perfil/servicos.svg">
+                    </a>
+                </span>
+            </div>
+            <div class="user-name logo">
+                <p id="username">
+                    <?php echo $_SESSION['usuario_login']; ?>
+                </p>
+            </div>
+            <!-- Ícone de perfil com menu de opções -->
+            <div class="logo" onclick="toggleProfileMenu()">
+                <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
+            </div>
+        </div>
+    </header>
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profileMenu">
+        <ul>
+            <li>
+                <a href="
+                    <?php
+                        if ($_SESSION['tipoUsuario'] === 'prestador') {
+                            echo './perfil.php?id=' . $_SESSION['usuario_id'];
+                        } else {
+                            echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+                        }
+                    ?>"
+                >
+                    Meu Perfil
+                </a>
+            </li>
+            <li><a href="./profile-edit.php">Editar Perfil</a></li>
+            <li><a href="../index.php" id="logout">Sair</a></li>
+        </ul>
+    </div>
+
 <h1>Registros de Log</h1>
 
 <!-- Tabela que exibirá os registros -->
-<table>
-    <thead>
-        <tr>
-            <!-- Cabeçalho das colunas -->
-            <th>ID</th>
-            <th>Login</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Ação</th>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Status</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <!-- Percorre cada linha retornada do banco e exibe na tabela -->
-        <?php foreach ($logs as $row): ?>
+<div class="tabela-container">
+    <table>
+        <thead>
             <tr>
-                <td><?= $row['idlog'] ?></td>
-                <td><?= $row['login'] ?></td>
-                <td><?= $row['nome'] ?></td>
-                <td><?= $row['cpf'] ?></td>
-                <td><?= $row['acao'] ?></td>
-                <td><?= $row['data_log'] ?></td>
-                <td><?= $row['hora_log'] ?></td>
-                <td><?= $row['status'] ?></td>
-
-                <!-- Ações: editar ou excluir o registro -->
-   <td>
-    <a class="action-btn btn-edit" 
-       href="../server/log/editar.php?id=<?= $row['idlog'] ?>">
-       Editar
-    </a>
-
-    <a class="action-btn btn-delete" 
-       href="excluir.php?id=<?= $row['idlog'] ?>"
-       onclick="return confirm('Tem certeza que deseja excluir este registro?');">
-       Excluir
-    </a>
-</td>
-
-</td>
-
-                </td>
+                <!-- Cabeçalho das colunas -->
+                <th>ID</th>
+                <th>Login</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Ação</th>
+                <th>Data</th>
+                <th>Hora</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-
-</table>
+        </thead>
+        <tbody>
+            <!-- Percorre cada linha retornada do banco e exibe na tabela -->
+            <?php foreach ($logs as $row): ?>
+                <tr>
+                    <td><?= $row['idlog'] ?></td>
+                    <td><?= $row['login'] ?></td>
+                    <td><?= $row['nome'] ?></td>
+                    <td><?= $row['cpf'] ?></td>
+                    <td><?= $row['acao'] ?></td>
+                    <td><?= $row['data_log'] ?></td>
+                    <td><?= $row['hora_log'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
 </body>
+<script src="../script/perfil/perfil.js"></script>
+<script src="../script/user-login.js"></script>
+<script src="../script/user-logout.js"></script>
 </html>
 
