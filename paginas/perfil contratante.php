@@ -5,8 +5,22 @@ require_once "../server/perfil/informaçoes.php";
 
 // Variáveis padrão / sessão (mesma lógica do outro HTML)
 $id_usuario_logado = $_SESSION['usuario_id'] ?? null;           // id do usuário logado
-$login_usuario     = $_SESSION['login_usuario'] ?? 'Usuário';   // login do logado
-$foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg'; // foto do logado
+// Buscar login e foto atual do usuário logado no DB (fallback para sessão)
+$login_usuario = $_SESSION['usuario_login'] ?? 'Usuário';
+$foto_usuario  = $_SESSION['usuario_foto'] ?? 'imagens/servicos/perfil_6.jpg';
+if (!empty($id_usuario_logado)) {
+  try {
+    $stmtL = $pdo->prepare('SELECT login, fotoPerfil FROM usuarios WHERE id = ?');
+    $stmtL->execute([$id_usuario_logado]);
+    $rowL = $stmtL->fetch();
+    if ($rowL) {
+      if (!empty($rowL['login'])) $login_usuario = $rowL['login'];
+      if (!empty($rowL['fotoPerfil'])) $foto_usuario = $rowL['fotoPerfil'];
+    }
+  } catch (Exception $e) {
+    // fallback para valores de sessão
+  }
+}
 
 // $id_usuario vem do informaçoes.php (id do perfil que está sendo visto)
 // $usuario e $avaliacoes também são carregados em informaçoes.php
@@ -50,9 +64,9 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
         
         <!-- FOTO DO USUÁRIO LOGADO -->
         <div class="user-display">
-          <span><?php echo $_SESSION['usuario_login']; ?></span>
+          <span id="username"><?php echo htmlspecialchars($login_usuario); ?></span>
           <div class="logo" onclick="toggleProfileMenu()">
-            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
+            <img src="<?php echo '../' . htmlspecialchars($foto_usuario); ?>" alt="Avatar" onerror="this.onerror=null;this.src='../imagens/servicos/perfil_6.jpg'">
           </div>
         </div>
       </div>
@@ -223,14 +237,13 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
     <div class="vertical-row"></div>
     <div class="footer-list">
       <ul>
-        <li><a href="./contato.php">Contato</a></li>
-        <li><a href="./sobrenos.php">Sobre</a></li>
-        <li><a href="./cadastro.php">Cadastro</a></li>
-        <li><a href="./login.php">Login</a></li>
-      </ul>
-    </div>
+       <li class="footer-list-option"><a href="./contato.php">Contato</a></li>
+       <li class="footer-list-option"><a href="./sobrenos.php">Sobre</a></li>
+       <li class="footer-list-option"><a href="./cadastro.php">Cadastro</a></li>
+       <li class="footer-list-option"><a href="./login.php">Login</a></li>
+     </ul>
+   </div> 
   </footer>
-
   <script src="../script/perfil/avaliacao.js"></script>
   <script src="../script/perfil/perfil.js"></script>
 </body>
