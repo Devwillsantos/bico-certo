@@ -1,20 +1,155 @@
+/* Importação da Fonte "Inter" e da Fonte "Crimson Pro" da API do Google */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* Fonte "Inter" Como Padrão Para Todo o Site */
+* {
+  font-family: "Inter", Arial;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f7f8fa;
-  color: #333;
-  padding: 20px;
+background: #f7f8fa;
+color: #333;
+}
+
+/* Navigation Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  padding: 10px 30px;
+  margin: 0;
+  border-bottom: 1px solid rgba(23, 50, 118, 0.164);
+}
+
+.top-bar .logo {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.top-bar .logo img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.icone a img {
+  margin-top: 5px;
+  width: 90px;
+}
+
+.top-bar .menu {
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .menu .logo {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  color: rgb(23,50,118);
+}
+
+.top-bar .logo:last-child img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid rgb(23,50,118);
+  object-fit: cover;
+}
+
+.menu span:hover {
+  color: #0019fd;
+}
+
+/* Estilo do menu de perfil */
+.profile-menu {
+  width: 150px;
+  background-color: rgba(16, 35, 82, 0.87);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 60px; /* Ajuste a altura para ficar próximo ao ícone de perfil */
+  right: 20px; /* Ajuste a posição horizontal */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: none;
+  z-index: 10; /* Para garantir que o menu fica à frente de outros elementos */
+}
+
+.profile-menu.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-menu li {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.profile-menu a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.profile-menu a:hover {
+  color: #4a90e2;
 }
 
 h1 {
   text-align: center;
-  color: #2c3e50;
+  color: rgb(23, 50, 118);
+  margin-top: 30px;
+}
+
+.tabela-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar {
+  border: none;
+  text-align: center;
+  width: 300px;
+  height: 40px;
+  background-position: 10px;
+  background-size: 14px;
+  outline: none;
+  align-self: center;
+  border-radius: 5px;
+  transition: all 0.15s;
+  box-sizing: border-box;
+  box-shadow: rgba(105, 105, 105, 0.25) 0px 1px 1px, rgba(151, 151, 151, 0.13) 0px 0px 1px 1px;
+  margin-bottom: 30px;
 }
 
 table {
-  width: 100%;
+  width: 80%;
+  margin: 0 20px;
+  margin-bottom: 40px;
   border-collapse: collapse;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -25,8 +160,16 @@ th, td {
 }
 
 th {
-  background: #007bff;
+  background: rgb(23, 50, 118);
   color: white;
+}
+
+tr th:first-child {
+  border-top-left-radius: 20px;
+}
+
+tr th:last-child {
+  border-top-right-radius: 20px;
 }
 
 tr:hover {
@@ -59,4 +202,71 @@ tr:hover {
 
 .btn-delete:hover {
   background-color: #b52a36;
+}
+
+/* Footer */
+footer {
+  height: 100px;
+  background-color: rgb(23,50,118);
+  display: flex;
+  width: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+}
+
+footer > div {
+  flex: 1;
+}
+
+.footer-image {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.footer-image > img {
+  filter: opacity(0.5);
+  transition: 0.5s;
+  width: 100px;
+}
+
+.footer-image > img:hover {
+  filter: opacity(1);
+}
+
+div.vertical-row {
+  flex: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.377);
+  height: 90px;
+  align-self: center;
+  margin: 0 10px;
+}
+
+.footer-list {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.footer-list > ul {
+  list-style-type: none;
+  width: min-content;
+}
+
+.footer-list > ul:hover {
+  filter: opacity(1);
+}
+
+.footer-list-option {
+  filter: opacity(0.5);
+  transition: 0.5s;
+}
+
+.footer-list-option:hover {
+  filter: opacity(1);
+}
+
+.footer-list-option > a {
+  text-decoration: none;
+  color: white;
 }
