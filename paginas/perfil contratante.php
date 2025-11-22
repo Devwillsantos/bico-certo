@@ -100,7 +100,7 @@ $foto_usuario      = $_SESSION['foto_usuario'] ?? 'imagens/servicos/perfil_6.jpg
 
         <div class="user-info">
           <div class="user-title">
-            <h2><?= htmlspecialchars($usuario['nome'] ?? 'Usuário') ?></h2>
+            <h2 id="profile-name"><?= htmlspecialchars($usuario['nome'] ?? 'Usuário') ?></h2>
 
             <?php if (($id_usuario ?? null) != $id_usuario_logado): ?>
               <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>

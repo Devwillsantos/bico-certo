@@ -101,7 +101,7 @@ $capa = !empty($usuario['foto_capa'])
 
         <div class="user-info">
           <div class="user-title">
-            <h2><?= htmlspecialchars($usuario['nome']) ?></h2>
+            <h2 id="profile-name"><?= htmlspecialchars($usuario['nome']) ?></h2>
 
             <?php if (($_SESSION['usuario_id'] ?? null) != ($id_usuario ?? null)): ?>
               <button id="abrirModal" class="btn-avaliar">⭐ Avaliar</button>
