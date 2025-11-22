@@ -73,6 +73,7 @@ body {
     align-items: center; /* Centraliza verticalmente */
     cursor: pointer; /* Mostra ponteiro de clique */
     color: #ff0000; /* Cor vermelha (aparentemente teste) */
+    gap: 10px;
 }
 
 .top-bar .logo img {

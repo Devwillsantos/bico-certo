@@ -24,8 +24,16 @@ require_once __DIR__ . "/../server/config.php";
         </div>
         <div class="menu">
             <div class="logo">
-                <span><a href="./servicos.php">
-                <img src="../imagens/perfil/servicos.svg"></a></span>
+                <?php
+                    if ($_SESSION['tipoUsuario'] === 'master') {
+                        require_once __DIR__ . "/../server/master-navbar.php";
+                    } 
+                ?>
+                <span>
+                    <a href="./servicos.php">
+                        <img src="../imagens/perfil/servicos.svg">
+                    </a>
+                </span>
             </div>
             <div class="user-name logo">
                 <p id="username">

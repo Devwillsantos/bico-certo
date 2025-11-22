@@ -130,6 +130,7 @@ body::-webkit-scrollbar-thumb {
     display: flex;
     align-items: center;
     cursor: pointer;
+    gap: 10px;
 }
 
 .top-bar .logo img {

@@ -33,7 +33,16 @@ if ($id) {
     <header class="top-bar">
         <div class="icone"><a href="./homepage.php"><img src="../imagens/logomarca.png" class="logomarca"></a></div>
         <div class="menu">
-            <div class="logo"><a href="./servicos.php"><img src="../imagens/perfil/servicos.svg"></a></div>
+            <div class="logo">
+                <?php
+                    if ($_SESSION['tipoUsuario'] === 'master') {
+                        require_once __DIR__ . "/../server/master-navbar.php";
+                    } 
+                ?>
+                <a href="./servicos.php">
+                    <img src="../imagens/perfil/servicos.svg">
+                </a>
+            </div>
             <div class="user-name logo"><p id="username"><?php echo $_SESSION['usuario_login']; ?></p></div>
             <div class="logo" onclick="toggleProfileMenu()"><img src="<?php echo '../' . ($_SESSION['usuario_foto'] ?? 'imagens/perfil/default.png'); ?>"></div>
         </div>
