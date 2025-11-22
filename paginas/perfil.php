@@ -39,15 +39,11 @@ $capa = !empty($usuario['foto_capa'])
 
       <div class="menu">
         <div class="logo">
-          <a href="./consulta.php">
-              <img src="../imagens/perfil/master-search.svg">
-          </a>
-          <a href="./log.php">
-              <img src="../imagens/perfil/master-log.svg">
-          </a>
-          <a href="./db-model.php">
-              <img src="../imagens/perfil/master-db.svg">
-          </a>
+          <?php
+            if ($_SESSION['tipoUsuario'] === 'master') {
+              require_once __DIR__ . "/../server/master-navbar.php";
+            }
+          ?>
           <a href="./servicos.php">
             <img src="../imagens/perfil/servicos.svg" alt="Serviços">
           </a>

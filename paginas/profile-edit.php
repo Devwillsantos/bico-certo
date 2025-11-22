@@ -34,15 +34,11 @@ if ($id) {
         <div class="icone"><a href="./homepage.php"><img src="../imagens/logomarca.png" class="logomarca"></a></div>
         <div class="menu">
             <div class="logo">
-                <a href="./consulta.php">
-                    <img src="../imagens/perfil/master-search.svg">
-                </a>
-                <a href="./log.php">
-                    <img src="../imagens/perfil/master-log.svg">
-                </a>
-                <a href="./db-model.php">
-                    <img src="../imagens/perfil/master-db.svg">
-                </a>
+                <?php
+                    if ($_SESSION['tipoUsuario'] === 'master') {
+                        require_once __DIR__ . "/../server/master-navbar.php";
+                    } 
+                ?>
                 <a href="./servicos.php">
                     <img src="../imagens/perfil/servicos.svg">
                 </a>
