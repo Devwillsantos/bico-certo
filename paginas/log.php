@@ -136,6 +136,20 @@ try {
     </table>
 </div>
 
+<!-- Footer-->
+<footer>
+    <div class="footer-image">
+        <img src="../imagens/logomarca-dark-mode.png">
+    </div>
+    <div class="vertical-row"></div>
+    <div class="footer-list">
+        <ul>
+            <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
+            <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
+        </ul>
+    </div>
+</footer>
+
 <script>
     document.getElementById("searchNome").addEventListener("keyup", function () {
         let filtro = this.value.toLowerCase();

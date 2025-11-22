@@ -146,6 +146,7 @@ h1 {
 table {
   width: 80%;
   margin: 0 20px;
+  margin-bottom: 40px;
   border-collapse: collapse;
   background: #fff;
   border-radius: 20px;
@@ -201,4 +202,71 @@ tr:hover {
 
 .btn-delete:hover {
   background-color: #b52a36;
+}
+
+/* Footer */
+footer {
+  height: 100px;
+  background-color: rgb(23,50,118);
+  display: flex;
+  width: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+
+}
+
+footer > div {
+  flex: 1;
+}
+
+.footer-image {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.footer-image > img {
+  filter: opacity(0.5);
+  transition: 0.5s;
+  width: 100px;
+}
+
+.footer-image > img:hover {
+  filter: opacity(1);
+}
+
+div.vertical-row {
+  flex: 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.377);
+  height: 90px;
+  align-self: center;
+  margin: 0 10px;
+}
+
+.footer-list {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.footer-list > ul {
+  list-style-type: none;
+  width: min-content;
+}
+
+.footer-list > ul:hover {
+  filter: opacity(1);
+}
+
+.footer-list-option {
+  filter: opacity(0.5);
+  transition: 0.5s;
+}
+
+.footer-list-option:hover {
+  filter: opacity(1);
+}
+
+.footer-list-option > a {
+  text-decoration: none;
+  color: white;
 }
