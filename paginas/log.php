@@ -32,7 +32,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Log do Sistema</title>
-
+    <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
+    <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
+    <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
+    <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
     <!-- CSS que estiliza a tabela de logs -->
     <link rel="stylesheet" href="../css/log.css">
 </head>
