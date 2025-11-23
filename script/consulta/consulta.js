@@ -18,33 +18,23 @@ document.addEventListener("click", function (e) {
 
   // Confirmar exclusão
   if (e.target.id === "confirmDelete") {
-    fetch("excluirUsuario.php", {
+    fetch("../server/excluirUsuario.php", {
       method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ id: userIdToDelete })
     })
-    
-    .then(res => res.text())
+    .then(res => res.json())
     .then(response => {
-      console.log(response); // debug no console
-
-      // Fecha modal de confirmação
       document.getElementById("deleteModal").classList.add("hidden");
 
-      // Se o PHP retornou sucesso
-      if (response.includes("sucesso")) {
-        // Remove a linha da tabela sem recarregar
+      if (response.ok) {
         const row = document.querySelector(`tr[data-id="${userIdToDelete}"]`);
-        if (row) {
-          row.remove();
-        }
-
-        // Mostra modal de sucesso
+        if (row) row.remove();
         document.getElementById("successDeleteModal").classList.remove("hidden");
       } else {
-        alert("Erro ao excluir usuário: " + response);
+        alert("Erro ao excluir usuário: " + response.message);
       }
 
-      // Reseta variável
       userIdToDelete = null;
     })
     .catch(error => {

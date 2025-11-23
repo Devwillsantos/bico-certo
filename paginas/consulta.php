@@ -4,12 +4,12 @@
 require_once __DIR__ . "/../server/logged-in-user.php";
 
 // Apenas usuários do tipo "master" podem entrar nesta página
-if ($_SESSION['tipoUsuario'] != 'master') {
-    header('Location: ../paginas/erro.php');
-    exit;
-}
+ if ($_SESSION['tipoUsuario'] != 'master') {
+     header('Location: ../paginas/erro.php');
+     exit;
+ }
 
-require_once "conexao.php";
+require_once __DIR__ . "/../server/conexao.php";
 
 // Buscar nome e foto do usuário logado
 $idUsuarioLogado = $_SESSION['usuario_id'] ?? null;
@@ -45,24 +45,22 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Consulta de Usuários</title>
-    <!-- CSS atualizado -->
-    <link rel="stylesheet" href="consulta.css?v=3.0">
+    <link rel="stylesheet" href="../css/consulta.css?v=3.0">
 </head>
 <body>
 <header class="top-bar">
     <div class="logo">
-        <!-- Link atualizado -->
         <a href="consulta.php">
-            <img src="imagens/logomarca.png" alt="Logo Bico Certo" class="logo-img">
+            <img src="../imagens/logomarca.png" alt="Logo Bico Certo" class="logo-img">
         </a>
     </div>
 
     <div class="user-photo">
         <span class="user-name"><?= htmlspecialchars($nomeUsuario) ?></span>
         <?php if ($fotoUsuario): ?>
-            <img src="imagens/<?= htmlspecialchars($fotoUsuario) ?>" alt="Foto do usuário" class="user-img">
+            <img src="../imagens/<?= htmlspecialchars($fotoUsuario) ?>" alt="Foto do usuário" class="user-img">
         <?php else: ?>
-            <img src="imagens/joao.jpg.jpeg" alt="Foto padrão" class="user-img">
+            <img src="../imagens/joao.jpg.jpeg" alt="Foto padrão" class="user-img">
         <?php endif; ?>
     </div>
 </header>
@@ -71,7 +69,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>Consulta de Usuários</h1>
     <br>
 
-    <!-- Form atualizado -->
     <form method="GET" action="consulta.php" class="search-bar">
         <input type="text" name="termo" placeholder="Pesquisar por Nome ou ID" value="<?= isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '' ?>">
         <button type="submit">Consultar</button>
@@ -104,7 +101,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </main>
 
 <footer>
-    <div class="footer-image"><img src="imagens/logomarca-dark-mode.png" alt="Bico Certo"></div>
+    <div class="footer-image"><img src="../imagens/logomarca-dark-mode.png" alt="Bico Certo"></div>
     <div class="vertical-row"></div>
     <div class="footer-list">
       <ul>
@@ -116,7 +113,22 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </footer>
 
-<!-- JS atualizado -->
-<script src="consulta.js"></script>
+<!-- Modais -->
+<div id="deleteModal" class="modal hidden">
+  <div class="modal-content">
+    <p>Tem certeza que deseja excluir este usuário?</p>
+    <button id="confirmDelete">Sim</button>
+    <button id="cancelDelete">Cancelar</button>
+  </div>
+</div>
+
+<div id="successDeleteModal" class="modal hidden">
+  <div class="modal-content">
+    <p>Usuário excluído com sucesso!</p>
+    <button id="closeDeleteModal">OK</button>
+  </div>
+</div>
+
+<script src="../script/consulta.js"></script>
 </body>
 </html>
