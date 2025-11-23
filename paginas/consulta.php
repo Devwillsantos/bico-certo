@@ -9,7 +9,7 @@ require_once __DIR__ . "/../server/logged-in-user.php";
      exit;
  }
 
-require_once __DIR__ . "/../server/conexao.php";
+require_once __DIR__ . "/../server/config.php";
 
 // Buscar nome e foto do usuário logado
 $idUsuarioLogado = $_SESSION['usuario_id'] ?? null;
