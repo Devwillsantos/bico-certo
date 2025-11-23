@@ -150,21 +150,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </footer>
 
-<!-- Modais -->
-<div id="deleteModal" class="modal hidden">
-  <div class="modal-content">
-    <p>Tem certeza que deseja excluir este usuário?</p>
-    <button id="confirmDelete">Sim</button>
-    <button id="cancelDelete">Cancelar</button>
-  </div>
-</div>
-
-<div id="successDeleteModal" class="modal hidden">
-  <div class="modal-content">
-    <p>Usuário excluído com sucesso!</p>
-    <button id="closeDeleteModal">OK</button>
-  </div>
-</div>
 <script src="../script/perfil/perfil.js"></script>
 <script src="../script/user-login.js"></script>
 <script src="../script/user-logout.js"></script>
