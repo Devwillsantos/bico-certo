@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // Apenas usuários registrados podem entrar nesta página
 require_once __DIR__ . "/../server/logged-in-user.php";
