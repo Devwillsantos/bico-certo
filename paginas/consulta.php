@@ -165,5 +165,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button id="closeDeleteModal">OK</button>
   </div>
 </div>
+<script src="../script/perfil/perfil.js"></script>
+<script src="../script/user-login.js"></script>
+<script src="../script/user-logout.js"></script>
 </body>
 </html>
