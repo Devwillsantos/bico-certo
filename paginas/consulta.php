@@ -1,20 +1,22 @@
 <?php
+session_start();
 
 // Apenas usuários registrados podem entrar nesta página
 require_once __DIR__ . "/../server/logged-in-user.php";
 
-// Apenas usuários do tipo "master" podem entrar nesta página
-if ($_SESSION['tipoUsuario'] != 'master') {
+// Apenas master pode acessar
+if ($_SESSION['tipoUsuario'] !== 'master') {
     header('Location: ../paginas/erro.php');
     exit;
 }
 
+// Conexão
 require_once __DIR__ . "/../server/config.php";
 
 // Buscar nome e foto do usuário logado
 $idUsuarioLogado = $_SESSION['usuario_id'] ?? null;
 $fotoUsuario = null;
-$nomeUsuario = 'Usuário'; // valor padrão
+$nomeUsuario = 'Usuário';
 
 if ($idUsuarioLogado) {
     $stmtFoto = $pdo->prepare("SELECT nome, fotoPerfil FROM usuarios WHERE id = ?");
@@ -27,7 +29,7 @@ if ($idUsuarioLogado) {
     }
 }
 
-// Consulta de usuários
+// Consulta
 $termo = isset($_GET['termo']) ? trim($_GET['termo']) : '';
 
 if ($termo !== '') {
@@ -39,7 +41,6 @@ if ($termo !== '') {
 
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -52,6 +53,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
 </head>
 <body>
+
 <!-- Top Bar -->
 <header class="top-bar">
     <div class="icone">
@@ -107,40 +109,40 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <main>
     <h1>Consulta de Usuários</h1>
-    <br>
 
     <form method="GET" action="consulta.php" class="search-bar">
-        <input type="text" name="termo" placeholder="Pesquisar por Nome ou ID" value="<?= isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '' ?>">
+        <input type="text" name="termo" placeholder="Pesquisar por Nome ou ID"
+               value="<?= isset($_GET['termo']) ? htmlspecialchars($_GET['termo']) : '' ?>">
         <button type="submit">Consultar</button>
     </form>
 
     <table id="userTable">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Login</th>
-                <th>Email</th>
-                <th>Ações</th>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Ações</th>
+        </tr>
         </thead>
         <tbody>
-            <?php foreach ($usuarios as $user): ?>
-                <tr data-id="<?= $user['id'] ?>">
-                    <td><?= $user['id'] ?></td>
-                    <td><?= htmlspecialchars($user['nome']) ?></td>
-                    <td><?= htmlspecialchars($user['login']) ?></td>
-                    <td><?= htmlspecialchars($user['email']) ?></td>
-                    <td>
-                        <button class="delete-btn" data-id="<?= $user['id'] ?>">Excluir</button>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+        <?php foreach ($usuarios as $user): ?>
+            <tr data-id="<?= $user['id'] ?>">
+                <td><?= $user['id'] ?></td>
+                <td><?= htmlspecialchars($user['nome']) ?></td>
+                <td><?= htmlspecialchars($user['login']) ?></td>
+                <td><?= htmlspecialchars($user['email']) ?></td>
+                <td>
+                    <button class="delete-btn" data-id="<?= $user['id'] ?>">Excluir</button>
+                </td>
+            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </main>
 
-<!-- Footer -->
+<!-- Footer-->
 <footer>
     <div class="footer-image">
         <img src="../imagens/logomarca-dark-mode.png">
@@ -155,7 +157,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </footer>
 
 <script src="../script/perfil/perfil.js"></script>
+<script src="../script/consulta/user-delete.js"></script>
 <script src="../script/user-login.js"></script>
 <script src="../script/user-logout.js"></script>
+
 </body>
 </html>
