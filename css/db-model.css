@@ -235,12 +235,12 @@ main {
 
 .db-model-conceptual {
     height: 90vw;
-    max-height: 800px;
+    max-height: 300px;
 }
 
 .db-model-logic {
     height: 90vw;
-    max-height: 300px;
+    max-height: 800px;
 }
 
 /* Footer */

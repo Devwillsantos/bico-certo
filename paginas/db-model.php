@@ -80,8 +80,8 @@ require_once __DIR__ . "/../server/config.php";
     <!-- Main Content -->
     <main>
         <div class="image-db-container">
-            <img src="../imagens/db-model-conceptual.png" class="db-model-logic">
-            <img src="../imagens/db-model-logic.png" class="db-model-conceptual">
+            <img src="../imagens/db-model-conceptual.png" class="db-model-conceptual">
+            <img src="../imagens/db-model-logic.png" class="db-model-logic">
         </div>
     </main>
 
