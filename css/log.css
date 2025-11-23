@@ -138,7 +138,8 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: top;
-  height: 90vh;
+  min-height: 90vh;
+  max-height: fit-content;
 }
 
 .search-bar {
