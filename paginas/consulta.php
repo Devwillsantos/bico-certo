@@ -22,7 +22,7 @@ if ($idUsuarioLogado) {
     $dadosUsuario = $stmtFoto->fetch(PDO::FETCH_ASSOC);
 
     if ($dadosUsuario) {
-        $fotoUsuario = $dadosUsuario['foto'] ?? null;
+        $fotoUsuario = $dadosUsuario['fotoPerfil'] ?? null;
         $nomeUsuario = $dadosUsuario['nome'] ?? 'Usuário';
     }
 }
