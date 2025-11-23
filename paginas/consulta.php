@@ -4,10 +4,10 @@
 require_once __DIR__ . "/../server/logged-in-user.php";
 
 // Apenas usuários do tipo "master" podem entrar nesta página
- if ($_SESSION['tipoUsuario'] != 'master') {
-     header('Location: ../paginas/erro.php');
-     exit;
- }
+if ($_SESSION['tipoUsuario'] != 'master') {
+    header('Location: ../paginas/erro.php');
+    exit;
+}
 
 require_once __DIR__ . "/../server/config.php";
 
