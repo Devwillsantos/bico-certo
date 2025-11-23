@@ -17,7 +17,7 @@ $fotoUsuario = null;
 $nomeUsuario = 'Usuário'; // valor padrão
 
 if ($idUsuarioLogado) {
-    $stmtFoto = $pdo->prepare("SELECT nome, foto FROM usuarios WHERE id = ?");
+    $stmtFoto = $pdo->prepare("SELECT nome, fotoPerfil FROM usuarios WHERE id = ?");
     $stmtFoto->execute([$idUsuarioLogado]);
     $dadosUsuario = $stmtFoto->fetch(PDO::FETCH_ASSOC);
 
