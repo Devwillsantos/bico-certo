@@ -219,20 +219,28 @@ main {
     justify-content: center;
     align-items: top;
     margin: 50px;
-    height: 100vh;
+    height: fit-content;
 }
 
 .image-db-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 90%;
+    height: fit-content;
     background-color: white;
     border-radius: 20px;
 }
 
-.db-model {
-    width: 90%;
+.db-model-conceptual {
+    height: 90vw;
+    max-height: 800px;
+}
+
+.db-model-logic {
+    height: 90vw;
+    max-height: 300px;
 }
 
 /* Footer */
