@@ -48,22 +48,58 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../css/consulta.css?v=3.0">
 </head>
 <body>
+<!-- Top Bar -->
 <header class="top-bar">
-    <div class="logo">
-        <a href="consulta.php">
-            <img src="../imagens/logomarca.png" alt="Logo Bico Certo" class="logo-img">
+    <div class="icone">
+        <a href="./homepage.php">
+            <img src="../imagens/logomarca.png" class="logomarca">
         </a>
     </div>
-
-    <div class="user-photo">
-        <span class="user-name"><?= htmlspecialchars($nomeUsuario) ?></span>
-        <?php if ($fotoUsuario): ?>
-            <img src="../imagens/<?= htmlspecialchars($fotoUsuario) ?>" alt="Foto do usuário" class="user-img">
-        <?php else: ?>
-            <img src="../imagens/joao.jpg.jpeg" alt="Foto padrão" class="user-img">
-        <?php endif; ?>
+    <div class="menu">
+        <div class="logo">
+            <?php
+                if ($_SESSION['tipoUsuario'] === 'master') {
+                    require_once __DIR__ . "/../server/master-navbar.php";
+                } 
+            ?>
+            <span>
+                <a href="./servicos.php">
+                    <img src="../imagens/perfil/servicos.svg">
+                </a>
+            </span>
+        </div>
+        <div class="user-name logo">
+            <p id="username">
+                <?php echo $_SESSION['usuario_login']; ?>
+            </p>
+        </div>
+        <!-- Ícone de perfil com menu de opções -->
+        <div class="logo" onclick="toggleProfileMenu()">
+            <img src="<?php echo '../' . $_SESSION['usuario_foto']; ?>">
+        </div>
     </div>
 </header>
+
+<!-- Profile Menu -->
+<div class="profile-menu" id="profileMenu">
+    <ul>
+        <li>
+            <a href="
+                <?php
+                    if ($_SESSION['tipoUsuario'] === 'prestador') {
+                        echo './perfil.php?id=' . $_SESSION['usuario_id'];
+                    } else {
+                        echo './perfil contratante.php?id=' . $_SESSION['usuario_id'];
+                    }
+                ?>"
+            >
+                Meu Perfil
+            </a>
+        </li>
+        <li><a href="./profile-edit.php">Editar Perfil</a></li>
+        <li><a href="../index.php" id="logout">Sair</a></li>
+    </ul>
+</div>
 
 <main>
     <h1>Consulta de Usuários</h1>
@@ -100,16 +136,17 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </main>
 
+<!-- Footer -->
 <footer>
-    <div class="footer-image"><img src="../imagens/logomarca-dark-mode.png" alt="Bico Certo"></div>
+    <div class="footer-image">
+        <img src="../imagens/logomarca-dark-mode.png">
+    </div>
     <div class="vertical-row"></div>
     <div class="footer-list">
-      <ul>
-        <li class="footer-list-option"><a href="./contato.php">Contato</a></li>
-        <li class="footer-list-option"><a href="./sobrenos.php">Sobre</a></li>
-        <li class="footer-list-option"><a href="./cadastro.php">Cadastro</a></li>
-        <li class="footer-list-option"><a href="./login.php">Login</a></li>
-      </ul>
+        <ul>
+            <li class="footer-list-option"><a href="./contato.php" target="_blank">Contato</a></li>
+            <li class="footer-list-option"><a href="./sobrenos.php" target="_blank">Sobre</a></li>
+        </ul>
     </div>
 </footer>
 
@@ -128,7 +165,5 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button id="closeDeleteModal">OK</button>
   </div>
 </div>
-
-<script src="../script/consulta.js"></script>
 </body>
 </html>
