@@ -46,6 +46,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Consulta de Usuários</title>
     <link rel="stylesheet" href="../css/consulta.css?v=3.0">
+    <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
+    <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
+    <link rel="icon" href="../imagens/icones-aba/icone32.ico" sizes="32x32">
+    <link rel="icon" href="../imagens/icones-aba/icone48.ico" sizes="48x48">
 </head>
 <body>
 <!-- Top Bar -->
