@@ -46,6 +46,7 @@ require_once __DIR__ . "/../server/config.php";
             </div>
         </div>
     </header>
+
     <!-- Profile Menu -->
     <div class="profile-menu" id="profileMenu">
         <ul>
@@ -66,12 +67,13 @@ require_once __DIR__ . "/../server/config.php";
             <li><a href="../index.php" id="logout">Sair</a></li>
         </ul>
     </div>
-    <!-- Advertisement Banner -->
-     <div class="banner">
-        <div class="banner-container">
-            <img src="../imagens/Google-AdWords-Logo.png">
-        </div>
-     </div>
+
+    <!-- Banner -->
+    <div class="banner">
+        <img src="../imagens/slides-homepage/1.jpg" class="slide active" alt="">
+        <img src="../imagens/slides-homepage/2.jpg" class="slide" alt="">
+    </div>
+
     <!-- Main Content -->
     <main>
         <div class="main-container">
@@ -206,6 +208,7 @@ require_once __DIR__ . "/../server/config.php";
             </div>
         </div>
     </main>
+
     <!-- Footer-->
     <footer>
         <div class="footer-image">
@@ -219,6 +222,8 @@ require_once __DIR__ . "/../server/config.php";
             </ul>
         </div>
     </footer>
+
+    <script src="../script/index/carousel.js"></script>
     <script src="../script/perfil/perfil.js"></script>
     <script src="../script/user-login.js"></script>
     <script src="../script/user-logout.js"></script>
