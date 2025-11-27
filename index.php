@@ -44,6 +44,7 @@ session_destroy();
             </div>
         </div>
     </header>
+
     <!-- Profile Menu -->
     <div class="profile-menu" id="profileMenu">
         <ul>
@@ -53,12 +54,13 @@ session_destroy();
             <li><a href="../bico-certo/paginas/contato.php">Contato</a></li>
         </ul>
     </div>
-    <!-- Advertisement Banner -->
-     <div class="banner">
-        <div class="banner-container">
-            <img src="../bico-certo/imagens/Google-AdWords-Logo.png">
-        </div>
-     </div>
+
+    <!-- Banner -->
+    <div class="banner">
+        <img src="./imagens/slides-homepage/1.jpg" class="slide active" alt="">
+        <img src="./imagens/slides-homepage/2.jpg" class="slide" alt="">
+    </div>
+
     <!-- Main Content -->
     <main>
         <div class="main-container">
@@ -193,6 +195,7 @@ session_destroy();
             </div>
         </div>
     </main>
+
     <!-- Footer-->
     <footer>
         <div class="footer-image">
@@ -224,6 +227,7 @@ session_destroy();
             </ul>
         </div>
     </footer>
-    <script src="../script/perfil/perfil.js"></script>
+
+    <script src="./script/index/carousel.js"></script>
 </body>
 </html>
