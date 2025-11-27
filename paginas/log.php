@@ -31,6 +31,7 @@ try {
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log do Sistema</title>
     <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
     <link rel="icon" href="../imagens/icones-aba/icone24.ico" sizes="24x24">
