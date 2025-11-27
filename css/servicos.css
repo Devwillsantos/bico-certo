@@ -339,7 +339,7 @@ input.search-bar {
 
 .service-title {
     word-wrap: break-word;
-    text-align: justify;
+    text-align: center;
 }
 
 .card:hover .name,
