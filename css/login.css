@@ -19,20 +19,11 @@
 }
 
 /* Responsividade de Altura e Largura */
-@media (max-width: 1000px) {
 
-    
-
-    div.container-esquerdo > .imagem {
-        object-position: 0 30%;
-        width: 100%;
-        height: 15%;
+@media (max-width: 880px) {
+    div.container-esquerdo {
+        display: none;
     }
-
-    #container-direito {
-        flex-basis: 85vh;
-    }
-
 }
 
 @media (max-height: 700px) {

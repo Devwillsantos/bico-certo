@@ -253,7 +253,13 @@ h1 {
   background: #d6d6d6;
 }
 
-/* Table */
+/* Wrapper responsivo */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Sua tabela original */
 table {
   margin: 0 auto;
   border-collapse: collapse;
@@ -262,8 +268,7 @@ table {
   background: white;
   border-radius: 5px;
   overflow: hidden;
-  border: 2px solid rgb(245, 6, 6); /* borda externa da tabela */
-
+  border: 2px solid rgb(245, 6, 6);
 }
 
 thead {
@@ -274,12 +279,9 @@ thead {
 th, td {
   padding: 10px 15px;
   text-align: left;
-  
-
-
 }
 
-/* Alinhar coluna Ações */
+/* Coluna Ações */
 th:last-child,
 td:last-child {
   text-align: center;
@@ -413,4 +415,21 @@ div.vertical-row {
 .footer-list-option > a {
   text-decoration: none;
   color: white;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 600px) {
+  th, td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .delete-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  table {
+    width: 100%;
+  }
 }

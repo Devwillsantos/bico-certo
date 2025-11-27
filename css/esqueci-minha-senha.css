@@ -19,10 +19,30 @@
 }
 
 /* Responsividade de Largura */
-@media (max-width: 700px) {
+@media (max-width: 880px) {
 
     .container-esquerdo {
         display: none;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    form {
+        width: 90%;
+    }
+
+    form .form-container {
+        width: 100%;
+    }
+
+    .form-container .campo {
+        width: 100%;
+    }
+
+    .form-container .botao-resetar-senha {
+        width: 100%;
     }
 
 }

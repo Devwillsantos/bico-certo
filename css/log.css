@@ -15,6 +15,45 @@ body {
   color: #333;
 }
 
+@media (max-width: 768px) {
+
+  .top-bar {
+    flex-direction: column; /* Empilha os itens da barra superior verticalmente */
+    padding: 10px 15px;
+    height: auto;
+  }
+
+  .top-bar .logo img {
+    width: 25px; /* Reduz o tamanho da logo */
+  }
+
+  .profile-info-container {
+    flex-direction: column; /* Informações do perfil empilhadas verticalmente */
+    align-items: flex-start; /* Alinhamento à esquerda */
+  }
+
+  .profile-pic {
+    position: relative; /* Remove o posicionamento absoluto */
+    top: 0; 
+    left: 0; 
+    margin-bottom: 20px;
+  }
+
+  div.user-details {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .user-info {
+    margin-left: 0; /* Remove margem lateral no mobile */
+  }
+
+  .main-content {
+    flex-direction: column; /* Empilha o conteúdo principal verticalmente */
+  } 
+}
+
 /* Scrollbar Personalizada*/
 body::-webkit-scrollbar {
   width: 2px;
@@ -158,20 +197,31 @@ h1 {
   margin-bottom: 30px;
 }
 
+/* Wrapper responsivo */
+.table-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  overflow-x: auto;
+  padding: 0 10px; /* mantém um respiro sem quebrar */
+  box-sizing: border-box;
+}
+
+/* TABELA */
 table {
-  width: 80%;
-  margin: 0 20px;
-  margin-bottom: 40px;
+  width: 100%;
+  min-width: 650px; /* impede que as colunas sejam esmagadas */
   border-collapse: collapse;
-  background: #fff;
+  background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* CÉLULAS */
 th, td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
   text-align: center;
+  white-space: nowrap; /* evita quebra feia nas colunas estreitas */
 }
 
 th {
@@ -179,6 +229,7 @@ th {
   color: white;
 }
 
+/* BORDAS DE CANTO */
 tr th:first-child {
   border-top-left-radius: 20px;
 }
@@ -187,6 +238,7 @@ tr th:last-child {
   border-top-right-radius: 20px;
 }
 
+/* HOVER */
 tr:hover {
   background: #eef4ff;
 }
@@ -284,4 +336,18 @@ div.vertical-row {
 .footer-list-option > a {
   text-decoration: none;
   color: white;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 600px) {
+  table {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  th, td {
+    padding: 10px;
+    font-size: 14px;
+  }
 }

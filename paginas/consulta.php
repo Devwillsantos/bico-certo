@@ -44,6 +44,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Usuários</title>
     <link rel="stylesheet" href="../css/consulta.css?v=3.0">
     <link rel="icon" href="../imagens/icones-aba/icone16.ico" sizes="16x16">
@@ -115,30 +116,33 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit">Consultar</button>
     </form>
 
-    <table id="userTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Login</th>
-            <th>Email</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($usuarios as $user): ?>
-            <tr data-id="<?= $user['id'] ?>">
-                <td><?= $user['id'] ?></td>
-                <td><?= htmlspecialchars($user['nome']) ?></td>
-                <td><?= htmlspecialchars($user['login']) ?></td>
-                <td><?= htmlspecialchars($user['email']) ?></td>
-                <td>
-                    <button class="delete-btn" data-id="<?= $user['id'] ?>">Excluir</button>
-                </td>
+
+<div class="table-wrapper">
+        <table id="userTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Ações</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <?php foreach ($usuarios as $user): ?>
+                <tr data-id="<?= $user['id'] ?>">
+                    <td><?= $user['id'] ?></td>
+                    <td><?= htmlspecialchars($user['nome']) ?></td>
+                    <td><?= htmlspecialchars($user['login']) ?></td>
+                    <td><?= htmlspecialchars($user['email']) ?></td>
+                    <td>
+                        <button class="delete-btn" data-id="<?= $user['id'] ?>">Excluir</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <!-- Footer-->
