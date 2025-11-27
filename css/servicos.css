@@ -291,7 +291,6 @@ input.search-bar {
 
 /* Estilos do Componente "Card" */
 .card {
-    height: 420px;
     width: 250px;
     display: flex;
     flex-direction: column;
@@ -330,11 +329,6 @@ input.search-bar {
     transition: transform 0.15s;
     word-wrap: break-word;
     text-align: justify;
-}
-
-.name:hover {
-    cursor: pointer;
-    transform: scale(1.05);
 }
 
 .service-title {
