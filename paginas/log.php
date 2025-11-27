@@ -109,34 +109,37 @@ try {
         >
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <!-- Cabeçalho das colunas -->
-                <th>ID</th>
-                <th>Login</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Ação</th>
-                <th>Data</th>
-                <th>Hora</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Percorre cada linha retornada do banco e exibe na tabela -->
-            <?php foreach ($logs as $row): ?>
+    <div class="table-wrapper">
+        <table>
+            <thead>
                 <tr>
-                    <td><?= $row['idlog'] ?></td>
-                    <td><?= $row['login'] ?></td>
-                    <td><?= $row['nome'] ?></td>
-                    <td><?= $row['cpf'] ?></td>
-                    <td><?= $row['acao'] ?></td>
-                    <td><?= $row['data_log'] ?></td>
-                    <td><?= $row['hora_log'] ?></td>
+                    <!-- Cabeçalho das colunas -->
+                    <th>ID</th>
+                    <th>Login</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Ação</th>
+                    <th>Data</th>
+                    <th>Hora</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <!-- Percorre cada linha retornada do banco e exibe na tabela -->
+                <?php foreach ($logs as $row): ?>
+                    <tr>
+                        <td><?= $row['idlog'] ?></td>
+                        <td><?= $row['login'] ?></td>
+                        <td><?= $row['nome'] ?></td>
+                        <td><?= $row['cpf'] ?></td>
+                        <td><?= $row['acao'] ?></td>
+                        <td><?= $row['data_log'] ?></td>
+                        <td><?= $row['hora_log'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <!-- Footer-->
