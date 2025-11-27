@@ -231,16 +231,15 @@ main {
     height: fit-content;
     background-color: white;
     border-radius: 20px;
+    padding: 30px;
 }
 
 .db-model-conceptual {
-    height: 90vw;
-    max-height: 300px;
+    width: 100%;
 }
 
 .db-model-logic {
-    height: 90vw;
-    max-height: 800px;
+    width: 100%;
 }
 
 /* Footer */
