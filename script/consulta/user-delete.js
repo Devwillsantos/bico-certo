@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
             const userId = btn.getAttribute("data-id");
 
-            if (!confirm(`Excluir usuário ${userId}?`)) return;
+            // Exibe alert de confirmação de exclusão
+            // if (!confirm(`Excluir usuário ${userId}?`)) return;
 
             fetch("../server/delete-user.php", {
                 method: "POST",
