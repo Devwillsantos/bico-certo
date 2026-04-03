@@ -44,12 +44,6 @@ Este projeto foi desenvolvido em grupo por 5 alunos como parte de um projeto uni
 
 ---
 
-## 📷 Demonstração (opcional - mas MUITO recomendado)
-
-Adicione aqui prints do sistema ou vídeos demonstrando o funcionamento.
-
----
-
 ## 📚 Aprendizados
 
 Durante o desenvolvimento deste projeto, foram aplicados conceitos como:
